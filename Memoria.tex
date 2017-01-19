@@ -1,0 +1,287 @@
+\documentclass[12pt, a4paper]{article}
+
+% Indicamos que el lenguaje es el español 
+\usepackage[spanish]{babel} % Soporte multilenguaje para LaTeX.
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry} % Interfaz flexible para definir las dimensiones del documento
+\usepackage[utf8]{inputenc} % Aceptar diferentes tipos de codificación de caracteres de entrada (en este caso usamos la codificación Unicode UTF-8)
+\usepackage{multirow} % Soporte para tablas
+\usepackage{graphicx} % Soporte aumentado para gráficos 
+\usepackage{color} % Para usar colores
+\usepackage{hyperref} % Para manejar referencias cruzadas. P.ej. añadir hiperenlaces al índice
+\usepackage{sectsty}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\pagestyle{fancy} % seleccionamos un estilo
+\lhead[\thepage]{PARTE \thepart }
+\renewcommand{\headrulewidth}{0.4pt} % grosor de la línea de la cabecera
+\renewcommand{\footrulewidth}{0.4pt} % grosor de la línea del pie
+
+\usepackage{titlesec}
+\partfont{\Huge}
+\titleformat*{\section}{\LARGE\bfseries}
+\titleformat*{\subsection}{\Large\bfseries}
+
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{scrbase}
+\usepackage{textcomp}
+\definecolor{gray97}{gray}{.97}
+
+\DeclareCaptionFont{white}{\color{white}}
+
+\DeclareCaptionFormat{listing}{%
+	\parbox{\textwidth}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}\vskip-4pt}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+\lstset{
+	literate={~} {$\sim$}{1},
+	frame=lrb,
+	xleftmargin=\fboxsep,
+	xrightmargin=-\fboxsep,
+	stringstyle=\ttfamily,
+	showstringspaces = false,
+	basicstyle=\small\ttfamily,
+	commentstyle=\color{gray45},
+	keywordstyle=\bfseries,
+	backgroundcolor=\color{gray97},
+	breaklines=true}
+
+\newcaptionname{spanish}{\lstlistingname}{Comando}
+
+
+\usepackage{chngcntr}
+\usepackage{endnotes}
+
+\setlength{\skip\footins}{1.5cm}
+
+\usepackage{wrapfig}
+\begin{document}
+
+\begin{titlepage}
+
+\begin{center}
+\vspace*{-1in}
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=8cm]{figuras/logo.png}
+\end{center}
+\end{figure}
+\vspace*{0.6in}
+{\Large Facultade de Informática}\\[1.25cm]
+\vspace*{0.15in}
+{\LARGE Trabajo fin de grado}\\[0.75cm]
+{\LARGE  Grado en Ingeniería Informática}\\[0.5cm]
+{Mención en Tecnologías de la Información }\\[1.25cm]
+\vspace*{0.6in}
+\vspace*{0.2in}
+\begin{Large}
+\textbf{Aplicación para el análisis de carteras de fondos de inversión} \\
+\end{Large}
+\vspace*{2in}
+\vspace*{0.3in}
+\rule{80mm}{0.1mm}\\
+\vspace*{0.1in}
+\begin{large}
+\textbf{Autor:} López López, Ángel\\
+\textbf{Director:} Castro Castro, Paula María\\
+\textbf{Director:} González Coma, José Pablo \\
+\end{large}
+\vspace*{0.3in}
+A Coruña, diciembre de 2016
+\end{center}
+
+\end{titlepage}
+
+\newpage
+\tableofcontents
+\newpage
+
+%Queda por decidir la estructura del proyecto, de momento lo he dividido en partes y dentro de estas partes creare secciones (Ej: Parte I Introdución y dentro de esta iria la introducción al mundo financiero), pero de momento utilizo las partes a modo de borrador.(Preguntar)
+
+\part{Introducción}
+\section{Introducción al mundo financiero}
+\vspace{1cm}
+% No estoy seguro de como debo orientar esta parte itroductoria, si como un resumen y explicación de en que consisten los fondos de inversiones o por el contrario debo explicar la forma en la cual yo he entendido como funcionan(Preguntar).
+Para poder llevar a cabo este proyecto, ha sido necesario realizar un primer paso de búsqueda de información acerca del mundo de las finanzas, mas concretamente sobre los fondos de inversión, para poder conocer su funcionamiento, sus métricas y los tipos de datos que en ellos se utilizan.\\
+
+\subsection{Fondos de inversión}
+
+Para comenzar empezaremos definiendo que es un fondo, como funciona y los elementos que en el intervienen:\\
+
+Un \textbf{fondo de inversión} es un capital compuesto por la suma de las aportaciones monetarias realizadas por varias personas. Este capital se invertirá en una serie de activos con el objetivo de obtener la máxima rentabilidad posible. Dependiendo de la evolución de estos activos, el fondo arroja resultados positivos o negativos, los cuales se repartirán entre cada inversor según la proporción que represente su inversión sobre el total del patrimonio del fondo.\\
+
+Los fondos de inversión se dividen en partes proporcionales llamadas \textbf{participaciones} y sus propietarios se denominan \textbf{participes}. El número de participaciones no es fijo, sino que depende de las compras y ventas de las mismas. Su valor, denominado \textbf{valor liquidativo} de la participación, se calcula diariamente de la siguiente manera: 
+	
+\begin{center}
+	\begin{equation}
+	Valor\ liquidativo = \frac{ Patrimonio\ del\ fondo}{N\ de\ participaciones\ en\ circulacion}
+	\end{equation}
+	\label{valorliquidativo}
+\end{center}
+\vspace{1cm}
+
+Este valor depende, por tanto, de la evolución diaria de los valores que componen el patrimonio del fondo y será uno de los indicativos fundamentales que utilizará la aplicación a la hora de realizar los históricos de los diferentes fondos. Otra medida importante es la \textbf{rentabilidad del fondo}, esta se calcula mediante el porcentaje entre el valor liquidativo en la fecha de compra de la participación (suscripción) y la fecha de venta (reembolso), de la siguiente manera:
+
+\begin{center}
+	\begin{equation}
+	Rentabilidad = \frac{ Valor\ liquidativo\ final - Valor\ liquidativo\ inicial}{Valor\ liquidativo\ inicial } * 100
+	\end{equation}
+\end{center}
+
+\newpage
+
+El resultado no es percibido de manera efectiva hasta que no se produzca el reembolso de las participaciones y será en ese momento en el que el partícipe deberá tributar por el resultado de su inversión. \\
+
+
+Otro aspecto importante es que las decisiones de la inversión las toma una \textbf{gestora}, que administra y representa el fondo, mientras que la función de custodiar y vigilar los activos la realiza el llamado \textbf{depositario}, generalmente una entidad financiera. Normalmente la gestora cobra una serie de comisiones de gestión que se restan al fondo, lo cual disminuye el valor liquidativo de cada participación.\\
+
+Los siguientes puntos se centrarán en ver los distintos tipos de fondos que podemos encontrar, los criterios que se deben de utilizar para su elección y las operaciones que podemos realizar sobre ellos.
+
+
+\subsubsection{Tipos de fondos }
+
+En el mercado existen una amplia gama de fondos de inversión, es tarea del propio inversor elegir aquel que más se adapte a sus necesidades.
+
+\begin{itemize}
+	\item \textbf{Fondos de renta fija:} Son fondos donde la mayoría de sus activos son de renta fija (obligaciones y bonos, letras, pagarés, etc). Normalmente, la rentabilidad de estos fondos va ligado al plazo de vencimiento de dichos activos, es decir, a menor plazo, menos riesgo y por lo tanto menos rentabilidad prevista y viceversa.
+	\item \textbf{Fondos de renta variable:} Son fondos donde la mayoría de sus activos son de renta variable (acciones). Por lo general, los fondos de renta variable reportan ganancias o rendimiento a largo plazo, a cambio de un mayor riesgo.
+	\item \textbf{Fondos Mixtos:} Son fondos en los que sus activos se encuentran divididos entre activos de renta fija y renta variable. Cuanto mayor sea el porcentaje de activos de renta variable mayor sera el riesgo y la rentabilidad potencial.
+	\item \textbf{Fondos globales:} Son fondos que suelen incluir renta variable, fija y activos monetarios en diferentes localizaciones geográficas, en determinados porcentajes dependiendo de la política del fondo, de forma que sus inversiones estén muy diversificadas.
+	\item \textbf{Fondos garantizados:} Son fondos que aseguran la recuperación del capital inicialmente invertido más una rentabilidad fija o variable, en una fecha futura determinada.
+	\item \textbf{Fondos monetarios:} Son fondos basados en la adquisición de activos a corto plazo para minimizar el riesgo de la inversión obteniendo la máxima rentabilidad posible.
+\end{itemize}
+
+
+\subsubsection{Criterios para elegir un fondo de inversión.}
+
+
+Como hemos visto en el apartado anterior, existen varios tipos de fondos de inversión adaptados a diferentes necesidades. A la hora de elegir un fondo en particular existen varios ratios e indicadores que pueden ayudar a determinar cual es el mas adecuado a las preferencias del inversor.\\
+
+Normalmente, a la hora de seleccionar un fondo, el inversor debe considerar cual es su capacidad de asumir de pérdidas (pues cuanto mayor es el riesgo también lo es la rentabilidad) así como el horizonte temporal durante el cual desea mantener la inversión, pues, dependiendo de la política del fondo, puede ser aconsejable estar dispuesto a mantener la inversión un determinado período de tiempo.\\
+
+Otro aspecto a tener en cuenta son las comisiones que se cargan a los fondos de inversión, puesto que pueden afectar a la rentabilidad. Es posible que un fondo aplique distintos tipos de comisiones a las diferentes tipos de participaciones que emita.\\
+
+También hemos de considerar el comportamiento histórico que ha tenido un fondo a lo largo del tiempo. Es importante conocer las rentabilidades obtenidas en el pasado, aunque esto no signifique que se siga una línea similar en el futuro. En la aplicación a desarrollar se incluirán históricos de las rentabilidades referidas a un determinado período (trimestre, semestre ...) para que al comparar distintos fondos se puedan contrastar las rentabilidades en los mismos períodos. Cabe mencionar que es necesario que los fondos sigan una misma política de inversión para poder realizar la comparación.\\
+
+Es posible que durante la vida de un fondo este cambie su política de inversión, por lo que al consultar rendimientos pasados hay que tener en cuenta que puede que esta haya cambiado,  es importante conocer la fecha de dicho cambio y tener en cuenta sólo las rentabilidades a partir de ese momento.\\
+
+Por último, algunos de los ratios que se deben utilizar para elegir un fondo de inversión son los siguientes:
+
+\begin{itemize}
+	\item \textbf{Volatilidad:} es una medida de variación (cambios) en el precio de un activo. Mide cuanto varía el precio de un activo respecto a su precio medio y cuantifica el riesgo del activo financiero.
+	\item \textbf{Alfa:} mide la capacidad o habilidad que tiene el gestor de generar valor al fondo de inversión.
+	\item \textbf{Beta:} mide la sensibilidad del valor liquidativo de un fondo a los movimientos de su índice de referencia.
+	\item \textbf{Ratio de Sharpe:} nos dice lo bueno que es un fondo de inversión en la relación rentabilidad-riesgo.
+	\item \textbf{Ratio de Información:}  es una medida que se emplea para determinar la influencia que ha tenido un gestor en la rentabilidad del fondo en comparación con el comportamiento del mercado.
+	\item \textbf{Máximo Drawdown:} se define como la máxima caída experimentada por un fondo en el periodo comprendido desde que se registra un máximo, hasta que vuelve a ser superado.
+\end{itemize}
+
+\newpage
+
+ \subsubsection{Operaciones y seguimiento de fondos}
+
+En este último punto hablaremos sobre las operaciones de suscripción, reembolso y traspaso de un fondo de inversión así como de como realizar el seguimiento de su rentabilidad.\\
+
+El método para realizar una inversión en un fondo consiste en la \textbf{suscripción} de participaciones, la entidad gestora emite una serie ellas y cada inversor obtiene tantas como el resultado de dividir el capital invertido entre el valor liquidativo(\ref{valorliquidativo}) aplicable a la operación. Normalmente el valor liquidativo aplicable es el del mismo día de la solicitud o el del día siguiente a la solicitud. Algunos fondos pueden estar sujetos a comisiones de suscripción,de hasta hasta un 5\% de la inversión.\\
+
+Si un inversor quiere recuperar su dinero debe solicitar un \textbf{reembolso} de todas o parte de sus participaciones, recibiendo el resultado de multiplicar el el valor liquidativo(\ref{valorliquidativo}) de la participación por el número de participaciones que quiera reembolsar. El valor liquidativo aplicable es el mismo que en el caso anterior, el del mismo día o el del día siguiente. 
+El plazo en el que el inversor recibe su dinero es de un máximo de 3 a 5 días, pudiendo tener dicho reembolso una comisión de hasta el 5\% como en el caso anterior. El inversor conocerá el resultado de la inversión(positivo o negativo) cuando se le abone el reemboslo.\\
+
+En el caso de querer realizar un \textbf{traspaso} de un fondo a otro se produce un reembolso del primero y la inmediata suscripción al segundo. Este método tiene una ventaja, pues se conserva la ntigüedad de la primera inversión a efectos fiscales, por lo que las plusvalías no se tributan hasta que se produzca el reembolso definitivo.\\
+
+Existen cuatro partes que intervienen en un traspaso:
+
+\begin{itemize}
+	\item \textbf{Fondo de origen:} fondo en el que se mantiene la inversión antes del traspaso.
+	\item \textbf{Fondo de destino:} fondo en el que quiere invertir el capital que se reembolse del fondo de origen.
+	\item \textbf{Entidad de origen:} la que comercializa o gestiona el fondo de origen.
+	\item \textbf{Entidad de destino:} la que comercializa o gestiona el fondo de destino.
+\end{itemize}
+
+Sin embargo, al tratarse de de una operación de reembolso y suscripción, se deberán abonar las respectivas comisiones que tengan establecidas ambos fondos.\\ 
+
+El proceso de \textbf{seguimiento} de un fondo de inversión puede realizarse principalmente a través de dos fuentes:
+\begin{itemize}
+	\item La documentación que proporcione la entidad gestora o depositaria. Pues es obligatorio que se proporcione a los partícipes información periódica acerca de la evolución de sus inversiones.
+	\item La divulgación de datos sobre fondos de inversión que proporcionan periódicos o diversos portales de internet. De esta última fuente obtendremos los datos necesarios para el funcionamiento de la aplicación.
+\end{itemize}
+\newpage
+
+\part{Metodología}
+
+Para la realización de este proyecto se utilizará la metodología Proceso Unificado de Desarrollo Software (PUD). El PUD Es un marco de desarrollo extensible, dirigido por casos de uso, iterativo e incremental, en el cual los casos de uso se utilizan para capturar los requisitos funcionales y para definir los contenidos de las iteraciones.\\
+
+El PUD presenta las siguientes características:
+
+\begin{itemize}
+	\item \textbf{Esta dirigido por casos de uso:} Cada caso de uso representa un requisito funcional y su conjunto forma el modelo de casos de uso.
+	\item \textbf{Esta centrado en la arquitectura:} La arquitectura muestra la visión común del sistema completo y describe los elementos del modelo que son mas importantes para poder desarrollarlo.
+	\item \textbf{Iterativo e incremental: } El trabajo es dividido en tareas mas pequeñas o iteraciones. El resultado de cada iteración es un sistema ejecutable, una nueva versión del producto final. Cada una de estas iteraciones resulta en un incremento en el proyecto y se divide a su vez en: análisis de requisitos, diseño, implementación y prueba.
+\end{itemize}
+
+Como lenguaje de representación visual el PUD utiliza el UML y se ha seleccionado para este proyecto porque esta concebido para la programación orientada a objetos, acelera el ritmo del desarrollo y reduce el coste del riesgo a un solo incremento.   
+
+\part{Planificación y evaluación de costes}
+
+En este apartado se detalla como se ha aplicado el PUD para gestionar el desarrollo de la aplicación. Debido a que se utiliza un marco de desarrollo incremental, en cada iteración se presentará un nuevo caso de uso que conformará una nueva versión del producto final.\\
+
+El objetivo de este TFG es implementar una aplicación en la que los usuarios puedan obtener gráficos, datos numéricos y resultados de una o varias carteras de fondos de inversión, por lo cual las fases en las que se divide el proyecto son las siguientes:\\
+
+
+%Aún no tengo claro las distintas iteracciones que voy a realizar, ¿debería incluir un diagrama de gant con la planificacion temporal de cada una de las fases?.
+
+
+\newpage
+
+\begin{table}[]
+	\centering
+	\caption{Planificación del proyecto}
+	\label{tplan}
+	\begin{tabular}{@{}|c|c|c|@{}}
+		\toprule
+		Fase                        & Iteración                   & Tareas                                                                                                            \\ \midrule
+		\multirow{4}{*}{Inicial}    & \multirow{4}{*}{Preliminar} & Inmersión en el mundo financiero                                                                                  \\ \cmidrule(l){3-3} 
+		&                             & \begin{tabular}[c]{@{}c@{}}Elección de indicadores, medidas y criterios más \\ significativos\end{tabular}        \\ \cmidrule(l){3-3} 
+		&                             & Localización y selección de las fuentes de datos                                                                  \\ \cmidrule(l){3-3} 
+		&                             & \begin{tabular}[c]{@{}c@{}}Definir las diferentes iteraciones en las que se realizará \\ el proyecto\end{tabular} \\ \midrule
+		\multirow{2}{*}{Diseño}     & 1                           & Búsqueda de requisitos funcionales                                                                                \\ \cmidrule(l){2-3} 
+		& 2                           & Realizar los modelos de los casos de uso                                                                          \\ \midrule
+		\multirow{4}{*}{Desarrollo} & 1                           & Desarrollo de la IT 1                                                                                             \\ \cmidrule(l){2-3} 
+		& 2                           & Desarrollo de la IT 2                                                                                             \\ \cmidrule(l){2-3} 
+		& 3                           & Desarrollo de la IT 3                                                                                             \\ \cmidrule(l){2-3} 
+		& 4                           & Desarrollo de la IT 4                                                                                             \\ \midrule
+		Documentación               & Final                       & Redacción del manual de usuario                                                                                   \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+
+Para una mayor monitorización de las tareas a realizar se incluye a continuación un diagrama de Gantt con la planificación temporal estimada para cada tarea.
+
+%Preguntar e incluir diagrama de gant.
+
+\newpage
+
+\part{Bibliografía}
+\begin{thebibliography}{10}
+	
+	\bibitem[CNMV]{}
+	\newblock {\textit{Comisión Nacional del Mercado de Valores}.}
+	\newline
+	\href{https://www.cnmv.es/}{https://www.cnmv.es/}
+	
+	\bibitem[Rankia]{}
+	\newblock {\textit{Todo lo que hay que saber de Fondos de inversión en un único artículo}.}
+	\newline
+	\href{http://www.rankia.com/blog/fondos-inversion/3208096-todo-que-hay-saber-fondos-inversion-unico-articulo}{http://www.rankia.com/blog/fondos-inversion/3208096-todo-que-hay-saber-fondos-inversion-unico-articulo}
+	
+	\bibitem[Rankia]{}
+	\newblock {\textit{¿Qué es un fondo de inversión y cómo funciona?}.}
+	\newline
+	\href{http://www.rankia.com/blog/fondos-inversion/952310-que-fondo-inversion-como-funciona}{http://www.rankia.com/blog/fondos-inversion/952310-que-fondo-inversion-como-funciona}
+	
+	
+	
+	
+\end{thebibliography}
+\end{document}
