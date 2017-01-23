@@ -11,6 +11,10 @@
 \usepackage{sectsty}
 \usepackage{booktabs}
 \usepackage{fancyhdr}
+\usepackage{pdflscape} % Pagina en vertical
+\usepackage{pgfgantt}% Para usar diagramas de gantt
+\usepackage{tikz}
+\usetikzlibrary{calc}
 \pagestyle{fancy} % seleccionamos un estilo
 \lhead[\thepage]{PARTE \thepart }
 \renewcommand{\headrulewidth}{0.4pt} % grosor de la línea de la cabecera
@@ -30,9 +34,49 @@
 
 \DeclareCaptionFont{white}{\color{white}}
 
+
+% GanttHeader prepara algunos parámetros para el resto del diagrama
+% #1 Ancho total del diagrama
+% #2 Ancho del espacio reservado para los números de las tareas
+% #3 Ancho del espacio reservado para los nombres de las tareas
+% #4 Número de meses en el diagrama
+% Además de los parámetros anteriores, algunas de las claves definidas
+% a continuación también afectan a su apariencia (por ejemplo, "y" cambia
+% la escala vertical del diagrama)
+
+\def\GanttHeader#1#2#3#4{%
+	\pgfmathparse{(#1-#2-#3)/#4}
+	\tikzset{y=7mm, task number/.style={left, font=\bfseries},
+		task description/.style={text width=#3,  right, draw=none,
+			font=\sffamily, xshift=#2,
+			minimum height=2em},
+		gantt bar/.style={draw=black, fill=blue!30},
+		help lines/.style={draw=black!30, dashed},
+		x=\pgfmathresult pt
+	}
+	\def\totalmonths{#4}
+	\node (Header) [task description] at (0,0) {\textbf{\large Tareas}};
+	\begin{scope}[shift=($(Header.south east)$)]
+		\foreach \x in {1,...,#4}
+		\node[above] at (\x,0) {\footnotesize\x};
+	\end{scope}
+}
+
 \DeclareCaptionFormat{listing}{%
 	\parbox{\textwidth}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}\vskip-4pt}}
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+\def\Task#1#2#3#4{%
+	\node[task number] at ($(Header.west) + (0, -#1)$) {#1};
+	\node[task description] at (0,-#1) {#2};
+	\begin{scope}[shift=($(Header.south east)$)]
+		\draw (0,-#1) rectangle +(\totalmonths, 1);
+		\foreach \x in {1,...,\totalmonths}
+		\draw[help lines] (\x,-#1) -- +(0,1);
+		\filldraw[gantt bar] ($(#3, -#1+0.2)$) rectangle +(#4,0.6);
+	\end{scope}
+}
+
 
 \lstset{
 	literate={~} {$\sim$}{1},
@@ -210,6 +254,7 @@ El proceso de \textbf{seguimiento} de un fondo de inversión puede realizarse pr
 
 \part{Metodología}
 
+\section{Proceso Unificado de Desarrollo Software}
 Para la realización de este proyecto se utilizará la metodología Proceso Unificado de Desarrollo Software (PUD). El PUD Es un marco de desarrollo extensible, dirigido por casos de uso, iterativo e incremental, en el cual los casos de uso se utilizan para capturar los requisitos funcionales y para definir los contenidos de las iteraciones.\\
 
 El PUD presenta las siguientes características:
@@ -222,7 +267,7 @@ El PUD presenta las siguientes características:
 
 Como lenguaje de representación visual el PUD utiliza el UML y se ha seleccionado para este proyecto porque esta concebido para la programación orientada a objetos, acelera el ritmo del desarrollo y reduce el coste del riesgo a un solo incremento.   
 
-\part{Planificación y evaluación de costes}
+\section{Planificación y evaluación de costes}
 
 En este apartado se detalla como se ha aplicado el PUD para gestionar el desarrollo de la aplicación. Debido a que se utiliza un marco de desarrollo incremental, en cada iteración se presentará un nuevo caso de uso que conformará una nueva versión del producto final.\\
 
@@ -258,7 +303,82 @@ El objetivo de este TFG es implementar una aplicación en la que los usuarios pu
 
 Para una mayor monitorización de las tareas a realizar se incluye a continuación un diagrama de Gantt con la planificación temporal estimada para cada tarea.
 
-%Preguntar e incluir diagrama de gant.
+%Preguntar el estilo del diagrama de gant y si vale asi.
+\newpage
+\begin{landscape}
+	
+\thispagestyle{empty}
+\begin{tikzpicture}
+\GanttHeader{22cm}{2ex}{6.5cm}{25}
+\Task{1}{Introducción al mundo financiero}{0}{7}
+\Task{2}{Metodología, Planificación y costes}{7}{4}
+\Task{3}{Formato de ficheros}{11}{7}
+\Task{4}{Tecnologías empleadas}{18}{7}
+\end{tikzpicture}
+
+\end{landscape} 
+
+\newpage
+
+\section{Revisión de fundamentos tecnológicos}
+
+En este apartado se describen las herramientas y tecnologías usadas para el desarrollo del proyecto.
+
+\subsection{Herramientas para la gestión de proyectos}
+
+\subsubsection{Git}
+
+	Es un software de control de versiones distribuido que permite trabajar en grupo y mantener accesibles las diferentes versiones de la aplicación del proyecto.\\
+	
+	 Se ha elegido git como sistema de gestión de versiones del proyecto por encima de su principal alternativa, subversion porque proporciona un repositorio local sobre el que se puede trabajar off-line.
+
+\subsection{Herramientas para el modelado de software}
+
+\subsubsection{Visual Paradigm Community Edition}
+	
+	Es una herramienta para el desarrollo de aplicaciones utilizando UML recomendada para la aplicación y el seguimiento del PUD. Proporciona asistencia para realizar los análisis, diseño, casos de uso y modelos UML del proyecto. Se trata de un software con licencia pero se utiliza su versión gratuita (Community Edition).
+	
+
+\subsection{Herramientas para el desarrollo del proyecto}
+
+\subsubsection{Eclipse IDE Neon}
+
+	Es una plataforma de desarrollo de software de código abierto y multiplataforma basada en Java. Proporciona IDEs (Entrono de desarrollo integrado) prácticamente para cualquier lenguaje, siendo el mas utilizado el de Java. Provee también de una serie de plugins para el control de versiones y frameworks para el desarrollo de aplicaciones gráficas.\\
+	
+	 Se ha elegido Eclipse como plataforma de desarrollo de este proyecto en lugar de Netbeans debido a que ha sido la plataforma utilizada en la mayoría de las asignaturas del grado, por lo que su funcionamiento es mas conocido.\\
+	
+	Para la sincronización con el repositorio git se utiliza el plugin EGit.
+	
+\subsubsection{Apache Maven}
+	
+	Es un software de gestión de proyectos software desarrollado por Apache. Esta basado en el concepto de project object model (POM), maven permite gestionar dependencias, módulos, componentes y el orden de construcción.
+
+\newpage
+\subsection{Herramientas de bases de datos}
+
+\subsubsection{MySQL}
+
+	Es un sistema de gestión de bases de datos relacional desarrollado por Oracle Corporation y está considerada como la base datos open source más popular del mundo. Se utiliza en este proyecto para guardar los datos de los diferentes fondos de inversión de tal forma que puedan estar disponibles off-line.\\
+	
+	Su principal alternativa es PostgreSQL, pero se ha decidido utilizar MySQL porque nuestra aplicación utilizará principalmente consultas sencillas, normalmente de lectura y MySQL esta orientado a este tipo de tareas proporcionando un mayor rendimiento que su competidor.
+	
+\subsubsection{Hibernate}
+	
+	Es un framework para el mapeo objeto-relacional de código abierto para la plataforma Java. Su uso facilita el mapeo de atributos entre una base de datos relacional tradicional y el modelo de objetos de una aplicación, mediante archivos XML o anotaciones en los beans de las entidades para poder establecer estas relaciones.
+	
+	
+\subsection{Herramientas para pruebas}
+
+\subsubsection{JUnit}
+
+	Es un framework utilizado para realizar pruebas unitarias a aplicaciones Java, permitiendo realizar estas pruebas de forma controlada y evaluar el funcionamiento de cada uno de los métodos de las clases.
+
+\subsection{Herramientas de documentación}
+
+\subsubsection{LaTeX}
+
+	Es un software gratuito de composición de textos para la elaboración de documentos de índole científica. Latex proporciona una serie de características que proporcionan una gran calidad tipográfica en sus documentos.
+
 
 \newpage
 
