@@ -1,5 +1,4 @@
 \documentclass[12pt, a4paper]{article}
-
 % Indicamos que el lenguaje es el español 
 \usepackage[spanish]{babel} % Soporte multilenguaje para LaTeX.
 \usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry} % Interfaz flexible para definir las dimensiones del documento
@@ -9,18 +8,21 @@
 \usepackage{color} % Para usar colores
 \usepackage{hyperref} % Para manejar referencias cruzadas. P.ej. añadir hiperenlaces al índice
 \usepackage{sectsty}
+\usepackage[acronym]{glossaries} % Permite el uso de acronimos
 \usepackage{booktabs}
+\usepackage{chngcntr}
+\usepackage{endnotes}
 \usepackage{fancyhdr}
 \usepackage{pdflscape} % Pagina en vertical
 \usepackage{pgfgantt}% Para usar diagramas de gantt
 \usepackage{tikz}
+\usepackage{wrapfig}
+\usepackage{titlesec}
 \usetikzlibrary{calc}
 \pagestyle{fancy} % seleccionamos un estilo
-\lhead[\thepage]{PARTE \thepart }
 \renewcommand{\headrulewidth}{0.4pt} % grosor de la línea de la cabecera
 \renewcommand{\footrulewidth}{0.4pt} % grosor de la línea del pie
 
-\usepackage{titlesec}
 \partfont{\Huge}
 \titleformat*{\section}{\LARGE\bfseries}
 \titleformat*{\subsection}{\Large\bfseries}
@@ -77,7 +79,6 @@
 	\end{scope}
 }
 
-
 \lstset{
 	literate={~} {$\sim$}{1},
 	frame=lrb,
@@ -92,23 +93,54 @@
 	breaklines=true}
 
 \newcaptionname{spanish}{\lstlistingname}{Comando}
-
-
-\usepackage{chngcntr}
-\usepackage{endnotes}
-
 \setlength{\skip\footins}{1.5cm}
 
-\usepackage{wrapfig}
+\newcommand*\parttitle{}
+\let\origpart\part
+\renewcommand*{\part}[2][]{%
+	\ifx\\#1\\% optional argument not present?
+	\origpart{#2}%
+	\renewcommand*\parttitle{#2}%
+	\else
+	\origpart[#1]{#2}%
+	\renewcommand*\parttitle{#1}%
+	\fi
+}
+
+
+\lhead[\thepage]{CAPÍTULO \thepart }
+%\rhead{\parttitle}
+
+%Definicion de acronimos
+\makeglossaries
+\newacronym{VL}{VL}{Valor Liquídativo}
+\newacronym{PUD}{PUD}{Proceso Unificado de Desarrollo Software}
+\newacronym{TFG}{TFG}{Trabajo de Fin de Grado}
+\newacronym{UML}{UML}{Lenguaje Unificado de Modelado}
+\newacronym{IDE}{IDE}{Entornos de Desarrollo Integrado}
+\newacronym{POM}{POM}{Project Object Model}
+\newacronym{XML}{XML}{eXtensible Markup Language}
+
+
+
+
+
 \begin{document}
+\renewcommand{\partname}{Capítulo}
+\renewcommand{\tablename}{Tabla}
+\renewcommand{\acronymname }{Acrónimos}
+\let\Oldpart\part
+
+% Definicion de acronimos
+
 
 \begin{titlepage}
 
 \begin{center}
-\vspace*{-1in}
+\vspace*{-0.2in}
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[width=8cm]{figuras/logo.png}
+\includegraphics[width=12cm]{figuras/logo.png}
 \end{center}
 \end{figure}
 \vspace*{0.6in}
@@ -142,10 +174,8 @@ A Coruña, diciembre de 2016
 \newpage
 
 %Queda por decidir la estructura del proyecto, de momento lo he dividido en partes y dentro de estas partes creare secciones (Ej: Parte I Introdución y dentro de esta iria la introducción al mundo financiero), pero de momento utilizo las partes a modo de borrador.(Preguntar)
-
 \part{Introducción}
 \section{Introducción al mundo financiero}
-\vspace{1cm}
 % No estoy seguro de como debo orientar esta parte itroductoria, si como un resumen y explicación de en que consisten los fondos de inversiones o por el contrario debo explicar la forma en la cual yo he entendido como funcionan(Preguntar).
 Para poder llevar a cabo este proyecto, ha sido necesario realizar un primer paso de búsqueda de información acerca del mundo de las finanzas, mas concretamente sobre los fondos de inversión, para poder conocer su funcionamiento, sus métricas y los tipos de datos que en ellos se utilizan.\\
 
@@ -155,7 +185,7 @@ Para comenzar empezaremos definiendo que es un fondo, como funciona y los elemen
 
 Un \textbf{fondo de inversión} es un capital compuesto por la suma de las aportaciones monetarias realizadas por varias personas. Este capital se invertirá en una serie de activos con el objetivo de obtener la máxima rentabilidad posible. Dependiendo de la evolución de estos activos, el fondo arroja resultados positivos o negativos, los cuales se repartirán entre cada inversor según la proporción que represente su inversión sobre el total del patrimonio del fondo.\\
 
-Los fondos de inversión se dividen en partes proporcionales llamadas \textbf{participaciones} y sus propietarios se denominan \textbf{participes}. El número de participaciones no es fijo, sino que depende de las compras y ventas de las mismas. Su valor, denominado \textbf{valor liquidativo} de la participación, se calcula diariamente de la siguiente manera: 
+Los fondos de inversión se dividen en partes proporcionales llamadas \textbf{participaciones} y sus propietarios se denominan \textbf{participes}. El número de participaciones no es fijo, sino que depende de las compras y ventas de las mismas. Su valor, denominado \textbf{\gls{VL}} de la participación, se calcula diariamente de la siguiente manera: 
 	
 \begin{center}
 	\begin{equation}
@@ -165,7 +195,7 @@ Los fondos de inversión se dividen en partes proporcionales llamadas \textbf{pa
 \end{center}
 \vspace{1cm}
 
-Este valor depende, por tanto, de la evolución diaria de los valores que componen el patrimonio del fondo y será uno de los indicativos fundamentales que utilizará la aplicación a la hora de realizar los históricos de los diferentes fondos. Otra medida importante es la \textbf{rentabilidad del fondo}, esta se calcula mediante el porcentaje entre el valor liquidativo en la fecha de compra de la participación (suscripción) y la fecha de venta (reembolso), de la siguiente manera:
+Este valor depende, por tanto, de la evolución diaria de los valores que componen el patrimonio del fondo y será uno de los indicativos fundamentales que utilizará la aplicación a la hora de realizar los históricos de los diferentes fondos. Otra medida importante es la \textbf{rentabilidad del fondo}, esta se calcula mediante el porcentaje entre el \gls{VL} en la fecha de compra de la participación (suscripción) y la fecha de venta (reembolso), de la siguiente manera:
 
 \begin{center}
 	\begin{equation}
@@ -178,7 +208,7 @@ Este valor depende, por tanto, de la evolución diaria de los valores que compon
 El resultado no es percibido de manera efectiva hasta que no se produzca el reembolso de las participaciones y será en ese momento en el que el partícipe deberá tributar por el resultado de su inversión. \\
 
 
-Otro aspecto importante es que las decisiones de la inversión las toma una \textbf{gestora}, que administra y representa el fondo, mientras que la función de custodiar y vigilar los activos la realiza el llamado \textbf{depositario}, generalmente una entidad financiera. Normalmente la gestora cobra una serie de comisiones de gestión que se restan al fondo, lo cual disminuye el valor liquidativo de cada participación.\\
+Otro aspecto importante es que las decisiones de la inversión las toma una \textbf{gestora}, que administra y representa el fondo, mientras que la función de custodiar y vigilar los activos la realiza el llamado \textbf{depositario}, generalmente una entidad financiera. Normalmente la gestora cobra una serie de comisiones de gestión que se restan al fondo, lo cual disminuye el \gls{VL} de cada participación.\\
 
 Los siguientes puntos se centrarán en ver los distintos tipos de fondos que podemos encontrar, los criterios que se deben de utilizar para su elección y las operaciones que podemos realizar sobre ellos.
 
@@ -206,16 +236,16 @@ Normalmente, a la hora de seleccionar un fondo, el inversor debe considerar cual
 
 Otro aspecto a tener en cuenta son las comisiones que se cargan a los fondos de inversión, puesto que pueden afectar a la rentabilidad. Es posible que un fondo aplique distintos tipos de comisiones a las diferentes tipos de participaciones que emita.\\
 
-También hemos de considerar el comportamiento histórico que ha tenido un fondo a lo largo del tiempo. Es importante conocer las rentabilidades obtenidas en el pasado, aunque esto no signifique que se siga una línea similar en el futuro. En la aplicación a desarrollar se incluirán históricos de las rentabilidades referidas a un determinado período (trimestre, semestre ...) para que al comparar distintos fondos se puedan contrastar las rentabilidades en los mismos períodos. Cabe mencionar que es necesario que los fondos sigan una misma política de inversión para poder realizar la comparación.\\
+También hemos de considerar el comportamiento histórico que ha tenido un fondo a lo largo del tiempo. Es importante conocer las rentabilidades obtenidas en el pasado, aunque esto no signifique que se siga una línea similar en el futuro. En la aplicación a desarrollar se incluirán históricos de las rentabilidades referidas a un determinado período (trimestre, semestre ...) para que al comparar distintos fondos se puedan contrastar las rentabilidades en los mismos períodos. Cabe mencionar que es necesario que los fondos sigan una misma política de inversión para que la comparación sea significativa.\\
 
-Es posible que durante la vida de un fondo este cambie su política de inversión, por lo que al consultar rendimientos pasados hay que tener en cuenta que puede que esta haya cambiado,  es importante conocer la fecha de dicho cambio y tener en cuenta sólo las rentabilidades a partir de ese momento.\\
+Es posible que durante la vida de un fondo este cambie su política de inversión e incluso de grupo gestor, por lo que al consultar rendimientos pasados hay que tener en cuenta que puede que estes hayan cambiado,  es importante conocer la fecha de dicho cambio y tener en cuenta sólo las rentabilidades a partir de ese momento.\\
 
-Por último, algunos de los ratios que se deben utilizar para elegir un fondo de inversión son los siguientes:
+Por último, algunas métricas o indicadores que se deben utilizar para elegir un fondo de inversión son los siguientes:
 
 \begin{itemize}
 	\item \textbf{Volatilidad:} es una medida de variación (cambios) en el precio de un activo. Mide cuanto varía el precio de un activo respecto a su precio medio y cuantifica el riesgo del activo financiero.
 	\item \textbf{Alfa:} mide la capacidad o habilidad que tiene el gestor de generar valor al fondo de inversión.
-	\item \textbf{Beta:} mide la sensibilidad del valor liquidativo de un fondo a los movimientos de su índice de referencia.
+	\item \textbf{Beta:} mide la sensibilidad del \gls{VL} de un fondo a los movimientos de su índice de referencia.
 	\item \textbf{Ratio de Sharpe:} nos dice lo bueno que es un fondo de inversión en la relación rentabilidad-riesgo.
 	\item \textbf{Ratio de Información:}  es una medida que se emplea para determinar la influencia que ha tenido un gestor en la rentabilidad del fondo en comparación con el comportamiento del mercado.
 	\item \textbf{Máximo Drawdown:} se define como la máxima caída experimentada por un fondo en el periodo comprendido desde que se registra un máximo, hasta que vuelve a ser superado.
@@ -227,12 +257,12 @@ Por último, algunos de los ratios que se deben utilizar para elegir un fondo de
 
 En este último punto hablaremos sobre las operaciones de suscripción, reembolso y traspaso de un fondo de inversión así como de como realizar el seguimiento de su rentabilidad.\\
 
-El método para realizar una inversión en un fondo consiste en la \textbf{suscripción} de participaciones, la entidad gestora emite una serie ellas y cada inversor obtiene tantas como el resultado de dividir el capital invertido entre el valor liquidativo(\ref{valorliquidativo}) aplicable a la operación. Normalmente el valor liquidativo aplicable es el del mismo día de la solicitud o el del día siguiente a la solicitud. Algunos fondos pueden estar sujetos a comisiones de suscripción,de hasta hasta un 5\% de la inversión.\\
+El método para realizar una inversión en un fondo consiste en la \textbf{suscripción} de participaciones, la entidad gestora emite una serie ellas y cada inversor obtiene tantas como el resultado de dividir el capital invertido entre el \gls{VL} (\ref{valorliquidativo}) aplicable a la operación. Normalmente el \gls{VL} aplicable es el del mismo día de la solicitud o el del día siguiente a la solicitud. Algunos fondos pueden estar sujetos a comisiones de suscripción,de hasta hasta un 5\% de la inversión.\\
 
-Si un inversor quiere recuperar su dinero debe solicitar un \textbf{reembolso} de todas o parte de sus participaciones, recibiendo el resultado de multiplicar el el valor liquidativo(\ref{valorliquidativo}) de la participación por el número de participaciones que quiera reembolsar. El valor liquidativo aplicable es el mismo que en el caso anterior, el del mismo día o el del día siguiente. 
+Si un inversor quiere recuperar su dinero debe solicitar un \textbf{reembolso} de todas o parte de sus participaciones, recibiendo el resultado de multiplicar el el \gls{VL}(\ref{valorliquidativo}) de la participación por el número de participaciones que quiera reembolsar. El \gls{VL} aplicable es el mismo que en el caso anterior, el del mismo día o el del día siguiente. 
 El plazo en el que el inversor recibe su dinero es de un máximo de 3 a 5 días, pudiendo tener dicho reembolso una comisión de hasta el 5\% como en el caso anterior. El inversor conocerá el resultado de la inversión(positivo o negativo) cuando se le abone el reemboslo.\\
 
-En el caso de querer realizar un \textbf{traspaso} de un fondo a otro se produce un reembolso del primero y la inmediata suscripción al segundo. Este método tiene una ventaja, pues se conserva la ntigüedad de la primera inversión a efectos fiscales, por lo que las plusvalías no se tributan hasta que se produzca el reembolso definitivo.\\
+En el caso de querer realizar un \textbf{traspaso} de un fondo a otro se produce un reembolso del primero y la inmediata suscripción al segundo. Este método tiene una ventaja, pues se conserva la antigüedad de la primera inversión a efectos fiscales, por lo que las plusvalías no se tributan hasta que se produzca el reembolso definitivo.\\
 
 Existen cuatro partes que intervienen en un traspaso:
 
@@ -248,16 +278,16 @@ Sin embargo, al tratarse de de una operación de reembolso y suscripción, se de
 El proceso de \textbf{seguimiento} de un fondo de inversión puede realizarse principalmente a través de dos fuentes:
 \begin{itemize}
 	\item La documentación que proporcione la entidad gestora o depositaria. Pues es obligatorio que se proporcione a los partícipes información periódica acerca de la evolución de sus inversiones.
-	\item La divulgación de datos sobre fondos de inversión que proporcionan periódicos o diversos portales de internet. De esta última fuente obtendremos los datos necesarios para el funcionamiento de la aplicación.
+	\item La divulgación de datos sobre fondos de inversión que proporcionan periódicos o diversos portales de internet. De esta última fuente obtendremos los datos necesarios para el funcionamiento inicial de la aplicación.
 \end{itemize}
 \newpage
 
 \part{Metodología}
 
 \section{Proceso Unificado de Desarrollo Software}
-Para la realización de este proyecto se utilizará la metodología Proceso Unificado de Desarrollo Software (PUD). El PUD Es un marco de desarrollo extensible, dirigido por casos de uso, iterativo e incremental, en el cual los casos de uso se utilizan para capturar los requisitos funcionales y para definir los contenidos de las iteraciones.\\
+Para la realización de este proyecto se utilizará la metodología de \textbf{ \gls{PUD}}. El \gls{PUD} \href{https://es.wikipedia.org/wiki/Proceso_unificado}{*} Es un marco de desarrollo extensible, dirigido por casos de uso, iterativo e incremental, en el cual los casos de uso se utilizan para capturar los requisitos funcionales y para definir los contenidos de las iteraciones.\\
 
-El PUD presenta las siguientes características:
+El \gls{PUD} presenta las siguientes características:
 
 \begin{itemize}
 	\item \textbf{Esta dirigido por casos de uso:} Cada caso de uso representa un requisito funcional y su conjunto forma el modelo de casos de uso.
@@ -265,21 +295,20 @@ El PUD presenta las siguientes características:
 	\item \textbf{Iterativo e incremental: } El trabajo es dividido en tareas mas pequeñas o iteraciones. El resultado de cada iteración es un sistema ejecutable, una nueva versión del producto final. Cada una de estas iteraciones resulta en un incremento en el proyecto y se divide a su vez en: análisis de requisitos, diseño, implementación y prueba.
 \end{itemize}
 
-Como lenguaje de representación visual el PUD utiliza el UML y se ha seleccionado para este proyecto porque esta concebido para la programación orientada a objetos, acelera el ritmo del desarrollo y reduce el coste del riesgo a un solo incremento.   
+Como lenguaje de representación visual el \gls{PUD} utiliza el \gls{UML} y se ha seleccionado para este proyecto porque esta concebido para la programación orientada a objetos, acelera el ritmo del desarrollo y reduce el coste del riesgo a un solo incremento.   
+
+\newpage 
 
 \section{Planificación y evaluación de costes}
 
-En este apartado se detalla como se ha aplicado el PUD para gestionar el desarrollo de la aplicación. Debido a que se utiliza un marco de desarrollo incremental, en cada iteración se presentará un nuevo caso de uso que conformará una nueva versión del producto final.\\
+En este apartado se detalla como se ha aplicado el \gls{PUD} para gestionar el desarrollo de la aplicación. Debido a que se utiliza un marco de desarrollo incremental, en cada iteración se presentará un nuevo caso de uso que conformará una nueva versión del producto final.\\
 
-El objetivo de este TFG es implementar una aplicación en la que los usuarios puedan obtener gráficos, datos numéricos y resultados de una o varias carteras de fondos de inversión, por lo cual las fases en las que se divide el proyecto son las siguientes:\\
+El objetivo de este \gls{TFG} es implementar una aplicación en la que los usuarios puedan obtener gráficos, datos numéricos y resultados de una o varias carteras de fondos de inversión, por lo cual las fases en las que se divide el proyecto son las siguientes:\\
 
 
 %Aún no tengo claro las distintas iteracciones que voy a realizar, ¿debería incluir un diagrama de gant con la planificacion temporal de cada una de las fases?.
 
-
-\newpage
-
-\begin{table}[]
+\begin{table}[htbp]
 	\centering
 	\caption{Planificación del proyecto}
 	\label{tplan}
@@ -299,7 +328,7 @@ El objetivo de este TFG es implementar una aplicación en la que los usuarios pu
 		Documentación               & Final                       & Redacción del manual de usuario                                                                                   \\ \bottomrule
 	\end{tabular}
 \end{table}
-
+\vspace{0.5cm}
 
 Para una mayor monitorización de las tareas a realizar se incluye a continuación un diagrama de Gantt con la planificación temporal estimada para cada tarea.
 
@@ -307,14 +336,32 @@ Para una mayor monitorización de las tareas a realizar se incluye a continuaci�
 \newpage
 \begin{landscape}
 	
-\thispagestyle{empty}
 \begin{tikzpicture}
 \GanttHeader{22cm}{2ex}{6.5cm}{25}
 \Task{1}{Introducción al mundo financiero}{0}{7}
 \Task{2}{Metodología, Planificación y costes}{7}{4}
-\Task{3}{Formato de ficheros}{11}{7}
+\Task{3}{Formato de  la base de datos}{11}{7}
 \Task{4}{Tecnologías empleadas}{18}{7}
 \end{tikzpicture}
+\\
+
+\begin{tikzpicture}
+\GanttHeader{22cm}{2ex}{6.5cm}{25}
+\Task{1}{Introducción al mundo financiero}{0}{7}
+\Task{2}{Metodología, Planificación y costes}{7}{4}
+\Task{3}{Formato de  la base de datos}{11}{7}
+\Task{4}{Tecnologías empleadas}{18}{7}
+\end{tikzpicture}
+\\
+
+\begin{tikzpicture}
+\GanttHeader{22cm}{2ex}{6.5cm}{25}
+\Task{1}{Introducción al mundo financiero}{0}{7}
+\Task{2}{Metodología, Planificación y costes}{7}{4}
+\Task{3}{Formato de  la base de datos}{11}{7}
+\Task{4}{Tecnologías empleadas}{18}{7}
+\end{tikzpicture}
+
 
 \end{landscape} 
 
@@ -325,64 +372,65 @@ Para una mayor monitorización de las tareas a realizar se incluye a continuaci�
 En este apartado se describen las herramientas y tecnologías usadas para el desarrollo del proyecto.
 
 \subsection{Herramientas para la gestión de proyectos}
+\begin{itemize}
+	\item \textbf{Git: } Es un software de control de versiones distribuido que permite trabajar en grupo y mantener accesibles las diferentes versiones de la aplicación del proyecto. Se ha elegido git como sistema de gestión de versiones del proyecto por encima de su principal alternativa, subversion porque proporciona un repositorio local sobre el que se puede trabajar off-line.
+\end{itemize}
 
-\subsubsection{Git}
-
-	Es un software de control de versiones distribuido que permite trabajar en grupo y mantener accesibles las diferentes versiones de la aplicación del proyecto.\\
 	
-	 Se ha elegido git como sistema de gestión de versiones del proyecto por encima de su principal alternativa, subversion porque proporciona un repositorio local sobre el que se puede trabajar off-line.
+	
+	
 
 \subsection{Herramientas para el modelado de software}
 
-\subsubsection{Visual Paradigm Community Edition}
+\begin{itemize}
+	\item \textbf{Visual Paradigm Community Edition: }
+		Es una herramienta para el desarrollo de aplicaciones utilizando \gls{UML} recomendada para la aplicación y el seguimiento del \gls{PUD}. Proporciona asistencia para realizar los análisis, diseño, casos de uso y modelos \gls{UML} del proyecto. Se trata de un software con licencia pero se utiliza su versión gratuita (Community Edition).
+\end{itemize}
 	
-	Es una herramienta para el desarrollo de aplicaciones utilizando UML recomendada para la aplicación y el seguimiento del PUD. Proporciona asistencia para realizar los análisis, diseño, casos de uso y modelos UML del proyecto. Se trata de un software con licencia pero se utiliza su versión gratuita (Community Edition).
-	
-
 \subsection{Herramientas para el desarrollo del proyecto}
 
-\subsubsection{Eclipse IDE Neon}
-
-	Es una plataforma de desarrollo de software de código abierto y multiplataforma basada en Java. Proporciona IDEs (Entrono de desarrollo integrado) prácticamente para cualquier lenguaje, siendo el mas utilizado el de Java. Provee también de una serie de plugins para el control de versiones y frameworks para el desarrollo de aplicaciones gráficas.\\
+\begin{itemize}
+	\item \textbf{Eclipse IDE Neon: } Es una plataforma de desarrollo de software de código abierto y multiplataforma basada en Java. Proporciona \glspl{IDE} prácticamente para cualquier lenguaje, siendo el mas utilizado el de Java. Provee también de una serie de plugins para el control de versiones y frameworks para el desarrollo de aplicaciones gráficas.
 	
-	 Se ha elegido Eclipse como plataforma de desarrollo de este proyecto en lugar de Netbeans debido a que ha sido la plataforma utilizada en la mayoría de las asignaturas del grado, por lo que su funcionamiento es mas conocido.\\
+	\vspace{2mm}
 	
-	Para la sincronización con el repositorio git se utiliza el plugin EGit.
+	Se ha elegido Eclipse como plataforma de desarrollo de este proyecto en lugar de Netbeans debido a que ha sido la plataforma utilizada en la mayoría de las asignaturas del grado, por lo que su funcionamiento es mas conocido. Para la sincronización con el repositorio git se utiliza el plugin EGit.\\
 	
-\subsubsection{Apache Maven}
+	\item \textbf{Apache Maven: }Es un software de gestión de proyectos software desarrollado por Apache. Esta basado en el concepto de \gls{POM}, maven permite gestionar dependencias, módulos, componentes y el orden de construcción.
 	
-	Es un software de gestión de proyectos software desarrollado por Apache. Esta basado en el concepto de project object model (POM), maven permite gestionar dependencias, módulos, componentes y el orden de construcción.
+\end{itemize}
 
 \newpage
+
 \subsection{Herramientas de bases de datos}
 
-\subsubsection{MySQL}
-
-	Es un sistema de gestión de bases de datos relacional desarrollado por Oracle Corporation y está considerada como la base datos open source más popular del mundo. Se utiliza en este proyecto para guardar los datos de los diferentes fondos de inversión de tal forma que puedan estar disponibles off-line.\\
+\begin{itemize}
+	\item \textbf{MySQL: }Es un sistema de gestión de bases de datos relacional desarrollado por Oracle Corporation y está considerada como la base datos open source más popular del mundo. Se utiliza en este proyecto para guardar los datos de los diferentes fondos de inversión de tal forma que puedan estar disponibles off-line.
 	
-	Su principal alternativa es PostgreSQL, pero se ha decidido utilizar MySQL porque nuestra aplicación utilizará principalmente consultas sencillas, normalmente de lectura y MySQL esta orientado a este tipo de tareas proporcionando un mayor rendimiento que su competidor.
+	\vspace{2mm}
 	
-\subsubsection{Hibernate}
+	Su principal alternativa es PostgreSQL, pero se ha decidido utilizar MySQL porque nuestra aplicación utilizará principalmente consultas sencillas, normalmente de lectura y MySQL esta orientado a este tipo de tareas proporcionando un mayor rendimiento que su competidor.\\  
 	
-	Es un framework para el mapeo objeto-relacional de código abierto para la plataforma Java. Su uso facilita el mapeo de atributos entre una base de datos relacional tradicional y el modelo de objetos de una aplicación, mediante archivos XML o anotaciones en los beans de las entidades para poder establecer estas relaciones.
-	
+	\item \textbf{Hibernate: }Es un framework para el mapeo objeto-relacional de código abierto para la plataforma Java. Su uso facilita el mapeo de atributos entre una base de datos relacional tradicional y el modelo de objetos de una aplicación, mediante archivos denominados \gls{XML} o anotaciones en los beans de las entidades para poder establecer estas relaciones.
+\end{itemize}	
 	
 \subsection{Herramientas para pruebas}
-
-\subsubsection{JUnit}
-
-	Es un framework utilizado para realizar pruebas unitarias a aplicaciones Java, permitiendo realizar estas pruebas de forma controlada y evaluar el funcionamiento de cada uno de los métodos de las clases.
+\begin{itemize}
+	\item \textbf{JUnit: }Es un framework utilizado para realizar pruebas unitarias a aplicaciones Java, permitiendo realizar estas pruebas de forma controlada y evaluar el funcionamiento de cada uno de los métodos de las clases.
+\end{itemize}
 
 \subsection{Herramientas de documentación}
 
-\subsubsection{LaTeX}
-
-	Es un software gratuito de composición de textos para la elaboración de documentos de índole científica. Latex proporciona una serie de características que proporcionan una gran calidad tipográfica en sus documentos.
+	\begin{itemize}
+		\item \textbf{LaTeX: }Es un software gratuito de composición de textos para la elaboración de documentos de índole científica. Latex proporciona una serie de características que proporcionan una gran calidad tipográfica en sus documentos.
+	\end{itemize}
+	
 
 
 \newpage
 
 \part{Bibliografía}
+
 \begin{thebibliography}{10}
 	
 	\bibitem[CNMV]{}
@@ -400,8 +448,14 @@ En este apartado se describen las herramientas y tecnologías usadas para el des
 	\newline
 	\href{http://www.rankia.com/blog/fondos-inversion/952310-que-fondo-inversion-como-funciona}{http://www.rankia.com/blog/fondos-inversion/952310-que-fondo-inversion-como-funciona}
 	
-	
-	
+	\bibitem[Wikipedia]{}
+	\newblock {\textit{Proceso Unificado de Desarrollo Software}.}
+	\newline
+	\href{https://es.wikipedia.org/wiki/Proceso\_unificado}{https://es.wikipedia.org/wiki/Proceso\_unificado}
 	
 \end{thebibliography}
+\newpage
+\setglossarystyle{tree}
+\printglossary[type=\acronymtype]
+
 \end{document}

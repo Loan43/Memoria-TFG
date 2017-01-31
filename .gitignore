@@ -6,3 +6,11 @@
 *.sty
 *.toc
 *.out
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.ist
