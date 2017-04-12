@@ -120,7 +120,8 @@
 \newacronym{IDE}{IDE}{Entornos de Desarrollo Integrado}
 \newacronym{POM}{POM}{Project Object Model}
 \newacronym{XML}{XML}{eXtensible Markup Language}
-
+\newacronym{ISIN}{ISIN}{International Securities Identification Number}
+\newacronym{ER}{ER}{Modelo entidad-relación}
 
 
 
@@ -183,7 +184,7 @@ Para poder llevar a cabo este proyecto, ha sido necesario realizar un primer pas
 
 Para comenzar empezaremos definiendo que es un fondo, como funciona y los elementos que en el intervienen:\\
 
-Un \textbf{fondo de inversión} es un capital compuesto por la suma de las aportaciones monetarias realizadas por varias personas. Este capital se invertirá en una serie de activos con el objetivo de obtener la máxima rentabilidad posible. Dependiendo de la evolución de estos activos, el fondo arroja resultados positivos o negativos, los cuales se repartirán entre cada inversor según la proporción que represente su inversión sobre el total del patrimonio del fondo.\\
+Un \textbf{fondo de inversión} es un capital compuesto por la suma de las aportaciones monetarias realizadas por varias personas. Este capital se invertirá en una serie de activos con el objetivo de obtener la máxima rentabilidad posible. Dependiendo de la evolución de estos activos, el fondo arroja resultados positivos o negativos, los cuales se repartirán entre cada inversor según la proporción que represente su inversión sobre el total del patrimonio del fondo. Cada fondo se encuentra identificado por un \gls{ISIN}, este código identifica unívocamente un valor mobiliario a nivel internacional.\\
 
 Los fondos de inversión se dividen en partes proporcionales llamadas \textbf{participaciones} y sus propietarios se denominan \textbf{participes}. El número de participaciones no es fijo, sino que depende de las compras y ventas de las mismas. Su valor, denominado \textbf{\gls{VL}} de la participación, se calcula diariamente de la siguiente manera: 
 	
@@ -429,6 +430,222 @@ En este apartado se describen las herramientas y tecnologías usadas para el des
 
 \newpage
 
+\part{Desarrollo}
+\section{Primera iteracción: Capa modelo}
+
+Esta primera iteracción de desarrollo tiene como objetivo sentar las bases de la aplicación, proporcionando una capa modelo que exponga las funcionalidades necesarias para el acceso a los datos de los diferentes fondos de inversión.\\
+
+La base de datos utilizada en la aplicación es MySQL junto con el Framework Hibernate.
+
+\subsection{Diseño de la base de datos}
+Para comenzar el diseño de la base de datos debemos analizar cuales son las funcionalidades y las estructuras de datos que necesitamos para la aplicación.\\
+
+Por un lado, hemos de ser capaces de guardar los principales campos que contiene un fondo de inversión: \gls{ISIN} del fondo, nombre de la entidad gestora, el tipo de fondo que es, la categoría, la divisa con la que operan sus inversiones y sus comisiones de apertura y cancelación.\\
+
+Por otro, cada fondo puede tener una cantidad variable de \gls{VL}s, normalmente uno por día durante el período en el que el fondo se encuentra activo.\\
+
+Una primera aproximación del \gls{ER} es el siguiente:\\
+
+
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/ERSimple.png}
+	\caption{Diagrama ER inicial}
+	\label{fig:erinicial}
+\end {figure}
+
+Este modelo está compuesto por una entidad fuerte encargada de guardar la información referente a los fondos y una débil, que presenta una dependencia de identificación con la primera, encargada de guardar los \gls{VL}s de cada fondo. Por tanto, cada fondo puede tener N \gls{VL}s y cada \gls{VL} solo puede pertenecer a un fondo.
+
+\newpage
+
+Este modelo permite almacenar los datos básicos tanto de un fondo como el histórico de sus \gls{VL}s, pero no permite realizar operaciones de compra/venta de participaciones. Para poder realizar operaciones sobre los diferentes fondos es necesario añadir un poco de complejidad al modelo:
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/ERCompleto.png}
+	\caption{Diagrama ER final}
+	\label{fig:erfinal}
+	\end {figure}
+
+%Diria que esta aproximacion no es correcta, ¿Quizas una entidad debil en el medio en lugar de la relacion "contiene"?
+
+
+De esta forma incorporamos la posibilidad de tener carteras de fondos y realizar operaciones de compra/venta de participaciones en diferentes fondos pertenecientes a diferentes carteras.\\
+
+Cada fondo de inversión puede pertenecer a varias carteras distintas y cada cartera estará compuesta por varios fondos. Las operaciones sobre ellos solo estarán permitidas si pertenecen a una cartera de inversión, en caso contrario solo se podrá acceder a su histórico de \gls{VL}s.\\
+
+Una vez terminado el diagrama \gls{ER} el siguiente paso es realizar su traducción? al modelo relacional. El resultado es el siguiente:\\
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/DiagramaR.png}
+	\caption{Diagrama del modelo relacional(eliminar los nulos)}
+	\label{fig:relacional}
+	\end {figure}
+	
+\newpage
+
+\subsection{Implementación de la base de datos mediante Hibernate}
+
+Para implementar la base de datos usando Hibernate, primero debemos modelar las clases Java correspondientes a las tablas del modelo relacional:\\
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/Diagrama_clases.png}
+	\caption{Diagrama de clases del modelo}
+	\label{fig:mclases}
+	\end {figure}
+
+Los atributos de FundDesc, \textbf{id} y de FundPort \textbf{pId}, están formados por valores auto generados por la base de datos mediante la estrategia de generación \textit{``GenerationType.IDENTITY"} y actúan como claves primarias de las tablas. En el caso de FunDesc el atributo fId (que se corresponde con el \gls{ISIN} del fondo) es una clave candidata que se guardará en base de datos como un Varchar de longitud 12, indicando a Hibernate que es un valor único y no puede ser nulo. Este atributo podría haberse utilizado como clave primaria de la tabla FundDesc, pero al tratarse de un tipo de dato Varchar que se repetirá, como norma general, más de un millar veces por cada fondo en la tabla FundVl, se ha decidido utilizar un id autogenerado por motivos de rendimiento.\\
+
+Para que Hibernate mapee las relaciones es necesario incluir en cada una de las clases con relación 1:N una lista con los objetos relacionados. Por ejemplo, cada objeto FunDesc tiene, a mayores de los atributos mostrados en el \gls{UML}, uno llamado fundVls y otro llamado portDescs, que contienen una lista de los FundVls y PortDescs relacionados con ese fondo respectivamente.\\
+
+\newpage
+
+En el caso de las relaciones N:1 basta con incluir un atributo del tipo del objeto con el que se relaciona. Por ejemplo, cada objeto FundVl tiene un atributo llamado fundDesc que contiene el fondo al que pertenece ese FundVl. Por este motivo, ha sido necesario modificar la implementación por defecto de los métodos equals y hashcode, para que su uso no provocase una llamada recursiva infinita que causase una excepción por stack overflow.\\
+
+
+Para poder implementar las clases correspondientes a tablas con claves compuestas en Hibernate, es necesario implementar clases serializables que contengan únicamente los atributos que componen la clave primaria de la tabla. En este caso se han implementado las tres necesarias: % Cambiar por uml?
+
+\begin{itemize}
+	\item \textbf{FundVlPk:} Con los atributos fundDesc y day.
+	\item \textbf{PortDescPk:} Con los atributos funDescId y fundPortId.
+	\item \textbf{PortOpPk:} Con los atributos portDesc y day.
+\end{itemize}
+
+En el caso de PortOpPk el atributo portDesc es mapeado en base de datos como el conjunto de las ids del fondo y de la cartera.\\
+
+A continuación, se definen las anotaciones de Hibernate utilizadas para crear la base de datos.
+
+\begin{itemize}
+	\item \textbf{@Id:} Indica que el siguiente atributo es la clave primaria de la tabla.
+	\item @\textbf{IdClass}: Indica la clase que contiene los atributos que componen la clave primaria de la clase/tabla actual.
+	\item  \textbf{@Column:} Indica que el siguiente atributo se modela como una columna en la base de datos.
+	\item  \textbf{@Transient:} Indica que el siguiente atributo no se modela como una columna en la base de datos.
+	\item \textbf{@GeneratedValue:} Indica que el siguiente atributo es generado automáticamente por la base de datos, utilizando la estrategia asignada.
+	\item \textbf{@OneToMany:} Indica que el objeto tiene una relación 1:N con otra tabla.
+	\item\textbf{@ManyToOne:} Indica que el objeto tiene una relación N:1 con otra tabla.
+	\item\textbf{@JoinColumn:} Indica que el objeto obtiene una columna de otra tabla , normalmente se utiliza junto con la anotación anterior.\\
+\end{itemize}
+
+La anotación \textbf{@Transient} se utiliza en la clase PortOp para indicar que los atributos fPartIni, fPartFin y fPrice no se guardan en la base de datos y serán calculados bajo demanda cuando se realice una operación de búsqueda.
+
+\newpage
+Las anotaciones @OneToMany y @ManyToOne tienen algunas opciones interesantes:
+\begin{itemize}
+	\item La opción \textbf{fetch} indica si las listas de objetos relacionados se cargaran bajo demanda (EAGER) o inmediatamente (LAZY).
+	\item La opción \textbf{cascade} hace referencia a las acciones que se deben de llevar a cabo tras la eliminación de un objeto, CascadeType.REMOVE indica que se deben eliminar todos los objetos relacionados con el (Por ejemplo si se elimina un FundDesc se eliminan también todos sus FundVls).
+	\item La opción \textbf{mappedBy} se utiliza para definir el atributo que mapea la relación entre las tablas.\\
+\end{itemize}
+
+ El último paso para crear la base de datos consiste en indicar a Hibernate cuales son las clases que debe mapear en su fichero de configuración \textit{``src/main/resources/hibernate.cfg.xml''}.\\
+ 
+  De esta forma, cuando realicemos la llamada de inicio de sesión \textit{``sessionFactory = new Configuration().configure().buildSessionFactory()"} Hibernate generará las tablas en la base de datos, si no existían previamente.\\
+ 
+  La propiedad \textit{``hbm2ddl.auto"} nos permite controlar el comportamiento de hibernate cuando se inicia la sesión. Podemos, desde eliminar las tablas y volverlas a crear en cada inicio, hasta simplemente actualizarlas si hay cambios.
+
+\newpage
+
+\subsection{Implementación del servicio del modelo}
+
+El servicio del modelo será el encargado de exponer las funcionalidades necesarias para el funcionamiento lógico de la aplicación.\\
+
+Como funcionalidades mínimas necesitamos tener la capacidad de añadir, buscar, actualizar y eliminar elementos de cada una de las tablas de la base de datos, pero a la hora de realizar gráficas es muy interesante, por ejemplo, la posibilidad de obtener los \gls{VL}s y las operaciones sobre un fondo en un rango de fechas determinado, por lo que el servicio consta de los siguientes métodos:\\
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/Diagrama_Modelo.png}
+	\caption{Diagrama del servicio}
+	\label{fig:relacional}
+	\end {figure}
+
+Aunque en este diagrama existe una interfaz del servicio para cada clase, en la implementación se han agrupado todos en una única interfaz denominada \textbf{FundService}.\\
+
+Cada uno de los métodos del servicio lanza una \textbf{RunTimeException} si se produce algun error a la hora de conectarse a la base de datos. A mayores, se han implementado dos excepciones más:
+
+\begin{itemize}
+	\item \textbf{InputValidationException:} Salta cuando los datos introducidos por el usuario no son correctos.
+	\item \textbf{InstanceNotFoundException:} Salta cuando no se puede encontrar el objeto solicitado en la base de datos.
+\end{itemize}
+
+
+Para llevar a cabo la validación de los datos de entrada se ha incorporado un validador: \\
+
+uml del validador\\
+
+\newpage
+
+Existen una serie de métodos en el servicio que utilizan este validador para asegurar que los datos introducidos son correctos:
+
+\begin{itemize}
+	\item \textbf{validateFundVl:} se encarga de validar que el campo vl del FundVl es mayor o igual que cero.
+	\item \textbf{validateFund:} se encarga de validar que el \gls{ISIN} del fondo es correcto y llama a su vez a validateFundVl para validar cada uno de sus FundVl.
+	\item \textbf{validateFundPort:} se encarga de validar que el nombre de la cartera de fondos no sea un string vacío.
+	\item \textbf{validatePortOp:} se encarga de validar que la operación añadida, eliminada o actualizada no deje en ningún momento a la base de datos con un total de participaciones negativo.
+\end{itemize}
+
+Ahora analizaremos cada método por separado:
+
+\begin{itemize}
+	\item FundDesc
+						 \begin{itemize}
+							\item \textbf{addFund:} Añade un FundDesc y toda su lista de FundVLs a la base de datos. La forma más común de representación de un fondo es mediante un fichero excel (.xls) que contenga un conjunto de pares día-\gls{VL}, en un futuro la aplicación permitirá importar los \gls{VL}s a partir de estos ficheros, por lo que se podrán guardar en la base de datos simplemente llamando a esta operación.
+							\item \textbf{findFund:} Devuelve el FundDesc a partir de su \gls{ISIN}. A pesar de que la clave primaria de la tabla sea la clave subrogada \textit{``id"}, es más natural buscar un fondo en concreto por su \gls{ISIN}.
+							\item \textbf{updateFund:} Actualiza los campos de un FundDesc.
+							\item \textbf{removeFund:} Elimina un FundDesc y toda su lista de FundVls de la base de datos.
+							\item \textbf{findAllFunds:} Obtiene todos los FundDesc de la base de datos.
+							\item \textbf{findFundsByKeywords:} Obtiene los fundDesc que coinciden con una serie de caracteres en alguno de sus campos. Esta función es útil a la hora de buscar varios fondos de un mismo tipo, moneda o gestora, por ejemplo.
+				 		 \end{itemize}
+	\item FundPort
+						\begin{itemize}
+							\item \textbf{addFundPortfolio:} Añade una cartera de fondos.
+							\item \textbf{removeFundPortfolio:} Elimina una cartera de fondos.
+							\item \textbf{findFundPortfolio:} Obtiene una cartera de fondos a partir de su Id.
+							\item \textbf{updateFundPortfolio:} Actualiza los campos de una cartera de fondos.
+							\item \textbf{findAllFundPortfolios:} Obtiene todas las carteras de la base de datos.
+							\item \textbf{findFundsOfPortfolio:} Obtiene todos los fondos de una cartera.
+						\end{itemize}
+					\newpage
+	\item FundVl
+						\begin{itemize}
+							\item\textbf{addFundVl:} Añade un unico FundVl a un fondo en un día concreto.
+							\item\textbf{removeFundVl:} Elimina una fila de la tabla vl de un fondo en un dia concreto.
+							\item \textbf{findFundVl:}Obtiene el FundVl de un fondo en un dia concreto.
+							\item \textbf{updateFundVl:} Actualiza un unico FundVl de un fondo en un día concreto.
+							\item \textbf{findFundVlByRange:} Obtiene los Vl de un fondo dado en el intervalo de tiempo deseado.
+							\item \textbf{findLatestFundVl:} Obtiene el FundVl del día mas próximo a uno dado (Se comporta exactamente igual a findFundVl si existe un valor vl en ese día). Esta función se utiliza para calcular el valor monetario de una operación. Cuando no se disponga del \gls{VL} de un fondo el dia de la operación, se utilizará en su lugar el valor del día anterior más cercano.
+						\end{itemize}
+				
+	\item PortDesc
+						\begin{itemize}
+							\item\textbf{addPortDesc:} Añade un fondo a una cartera.
+							\item\textbf{removePortDesc:} Elimina un fondo de una cartera.
+						\end{itemize}
+	\item PortOp
+						\begin{itemize}
+							\item\textbf{addPortOp:} Añade una operacion (Con participaciones como unidad) sobre un fondo en una cartera en un día determinado.
+							\item\textbf{removePortOp:} Elimina una operacion realizada sobre un fondo en una cartera en una fecha.
+							\item \textbf{findPortOp:} Obtiene una operacion sobre un fondo en una cartera en un día determinado.
+							\item \textbf{updatePortOp:} Actualiza un PortOp (Con participaciones como unidad) sobre un fondo en una cartera en un día determinado.
+							\item \textbf{findAllPortOp:} Devuelve todas las operaciones realizadas sobre un fondo en una cartera.
+							\item \textbf{findPortOpByRange:} Devuelve todas las operaciones realizadas sobre un fondo en una cartera entre dos fechas.
+							\item \textbf{findLatestPortOp:} Obtiene el la operacion sobre un fondo en una cartera del dia mas proximo a un dia dado (Se comporta exactamente igual a findPortOp si existe un PortOp en ese dia). Esta función se utiliza para conocer cual ha sido la operación mas reciente sobre un fondo, lo que permite ver las participaciones que tenemos invertidas en el.\\
+						\end{itemize}
+	
+\end{itemize}
+
+Como se ha comentado anteriormente, los campos de los objetos PortOp:  fPartIni, fPartFin y fPrice se calculan bajo demanda en los métodos de búsqueda findPortOp, findAllPortOp, findPortOpByRange y findLatestPortOp. La operación encargada de calcularlos es calculatePortOp.\\
+
+\newpage
+
+El método \textbf{calculatePortOp} revisa todas las operaciones anteriores y obtiene el numero de participaciones inicial y final, además del precio de la operación, utilizando para ello el vl más próximo y teniendo en cuenta las comisiones de apertura y cancelación del fondo.\\
+
+Se utiliza esta operación en lugar de almacenar directamente los valores de los campos en la base de datos debido a que si se guardasen, cada inserción, actualización o borrado de una operación, implicaría actualizar todos los valores de las operaciones siguientes, además de estar guardando información redundante que se puede calcular directamente con los datos que ya se encuentran en la base de datos.
+
+
+
+\newpage
 \part{Bibliografía}
 
 \begin{thebibliography}{10}
