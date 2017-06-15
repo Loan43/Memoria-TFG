@@ -5,6 +5,7 @@
 \usepackage[utf8]{inputenc} % Aceptar diferentes tipos de codificación de caracteres de entrada (en este caso usamos la codificación Unicode UTF-8)
 \usepackage{multirow} % Soporte para tablas
 \usepackage{graphicx} % Soporte aumentado para gráficos 
+\usepackage{subfigure} % subfiguras
 \usepackage{color} % Para usar colores
 \usepackage{hyperref} % Para manejar referencias cruzadas. P.ej. añadir hiperenlaces al índice
 \usepackage{sectsty}
@@ -115,13 +116,14 @@
 \makeglossaries
 \newacronym{VL}{VL}{Valor Liquídativo}
 \newacronym{PUD}{PUD}{Proceso Unificado de Desarrollo Software}
-\newacronym{TFG}{TFG}{Trabajo de Fin de Grado}
+\newacronym{TFG}{TFG}{Trabajo Fin de Grado}
 \newacronym{UML}{UML}{Lenguaje Unificado de Modelado}
 \newacronym{IDE}{IDE}{Entornos de Desarrollo Integrado}
 \newacronym{POM}{POM}{Project Object Model}
 \newacronym{XML}{XML}{eXtensible Markup Language}
 \newacronym{ISIN}{ISIN}{International Securities Identification Number}
-\newacronym{ER}{ER}{Modelo entidad-relación}
+\newacronym{ER}{ER}{Modelo Entidad-Relación}
+\newacronym{GUI}{GUI}{Interfaz Gráfica de Usuario}
 
 
 
@@ -165,7 +167,7 @@
 \textbf{Director:} González Coma, José Pablo \\
 \end{large}
 \vspace*{0.3in}
-A Coruña, diciembre de 2016
+A Coruña, Junio de 2016
 \end{center}
 
 \end{titlepage}
@@ -182,9 +184,9 @@ Para poder llevar a cabo este proyecto, ha sido necesario realizar un primer pas
 
 \subsection{Fondos de inversión}
 
-Para comenzar empezaremos definiendo que es un fondo, como funciona y los elementos que en el intervienen:\\
+Para comenzar definiremos qué es un fondo, cómo funciona y los elementos que en el intervienen:\\
 
-Un \textbf{fondo de inversión} es un capital compuesto por la suma de las aportaciones monetarias realizadas por varias personas. Este capital se invertirá en una serie de activos con el objetivo de obtener la máxima rentabilidad posible. Dependiendo de la evolución de estos activos, el fondo arroja resultados positivos o negativos, los cuales se repartirán entre cada inversor según la proporción que represente su inversión sobre el total del patrimonio del fondo. Cada fondo se encuentra identificado por un \gls{ISIN}, este código identifica unívocamente un valor mobiliario a nivel internacional.\\
+Un \textbf{fondo de inversión} es un capital compuesto por la suma de las aportaciones monetarias realizadas por varias personas. Este capital se invertirá en una serie de activos con el objetivo de obtener la máxima rentabilidad posible. Dependiendo de la evolución de estos activos, el fondo arroja resultados positivos o negativos, los cuales se repartirán entre cada inversor según la proporción que represente su inversión sobre el total del patrimonio del fondo. Cada fondo se encuentra identificado por un \gls{ISIN}. Este código identifica unívocamente un valor mobiliario a nivel internacional.\\
 
 Los fondos de inversión se dividen en partes proporcionales llamadas \textbf{participaciones} y sus propietarios se denominan \textbf{participes}. El número de participaciones no es fijo, sino que depende de las compras y ventas de las mismas. Su valor, denominado \textbf{\gls{VL}} de la participación, se calcula diariamente de la siguiente manera: 
 	
@@ -196,11 +198,11 @@ Los fondos de inversión se dividen en partes proporcionales llamadas \textbf{pa
 \end{center}
 \vspace{1cm}
 
-Este valor depende, por tanto, de la evolución diaria de los valores que componen el patrimonio del fondo y será uno de los indicativos fundamentales que utilizará la aplicación a la hora de realizar los históricos de los diferentes fondos. Otra medida importante es la \textbf{rentabilidad del fondo}, esta se calcula mediante el porcentaje entre el \gls{VL} en la fecha de compra de la participación (suscripción) y la fecha de venta (reembolso), de la siguiente manera:
+Este valor depende, por tanto, de la evolución diaria de los valores que componen el patrimonio del fondo y será uno de los indicativos fundamentales que utilizará la aplicación a la hora de realizar los históricos de los diferentes fondos. Otra medida importante es la \textbf{rentabilidad del fondo}. Esta se calcula mediante la diferencia porcentual entre el \gls{VL} en la fecha de compra de la participación (suscripción) y la fecha de venta (reembolso), de la siguiente manera:
 
 \begin{center}
 	\begin{equation}
-	Rentabilidad = \frac{ Valor\ liquidativo\ final - Valor\ liquidativo\ inicial}{Valor\ liquidativo\ inicial } * 100
+	Rentabilidad = \frac{ Valor\ liquidativo\ final - Valor\ liquidativo\ inicial}{Valor\ liquidativo\ inicial } \times 100.
 	\end{equation}
 \end{center}
 
@@ -216,10 +218,10 @@ Los siguientes puntos se centrarán en ver los distintos tipos de fondos que pod
 
 \subsubsection{Tipos de fondos }
 
-En el mercado existen una amplia gama de fondos de inversión, es tarea del propio inversor elegir aquel que más se adapte a sus necesidades.
+En el mercado existen una amplia gama de fondos de inversión. Es tarea del propio inversor elegir aquél que más se adapte a sus necesidades.
 
 \begin{itemize}
-	\item \textbf{Fondos de renta fija:} Son fondos donde la mayoría de sus activos son de renta fija (obligaciones y bonos, letras, pagarés, etc). Normalmente, la rentabilidad de estos fondos va ligado al plazo de vencimiento de dichos activos, es decir, a menor plazo, menos riesgo y por lo tanto menos rentabilidad prevista y viceversa.
+	\item \textbf{Fondos de renta fija:} Son fondos donde la mayoría de sus activos son de renta fija (obligaciones y bonos, letras, pagarés, etc). Normalmente, la rentabilidad de estos fondos va ligado al plazo de vencimiento de dichos activos, es decir, a menor plazo, menos riesgo y por lo tanto, menos rentabilidad prevista, y viceversa.
 	\item \textbf{Fondos de renta variable:} Son fondos donde la mayoría de sus activos son de renta variable (acciones). Por lo general, los fondos de renta variable reportan ganancias o rendimiento a largo plazo, a cambio de un mayor riesgo.
 	\item \textbf{Fondos Mixtos:} Son fondos en los que sus activos se encuentran divididos entre activos de renta fija y renta variable. Cuanto mayor sea el porcentaje de activos de renta variable mayor sera el riesgo y la rentabilidad potencial.
 	\item \textbf{Fondos globales:} Son fondos que suelen incluir renta variable, fija y activos monetarios en diferentes localizaciones geográficas, en determinados porcentajes dependiendo de la política del fondo, de forma que sus inversiones estén muy diversificadas.
@@ -231,15 +233,15 @@ En el mercado existen una amplia gama de fondos de inversión, es tarea del prop
 \subsubsection{Criterios para elegir un fondo de inversión.}
 
 
-Como hemos visto en el apartado anterior, existen varios tipos de fondos de inversión adaptados a diferentes necesidades. A la hora de elegir un fondo en particular existen varios ratios e indicadores que pueden ayudar a determinar cual es el mas adecuado a las preferencias del inversor.\\
+Como hemos visto en el apartado anterior, existen varios tipos de fondos de inversión adaptados a diferentes necesidades. A la hora de elegir un fondo en particular existen varios ratios e indicadores que pueden ayudar a determinar cual es el más adecuado a las preferencias del inversor.\\
 
-Normalmente, a la hora de seleccionar un fondo, el inversor debe considerar cual es su capacidad de asumir de pérdidas (pues cuanto mayor es el riesgo también lo es la rentabilidad) así como el horizonte temporal durante el cual desea mantener la inversión, pues, dependiendo de la política del fondo, puede ser aconsejable estar dispuesto a mantener la inversión un determinado período de tiempo.\\
+Normalmente, a la hora de seleccionar un fondo, el inversor debe considerar cual es su capacidad para asumir pérdidas (pues cuanto mayor es el riesgo también lo es la rentabilidad) así como el horizonte temporal durante el cual desea mantener la inversión, pues, dependiendo de la política del fondo, puede ser aconsejable estar dispuesto a mantener la inversión un determinado período de tiempo.\\
 
 Otro aspecto a tener en cuenta son las comisiones que se cargan a los fondos de inversión, puesto que pueden afectar a la rentabilidad. Es posible que un fondo aplique distintos tipos de comisiones a las diferentes tipos de participaciones que emita.\\
 
 También hemos de considerar el comportamiento histórico que ha tenido un fondo a lo largo del tiempo. Es importante conocer las rentabilidades obtenidas en el pasado, aunque esto no signifique que se siga una línea similar en el futuro. En la aplicación a desarrollar se incluirán históricos de las rentabilidades referidas a un determinado período (trimestre, semestre ...) para que al comparar distintos fondos se puedan contrastar las rentabilidades en los mismos períodos. Cabe mencionar que es necesario que los fondos sigan una misma política de inversión para que la comparación sea significativa.\\
 
-Es posible que durante la vida de un fondo este cambie su política de inversión e incluso de grupo gestor, por lo que al consultar rendimientos pasados hay que tener en cuenta que puede que estes hayan cambiado,  es importante conocer la fecha de dicho cambio y tener en cuenta sólo las rentabilidades a partir de ese momento.\\
+Es posible que durante la vida de un fondo éste cambie su política de inversión e incluso de grupo gestor, por lo que al consultar rendimientos pasados hay que tener en cuenta que puede que éstos hayan cambiado. Es importante conocer la fecha de dicho cambio y tener en cuenta sólo las rentabilidades a partir de ese momento.\\
 
 Por último, algunas métricas o indicadores que se deben utilizar para elegir un fondo de inversión son los siguientes:
 
@@ -249,19 +251,19 @@ Por último, algunas métricas o indicadores que se deben utilizar para elegir u
 	\item \textbf{Beta:} mide la sensibilidad del \gls{VL} de un fondo a los movimientos de su índice de referencia.
 	\item \textbf{Ratio de Sharpe:} nos dice lo bueno que es un fondo de inversión en la relación rentabilidad-riesgo.
 	\item \textbf{Ratio de Información:}  es una medida que se emplea para determinar la influencia que ha tenido un gestor en la rentabilidad del fondo en comparación con el comportamiento del mercado.
-	\item \textbf{Máximo Drawdown:} se define como la máxima caída experimentada por un fondo en el periodo comprendido desde que se registra un máximo, hasta que vuelve a ser superado.
+	\item \textbf{Máximo Drawdown:} se define como la máxima caída experimentada por un fondo en el periodo comprendido desde que se registra un máximo hasta que vuelve a ser superado.
 \end{itemize}
 
 \newpage
 
  \subsubsection{Operaciones y seguimiento de fondos}
 
-En este último punto hablaremos sobre las operaciones de suscripción, reembolso y traspaso de un fondo de inversión así como de como realizar el seguimiento de su rentabilidad.\\
+En este último punto hablaremos sobre las operaciones de suscripción, reembolso y traspaso de un fondo de inversión y de cómo realizar el seguimiento de su rentabilidad.\\
 
-El método para realizar una inversión en un fondo consiste en la \textbf{suscripción} de participaciones, la entidad gestora emite una serie ellas y cada inversor obtiene tantas como el resultado de dividir el capital invertido entre el \gls{VL} (\ref{valorliquidativo}) aplicable a la operación. Normalmente el \gls{VL} aplicable es el del mismo día de la solicitud o el del día siguiente a la solicitud. Algunos fondos pueden estar sujetos a comisiones de suscripción,de hasta hasta un 5\% de la inversión.\\
+El método para realizar una inversión en un fondo consiste en la \textbf{suscripción} de participaciones. La entidad gestora emite una serie ellas y cada inversor obtiene tantas como el resultado de dividir el capital invertido entre el \gls{VL} (\ref{valorliquidativo}) aplicable a la operación. Normalmente el \gls{VL} aplicable es el del mismo día de la solicitud o el del día siguiente a la solicitud. Algunos fondos pueden estar sujetos a comisiones de suscripción, de hasta un 5\% de la inversión.\\
 
-Si un inversor quiere recuperar su dinero debe solicitar un \textbf{reembolso} de todas o parte de sus participaciones, recibiendo el resultado de multiplicar el el \gls{VL}(\ref{valorliquidativo}) de la participación por el número de participaciones que quiera reembolsar. El \gls{VL} aplicable es el mismo que en el caso anterior, el del mismo día o el del día siguiente. 
-El plazo en el que el inversor recibe su dinero es de un máximo de 3 a 5 días, pudiendo tener dicho reembolso una comisión de hasta el 5\% como en el caso anterior. El inversor conocerá el resultado de la inversión(positivo o negativo) cuando se le abone el reemboslo.\\
+Si un inversor quiere recuperar su dinero debe solicitar un \textbf{reembolso} de todas o parte de sus participaciones, recibiendo el resultado de multiplicar el el \gls{VL} (\ref{valorliquidativo}) de la participación por el número de participaciones que quiera reembolsar. El \gls{VL} aplicable es el mismo que en el caso anterior, el del mismo día o el del día siguiente. 
+El plazo en el que el inversor recibe su dinero es como máximo de 3 a 5 días, pudiendo tener dicho reembolso una comisión de hasta el 5\%, como en el caso anterior. El inversor conocerá el resultado de la inversión (positivo o negativo) cuando se le abone el reemboslo.\\
 
 En el caso de querer realizar un \textbf{traspaso} de un fondo a otro se produce un reembolso del primero y la inmediata suscripción al segundo. Este método tiene una ventaja, pues se conserva la antigüedad de la primera inversión a efectos fiscales, por lo que las plusvalías no se tributan hasta que se produzca el reembolso definitivo.\\
 
@@ -283,26 +285,90 @@ El proceso de \textbf{seguimiento} de un fondo de inversión puede realizarse pr
 \end{itemize}
 \newpage
 
+\section{Revisión de fundamentos tecnológicos}
+
+En este apartado se describen las herramientas y tecnologías usadas para el desarrollo del proyecto.
+
+\subsection{Herramientas para la gestión de proyectos}
+\begin{itemize}
+	\item \textbf{Git: } Es un software de control de versiones distribuido que permite trabajar en grupo y mantener accesibles las diferentes versiones de la aplicación del proyecto. Se ha elegido git como sistema de gestión de versiones del proyecto por encima de su principal alternativa, subversion porque proporciona un repositorio local sobre el que se puede trabajar off-line.
+\end{itemize}
+
+
+
+
+
+\subsection{Herramientas para el modelado de software}
+
+\begin{itemize}
+	\item \textbf{Visual Paradigm Community Edition: }
+	Es una herramienta para el desarrollo de aplicaciones utilizando \gls{UML} recomendada para la aplicación y el seguimiento del \gls{PUD}. Proporciona asistencia para realizar los análisis, diseño, casos de uso y modelos \gls{UML} del proyecto. Se trata de un software con licencia pero se utiliza su versión gratuita (Community Edition).
+\end{itemize}
+
+\subsection{Herramientas para el desarrollo del proyecto}
+
+\begin{itemize}
+	\item \textbf{Eclipse IDE Neon: } Es una plataforma de desarrollo de software de código abierto y multiplataforma basada en Java. Proporciona \glspl{IDE} prácticamente para cualquier lenguaje, siendo el mas utilizado el de Java. Provee también de una serie de plugins para el control de versiones y frameworks para el desarrollo de aplicaciones gráficas.
+	
+	\vspace{2mm}
+	
+	Se ha elegido Eclipse como plataforma de desarrollo de este proyecto en lugar de Netbeans debido a que ha sido la plataforma utilizada en la mayoría de las asignaturas del grado, por lo que su funcionamiento es mas conocido. Para la sincronización con el repositorio git se utiliza el plugin EGit.\\
+	
+	\item \textbf{Apache Maven: }Es un software de gestión de proyectos software desarrollado por Apache. Esta basado en el concepto de \gls{POM}, maven permite gestionar dependencias, módulos, componentes y el orden de construcción.
+	
+\end{itemize}
+
+\newpage
+
+\subsection{Herramientas de bases de datos}
+
+\begin{itemize}
+	\item \textbf{MySQL: }Es un sistema de gestión de bases de datos relacional desarrollado por Oracle Corporation y está considerada como la base datos open source más popular del mundo. Se utiliza en este proyecto para guardar los datos de los diferentes fondos de inversión de tal forma que puedan estar disponibles off-line.
+	
+	\vspace{2mm}
+	
+	Su principal alternativa es PostgreSQL, pero se ha decidido utilizar MySQL porque nuestra aplicación utilizará principalmente consultas sencillas, normalmente de lectura y MySQL esta orientado a este tipo de tareas proporcionando un mayor rendimiento que su competidor.\\  
+	
+	\item \textbf{Hibernate: }Es un framework para el mapeo objeto-relacional de código abierto para la plataforma Java. Su uso facilita el mapeo de atributos entre una base de datos relacional tradicional y el modelo de objetos de una aplicación, mediante archivos denominados \gls{XML} o anotaciones en los beans de las entidades para poder establecer estas relaciones.
+\end{itemize}	
+
+\subsection{Herramientas para pruebas}
+\begin{itemize}
+	\item \textbf{JUnit: }Es un framework utilizado para realizar pruebas unitarias a aplicaciones Java, permitiendo realizar estas pruebas de forma controlada y evaluar el funcionamiento de cada uno de los métodos de las clases.
+\end{itemize}
+
+\subsection{Herramientas de documentación}
+
+\begin{itemize}
+	\item \textbf{LaTeX: }Es un software gratuito de composición de textos para la elaboración de documentos de índole científica. Latex proporciona una serie de características que proporcionan una gran calidad tipográfica en sus documentos.
+\end{itemize}
+
+
+
+\newpage
+
+
+
 \part{Metodología}
 
 \section{Proceso Unificado de Desarrollo Software}
-Para la realización de este proyecto se utilizará la metodología de \textbf{ \gls{PUD}}. El \gls{PUD} \href{https://es.wikipedia.org/wiki/Proceso_unificado}{*} Es un marco de desarrollo extensible, dirigido por casos de uso, iterativo e incremental, en el cual los casos de uso se utilizan para capturar los requisitos funcionales y para definir los contenidos de las iteraciones.\\
+Para la realización de este proyecto se utilizará la metodología de \textbf{ \gls{PUD}}. El \gls{PUD} \href{https://es.wikipedia.org/wiki/Proceso_unificado}{*} es un marco de desarrollo extensible, dirigido por casos de uso, iterativo e incremental, en el cual los casos de uso se utilizan para capturar los requisitos funcionales y para definir los contenidos de las iteraciones.\\
 
 El \gls{PUD} presenta las siguientes características:
 
 \begin{itemize}
-	\item \textbf{Esta dirigido por casos de uso:} Cada caso de uso representa un requisito funcional y su conjunto forma el modelo de casos de uso.
-	\item \textbf{Esta centrado en la arquitectura:} La arquitectura muestra la visión común del sistema completo y describe los elementos del modelo que son mas importantes para poder desarrollarlo.
-	\item \textbf{Iterativo e incremental: } El trabajo es dividido en tareas mas pequeñas o iteraciones. El resultado de cada iteración es un sistema ejecutable, una nueva versión del producto final. Cada una de estas iteraciones resulta en un incremento en el proyecto y se divide a su vez en: análisis de requisitos, diseño, implementación y prueba.
+	\item \textbf{Está dirigido por casos de uso:} Cada caso de uso representa un requisito funcional y su conjunto forma el modelo de casos de uso.
+	\item \textbf{Esta centrado en la arquitectura:} La arquitectura muestra la visión común del sistema completo y describe los elementos del modelo que son más importantes para poder desarrollarlo.
+	\item \textbf{Iterativo e incremental: } El trabajo es dividido en tareas más pequeñas o iteraciones. El resultado de cada iteración es un sistema ejecutable, una nueva versión del producto final. Cada una de estas iteraciones resulta en un incremento en el proyecto y se divide a su vez en: análisis de requisitos, diseño, implementación y prueba.
 \end{itemize}
 
-Como lenguaje de representación visual el \gls{PUD} utiliza el \gls{UML} y se ha seleccionado para este proyecto porque esta concebido para la programación orientada a objetos, acelera el ritmo del desarrollo y reduce el coste del riesgo a un solo incremento.   
+Como lenguaje de representación visual el \gls{PUD} utiliza el \gls{UML} y se ha seleccionado para este proyecto porque está concebido para la programación orientada a objetos, acelera el ritmo del desarrollo y reduce el coste del riesgo a un solo incremento.   
 
 \newpage 
 
-\section{Planificación y evaluación de costes}
+\part{Planificación y evaluación de costes}
 
-En este apartado se detalla como se ha aplicado el \gls{PUD} para gestionar el desarrollo de la aplicación. Debido a que se utiliza un marco de desarrollo incremental, en cada iteración se presentará un nuevo caso de uso que conformará una nueva versión del producto final.\\
+En este apartado se detalla cómo se ha aplicado el \gls{PUD} para gestionar el desarrollo de la aplicación. Debido a que se utiliza un marco de desarrollo incremental, en cada iteración se presentará un nuevo caso de uso que conformará una nueva versión del producto final.\\
 
 El objetivo de este \gls{TFG} es implementar una aplicación en la que los usuarios puedan obtener gráficos, datos numéricos y resultados de una o varias carteras de fondos de inversión, por lo cual las fases en las que se divide el proyecto son las siguientes:\\
 
@@ -319,9 +385,9 @@ El objetivo de este \gls{TFG} es implementar una aplicación en la que los usuar
 		\multirow{4}{*}{Inicial}    & \multirow{4}{*}{Preliminar} & Inmersión en el mundo financiero                                                                                  \\ \cmidrule(l){3-3} 
 		&                             & \begin{tabular}[c]{@{}c@{}}Elección de indicadores, medidas y criterios más \\ significativos\end{tabular}        \\ \cmidrule(l){3-3} 
 		&                             & Localización y selección de las fuentes de datos                                                                  \\ \cmidrule(l){3-3} 
-		&                             & \begin{tabular}[c]{@{}c@{}}Definir las diferentes iteraciones en las que se realizará \\ el proyecto\end{tabular} \\ \midrule
+		&                             & \begin{tabular}[c]{@{}c@{}}Definición las diferentes iteraciones en las que se realizará \\ el proyecto\end{tabular} \\ \midrule
 		\multirow{2}{*}{Diseño}     & 1                           & Búsqueda de requisitos funcionales                                                                                \\ \cmidrule(l){2-3} 
-		& 2                           & Realizar los modelos de los casos de uso                                                                          \\ \midrule
+		& 2                           & Realización de los modelos de los casos de uso                                                                          \\ \midrule
 		\multirow{4}{*}{Desarrollo} & 1                           & Desarrollo de la IT 1                                                                                             \\ \cmidrule(l){2-3} 
 		& 2                           & Desarrollo de la IT 2                                                                                             \\ \cmidrule(l){2-3} 
 		& 3                           & Desarrollo de la IT 3                                                                                             \\ \cmidrule(l){2-3} 
@@ -368,77 +434,16 @@ Para una mayor monitorización de las tareas a realizar se incluye a continuaci�
 
 \newpage
 
-\section{Revisión de fundamentos tecnológicos}
-
-En este apartado se describen las herramientas y tecnologías usadas para el desarrollo del proyecto.
-
-\subsection{Herramientas para la gestión de proyectos}
-\begin{itemize}
-	\item \textbf{Git: } Es un software de control de versiones distribuido que permite trabajar en grupo y mantener accesibles las diferentes versiones de la aplicación del proyecto. Se ha elegido git como sistema de gestión de versiones del proyecto por encima de su principal alternativa, subversion porque proporciona un repositorio local sobre el que se puede trabajar off-line.
-\end{itemize}
-
-	
-	
-	
-
-\subsection{Herramientas para el modelado de software}
-
-\begin{itemize}
-	\item \textbf{Visual Paradigm Community Edition: }
-		Es una herramienta para el desarrollo de aplicaciones utilizando \gls{UML} recomendada para la aplicación y el seguimiento del \gls{PUD}. Proporciona asistencia para realizar los análisis, diseño, casos de uso y modelos \gls{UML} del proyecto. Se trata de un software con licencia pero se utiliza su versión gratuita (Community Edition).
-\end{itemize}
-	
-\subsection{Herramientas para el desarrollo del proyecto}
-
-\begin{itemize}
-	\item \textbf{Eclipse IDE Neon: } Es una plataforma de desarrollo de software de código abierto y multiplataforma basada en Java. Proporciona \glspl{IDE} prácticamente para cualquier lenguaje, siendo el mas utilizado el de Java. Provee también de una serie de plugins para el control de versiones y frameworks para el desarrollo de aplicaciones gráficas.
-	
-	\vspace{2mm}
-	
-	Se ha elegido Eclipse como plataforma de desarrollo de este proyecto en lugar de Netbeans debido a que ha sido la plataforma utilizada en la mayoría de las asignaturas del grado, por lo que su funcionamiento es mas conocido. Para la sincronización con el repositorio git se utiliza el plugin EGit.\\
-	
-	\item \textbf{Apache Maven: }Es un software de gestión de proyectos software desarrollado por Apache. Esta basado en el concepto de \gls{POM}, maven permite gestionar dependencias, módulos, componentes y el orden de construcción.
-	
-\end{itemize}
-
-\newpage
-
-\subsection{Herramientas de bases de datos}
-
-\begin{itemize}
-	\item \textbf{MySQL: }Es un sistema de gestión de bases de datos relacional desarrollado por Oracle Corporation y está considerada como la base datos open source más popular del mundo. Se utiliza en este proyecto para guardar los datos de los diferentes fondos de inversión de tal forma que puedan estar disponibles off-line.
-	
-	\vspace{2mm}
-	
-	Su principal alternativa es PostgreSQL, pero se ha decidido utilizar MySQL porque nuestra aplicación utilizará principalmente consultas sencillas, normalmente de lectura y MySQL esta orientado a este tipo de tareas proporcionando un mayor rendimiento que su competidor.\\  
-	
-	\item \textbf{Hibernate: }Es un framework para el mapeo objeto-relacional de código abierto para la plataforma Java. Su uso facilita el mapeo de atributos entre una base de datos relacional tradicional y el modelo de objetos de una aplicación, mediante archivos denominados \gls{XML} o anotaciones en los beans de las entidades para poder establecer estas relaciones.
-\end{itemize}	
-	
-\subsection{Herramientas para pruebas}
-\begin{itemize}
-	\item \textbf{JUnit: }Es un framework utilizado para realizar pruebas unitarias a aplicaciones Java, permitiendo realizar estas pruebas de forma controlada y evaluar el funcionamiento de cada uno de los métodos de las clases.
-\end{itemize}
-
-\subsection{Herramientas de documentación}
-
-	\begin{itemize}
-		\item \textbf{LaTeX: }Es un software gratuito de composición de textos para la elaboración de documentos de índole científica. Latex proporciona una serie de características que proporcionan una gran calidad tipográfica en sus documentos.
-	\end{itemize}
-	
-
-
-\newpage
 
 \part{Desarrollo}
-\section{Primera iteracción: Capa modelo}
+\section{Primera iteración: Capa modelo}
 
-Esta primera iteracción de desarrollo tiene como objetivo sentar las bases de la aplicación, proporcionando una capa modelo que exponga las funcionalidades necesarias para el acceso a los datos de los diferentes fondos de inversión.\\
+Esta primera iteración de desarrollo tiene como objetivo sentar las bases de la aplicación, proporcionando una capa modelo que exponga las funcionalidades necesarias para el acceso a los datos de los diferentes fondos de inversión.\\
 
 La base de datos utilizada en la aplicación es MySQL junto con el Framework Hibernate.
 
 \subsection{Diseño de la base de datos}
-Para comenzar el diseño de la base de datos debemos analizar cuales son las funcionalidades y las estructuras de datos que necesitamos para la aplicación.\\
+Para comenzar el diseño de la base de datos debemos analizar cuáles son las funcionalidades y las estructuras de datos que necesitamos para la aplicación.\\
 
 Por un lado, hemos de ser capaces de guardar los principales campos que contiene un fondo de inversión: \gls{ISIN} del fondo, nombre de la entidad gestora, el tipo de fondo que es, la categoría, la divisa con la que operan sus inversiones y sus comisiones de apertura y cancelación.\\
 
@@ -451,11 +456,11 @@ Una primera aproximación del \gls{ER} es el siguiente:\\
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\textwidth]{figuras/ERSimple.png}
-	\caption{Diagrama ER inicial}
+	\caption{Diagrama ER inicial.}
 	\label{fig:erinicial}
 \end {figure}
 
-Este modelo está compuesto por una entidad fuerte encargada de guardar la información referente a los fondos y una débil, que presenta una dependencia de identificación con la primera, encargada de guardar los \gls{VL}s de cada fondo. Por tanto, cada fondo puede tener N \gls{VL}s y cada \gls{VL} solo puede pertenecer a un fondo.
+Este modelo está compuesto por una entidad fuerte encargada de guardar la información referente a los fondos y una débil, que presenta una dependencia de identificación con la primera, encargada de guardar los \gls{VL}s de cada fondo. Por tanto, cada fondo puede tener N \gls{VL}s y cada \gls{VL} sólo puede pertenecer a un fondo.
 
 \newpage
 
@@ -473,14 +478,14 @@ Este modelo permite almacenar los datos básicos tanto de un fondo como el hist�
 
 De esta forma incorporamos la posibilidad de tener carteras de fondos y realizar operaciones de compra/venta de participaciones en diferentes fondos pertenecientes a diferentes carteras.\\
 
-Cada fondo de inversión puede pertenecer a varias carteras distintas y cada cartera estará compuesta por varios fondos. Las operaciones sobre ellos solo estarán permitidas si pertenecen a una cartera de inversión, en caso contrario solo se podrá acceder a su histórico de \gls{VL}s.\\
+Cada fondo de inversión puede pertenecer a varias carteras distintas y cada cartera estará compuesta por varios fondos. Las operaciones sobre ellos sólo estarán permitidas si pertenecen a una cartera de inversión. En caso contrario, sólo se podrá acceder a su histórico de \gls{VL}s.\\
 
-Una vez terminado el diagrama \gls{ER} el siguiente paso es realizar su traducción? al modelo relacional. El resultado es el siguiente:\\
+Una vez terminado el diagrama \gls{ER}, el siguiente paso es realizar su conversión al modelo relacional. El resultado es el siguiente:\\
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\textwidth]{figuras/DiagramaR.png}
-	\caption{Diagrama del modelo relacional(eliminar los nulos)}
+	\caption{Diagrama del modelo relacional (eliminar los nulos)}
 	\label{fig:relacional}
 	\end {figure}
 	
@@ -493,13 +498,13 @@ Para implementar la base de datos usando Hibernate, primero debemos modelar las 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\textwidth]{figuras/Diagrama_clases.png}
-	\caption{Diagrama de clases del modelo}
+	\caption{Diagrama de clases del modelo.}
 	\label{fig:mclases}
 	\end {figure}
 
-Los atributos de FundDesc, \textbf{id} y de FundPort \textbf{pId}, están formados por valores auto generados por la base de datos mediante la estrategia de generación \textit{``GenerationType.IDENTITY"} y actúan como claves primarias de las tablas. En el caso de FunDesc el atributo fId (que se corresponde con el \gls{ISIN} del fondo) es una clave candidata que se guardará en base de datos como un Varchar de longitud 12, indicando a Hibernate que es un valor único y no puede ser nulo. Este atributo podría haberse utilizado como clave primaria de la tabla FundDesc, pero al tratarse de un tipo de dato Varchar que se repetirá, como norma general, más de un millar veces por cada fondo en la tabla FundVl, se ha decidido utilizar un id autogenerado por motivos de rendimiento.\\
+Los atributos de FundDesc, \textbf{id} y de FundPort \textbf{pId}, están formados por valores autogenerados por la base de datos mediante la estrategia de generación \textit{``GenerationType.IDENTITY"} y actúan como claves primarias de las tablas. En el caso de FunDesc el atributo fId (que se corresponde con el \gls{ISIN} del fondo) es una clave candidata que se guardará en la base de datos como un Varchar de longitud 12, indicando a Hibernate que es un valor único y no puede ser nulo. Este atributo podría haberse utilizado como clave primaria de la tabla FundDesc, pero al tratarse de un tipo de dato Varchar que se repetirá, como norma general, más de un millar de veces por cada fondo en la tabla FundVl, se ha decidido utilizar un id autogenerado por motivos de rendimiento.\\
 
-Para que Hibernate mapee las relaciones es necesario incluir en cada una de las clases con relación 1:N una lista con los objetos relacionados. Por ejemplo, cada objeto FunDesc tiene, a mayores de los atributos mostrados en el \gls{UML}, uno llamado fundVls y otro llamado portDescs, que contienen una lista de los FundVls y PortDescs relacionados con ese fondo respectivamente.\\
+Para que Hibernate mapee las relaciones es necesario incluir en cada una de las clases con relación 1:N una lista con los objetos relacionados. Por ejemplo, cada objeto FunDesc tiene, a mayores de los atributos mostrados en el \gls{UML}, uno llamado fundVls y otro llamado portDescs, que contienen una lista de los FundVls y PortDescs relacionados con ese fondo, respectivamente.\\
 
 \newpage
 
@@ -514,7 +519,7 @@ Para poder implementar las clases correspondientes a tablas con claves compuesta
 	\item \textbf{PortOpPk:} Con los atributos portDesc y day.
 \end{itemize}
 
-En el caso de PortOpPk el atributo portDesc es mapeado en base de datos como el conjunto de las ids del fondo y de la cartera.\\
+En el caso de PortOpPk, el atributo portDesc es mapeado en base de datos como el conjunto de las ids del fondo y de la cartera.\\
 
 A continuación, se definen las anotaciones de Hibernate utilizadas para crear la base de datos.
 
@@ -526,7 +531,7 @@ A continuación, se definen las anotaciones de Hibernate utilizadas para crear l
 	\item \textbf{@GeneratedValue:} Indica que el siguiente atributo es generado automáticamente por la base de datos, utilizando la estrategia asignada.
 	\item \textbf{@OneToMany:} Indica que el objeto tiene una relación 1:N con otra tabla.
 	\item\textbf{@ManyToOne:} Indica que el objeto tiene una relación N:1 con otra tabla.
-	\item\textbf{@JoinColumn:} Indica que el objeto obtiene una columna de otra tabla , normalmente se utiliza junto con la anotación anterior.\\
+	\item\textbf{@JoinColumn:} Indica que el objeto obtiene una columna de otra tabla, normalmente se utiliza junto con la anotación anterior.\\
 \end{itemize}
 
 La anotación \textbf{@Transient} se utiliza en la clase PortOp para indicar que los atributos fPartIni, fPartFin y fPrice no se guardan en la base de datos y serán calculados bajo demanda cuando se realice una operación de búsqueda.
@@ -535,15 +540,15 @@ La anotación \textbf{@Transient} se utiliza en la clase PortOp para indicar que
 Las anotaciones @OneToMany y @ManyToOne tienen algunas opciones interesantes:
 \begin{itemize}
 	\item La opción \textbf{fetch} indica si las listas de objetos relacionados se cargaran bajo demanda (EAGER) o inmediatamente (LAZY).
-	\item La opción \textbf{cascade} hace referencia a las acciones que se deben de llevar a cabo tras la eliminación de un objeto, CascadeType.REMOVE indica que se deben eliminar todos los objetos relacionados con el (Por ejemplo si se elimina un FundDesc se eliminan también todos sus FundVls).
+	\item La opción \textbf{cascade} hace referencia a las acciones que se deben de llevar a cabo tras la eliminación de un objeto, CascadeType.REMOVE indica que se deben eliminar todos los objetos relacionados con él (Por ejemplo, si se elimina un FundDesc se eliminan también todos sus FundVls).
 	\item La opción \textbf{mappedBy} se utiliza para definir el atributo que mapea la relación entre las tablas.\\
 \end{itemize}
 
- El último paso para crear la base de datos consiste en indicar a Hibernate cuales son las clases que debe mapear en su fichero de configuración \textit{``src/main/resources/hibernate.cfg.xml''}.\\
+ El último paso para crear la base de datos consiste en indicar a Hibernate cuáles son las clases que debe mapear en su fichero de configuración \textit{``src/main/resources/hibernate.cfg.xml''}.\\
  
   De esta forma, cuando realicemos la llamada de inicio de sesión \textit{``sessionFactory = new Configuration().configure().buildSessionFactory()"} Hibernate generará las tablas en la base de datos, si no existían previamente.\\
  
-  La propiedad \textit{``hbm2ddl.auto"} nos permite controlar el comportamiento de hibernate cuando se inicia la sesión. Podemos, desde eliminar las tablas y volverlas a crear en cada inicio, hasta simplemente actualizarlas si hay cambios.
+  La propiedad \textit{``hbm2ddl.auto"} nos permite controlar el comportamiento de hibernate cuando se inicia la sesión. Podemos, desde eliminar las tablas y volver a crearlas en cada inicio, hasta simplemente actualizarlas si hay cambios.
 
 \newpage
 
@@ -565,8 +570,8 @@ Aunque en este diagrama existe una interfaz del servicio para cada clase, en la 
 Cada uno de los métodos del servicio lanza una \textbf{RunTimeException} si se produce algun error a la hora de conectarse a la base de datos. A mayores, se han implementado dos excepciones más:
 
 \begin{itemize}
-	\item \textbf{InputValidationException:} Salta cuando los datos introducidos por el usuario no son correctos.
-	\item \textbf{InstanceNotFoundException:} Salta cuando no se puede encontrar el objeto solicitado en la base de datos.
+	\item \textbf{InputValidationException:} Se produce cuando los datos introducidos por el usuario no son correctos.
+	\item \textbf{InstanceNotFoundException:} Se produce cuando no se puede encontrar el objeto solicitado en la base de datos.
 \end{itemize}
 
 
@@ -579,10 +584,10 @@ uml del validador\\
 Existen una serie de métodos en el servicio que utilizan este validador para asegurar que los datos introducidos son correctos:
 
 \begin{itemize}
-	\item \textbf{validateFundVl:} se encarga de validar que el campo vl del FundVl es mayor o igual que cero.
-	\item \textbf{validateFund:} se encarga de validar que el \gls{ISIN} del fondo es correcto y llama a su vez a validateFundVl para validar cada uno de sus FundVl.
-	\item \textbf{validateFundPort:} se encarga de validar que el nombre de la cartera de fondos no sea un string vacío.
-	\item \textbf{validatePortOp:} se encarga de validar que la operación añadida, eliminada o actualizada no deje en ningún momento a la base de datos con un total de participaciones negativo.
+	\item \textbf{validateFundVl:} Se encarga de validar si el campo \gls{VL} del FundVl es mayor o igual que cero.
+	\item \textbf{validateFund:} Se encarga de validar que el \gls{ISIN} del fondo es correcto y llama a su vez a validateFundVl para validar cada uno de sus FundVl.
+	\item \textbf{validateFundPort:} Se encarga de validar que el nombre de la cartera de fondos no sea un string vacío.
+	\item \textbf{validatePortOp:} Se encarga de validar que la operación añadida, eliminada o actualizada no deje en ningún momento a la base de datos con un total de participaciones negativo.
 \end{itemize}
 
 Ahora analizaremos cada método por separado:
@@ -590,60 +595,539 @@ Ahora analizaremos cada método por separado:
 \begin{itemize}
 	\item FundDesc
 						 \begin{itemize}
-							\item \textbf{addFund:} Añade un FundDesc y toda su lista de FundVLs a la base de datos. La forma más común de representación de un fondo es mediante un fichero excel (.xls) que contenga un conjunto de pares día-\gls{VL}, en un futuro la aplicación permitirá importar los \gls{VL}s a partir de estos ficheros, por lo que se podrán guardar en la base de datos simplemente llamando a esta operación.
-							\item \textbf{findFund:} Devuelve el FundDesc a partir de su \gls{ISIN}. A pesar de que la clave primaria de la tabla sea la clave subrogada \textit{``id"}, es más natural buscar un fondo en concreto por su \gls{ISIN}.
-							\item \textbf{updateFund:} Actualiza los campos de un FundDesc.
-							\item \textbf{removeFund:} Elimina un FundDesc y toda su lista de FundVls de la base de datos.
-							\item \textbf{findAllFunds:} Obtiene todos los FundDesc de la base de datos.
-							\item \textbf{findFundsByKeywords:} Obtiene los fundDesc que coinciden con una serie de caracteres en alguno de sus campos. Esta función es útil a la hora de buscar varios fondos de un mismo tipo, moneda o gestora, por ejemplo.
+							\item \textbf{addFund:} añade un FundDesc y toda su lista de FundVLs a la base de datos. La forma más común de representación de un fondo es mediante un fichero excel (.xls) que contenga un conjunto de pares día-\gls{VL}, en un futuro la aplicación permitirá importar los \gls{VL}s a partir de estos ficheros, por lo que se podrán guardar en la base de datos simplemente llamando a esta operación.
+							\item \textbf{findFund:} devuelve el FundDesc a partir de su \gls{ISIN}. A pesar de que la clave primaria de la tabla sea la clave subrogada \textit{``id"}, es más natural buscar un fondo en concreto por su \gls{ISIN}.
+							\item \textbf{updateFund:} actualiza los campos de un FundDesc.
+							\item \textbf{removeFund:} elimina un FundDesc y toda su lista de FundVls de la base de datos.
+							\item \textbf{findAllFunds:} obtiene todos los FundDesc de la base de datos.
+							\item \textbf{findFundsByKeywords:} obtiene los fundDesc que coinciden con una serie de caracteres en alguno de sus campos. Esta función es útil a la hora de buscar varios fondos de un mismo tipo, moneda o gestora, por ejemplo.
 				 		 \end{itemize}
 	\item FundPort
 						\begin{itemize}
-							\item \textbf{addFundPortfolio:} Añade una cartera de fondos.
-							\item \textbf{removeFundPortfolio:} Elimina una cartera de fondos.
-							\item \textbf{findFundPortfolio:} Obtiene una cartera de fondos a partir de su Id.
-							\item \textbf{updateFundPortfolio:} Actualiza los campos de una cartera de fondos.
-							\item \textbf{findAllFundPortfolios:} Obtiene todas las carteras de la base de datos.
-							\item \textbf{findFundsOfPortfolio:} Obtiene todos los fondos de una cartera.
+							\item \textbf{addFundPortfolio:} añade una cartera de fondos.
+							\item \textbf{removeFundPortfolio:} elimina una cartera de fondos.
+							\item \textbf{findFundPortfolio:} obtiene una cartera de fondos a partir de su Id.
+							\item \textbf{updateFundPortfolio:} actualiza los campos de una cartera de fondos.
+							\item \textbf{findAllFundPortfolios:} obtiene todas las carteras de la base de datos.
+							\item \textbf{findFundsOfPortfolio:} obtiene todos los fondos de una cartera.
 						\end{itemize}
 					\newpage
 	\item FundVl
 						\begin{itemize}
-							\item\textbf{addFundVl:} Añade un unico FundVl a un fondo en un día concreto.
-							\item\textbf{removeFundVl:} Elimina una fila de la tabla vl de un fondo en un dia concreto.
-							\item \textbf{findFundVl:}Obtiene el FundVl de un fondo en un dia concreto.
-							\item \textbf{updateFundVl:} Actualiza un unico FundVl de un fondo en un día concreto.
-							\item \textbf{findFundVlByRange:} Obtiene los Vl de un fondo dado en el intervalo de tiempo deseado.
-							\item \textbf{findLatestFundVl:} Obtiene el FundVl del día mas próximo a uno dado (Se comporta exactamente igual a findFundVl si existe un valor vl en ese día). Esta función se utiliza para calcular el valor monetario de una operación. Cuando no se disponga del \gls{VL} de un fondo el dia de la operación, se utilizará en su lugar el valor del día anterior más cercano.
+							\item\textbf{addFundVl:} añade un unico FundVl a un fondo en un día concreto.
+							\item\textbf{removeFundVl:} elimina una fila de la tabla \gls{VL} de un fondo en un día concreto.
+							\item \textbf{findFundVl:} obtiene el FundVl de un fondo en un día concreto.
+							\item \textbf{updateFundVl:} actualiza un único FundVl de un fondo en un día concreto.
+							\item \textbf{findFundVlByRange:} obtiene los Vl de un fondo dado en el intervalo de tiempo deseado.
+							\item \textbf{findLatestFundVl:} obtiene el FundVl del día mas próximo a uno dado (se comporta exactamente igual a findFundVl si existe un valor vl en ese día). Esta función se utiliza para calcular el valor monetario de una operación. Cuando no se disponga del \gls{VL} de un fondo el día de la operación, se utilizará en su lugar el valor del día anterior más cercano.
 						\end{itemize}
 				
 	\item PortDesc
 						\begin{itemize}
-							\item\textbf{addPortDesc:} Añade un fondo a una cartera.
-							\item\textbf{removePortDesc:} Elimina un fondo de una cartera.
+							\item\textbf{addPortDesc:} añade un fondo a una cartera.
+							\item\textbf{removePortDesc:} elimina un fondo de una cartera.
 						\end{itemize}
 	\item PortOp
 						\begin{itemize}
-							\item\textbf{addPortOp:} Añade una operacion (Con participaciones como unidad) sobre un fondo en una cartera en un día determinado.
-							\item\textbf{removePortOp:} Elimina una operacion realizada sobre un fondo en una cartera en una fecha.
-							\item \textbf{findPortOp:} Obtiene una operacion sobre un fondo en una cartera en un día determinado.
-							\item \textbf{updatePortOp:} Actualiza un PortOp (Con participaciones como unidad) sobre un fondo en una cartera en un día determinado.
-							\item \textbf{findAllPortOp:} Devuelve todas las operaciones realizadas sobre un fondo en una cartera.
-							\item \textbf{findPortOpByRange:} Devuelve todas las operaciones realizadas sobre un fondo en una cartera entre dos fechas.
-							\item \textbf{findLatestPortOp:} Obtiene el la operacion sobre un fondo en una cartera del dia mas proximo a un dia dado (Se comporta exactamente igual a findPortOp si existe un PortOp en ese dia). Esta función se utiliza para conocer cual ha sido la operación mas reciente sobre un fondo, lo que permite ver las participaciones que tenemos invertidas en el.\\
+							\item\textbf{addPortOp:} añade una operación (con participaciones como unidad) sobre un fondo en una cartera en un día determinado.
+							\item\textbf{removePortOp:} elimina una operación realizada sobre un fondo en una cartera en una fecha.
+							\item \textbf{findPortOp:} obtiene una operación sobre un fondo en una cartera en un día determinado.
+							\item \textbf{updatePortOp:} actualiza un PortOp (con participaciones como unidad) sobre un fondo en una cartera en un día determinado.
+							\item \textbf{findAllPortOp:} devuelve todas las operaciones realizadas sobre un fondo en una cartera.
+							\item \textbf{findPortOpByRange:} devuelve todas las operaciones realizadas sobre un fondo en una cartera entre dos fechas.
+							\item \textbf{findLatestPortOp:} obtiene la operación sobre un fondo en una cartera del día mas próximo a un día dado (Se comporta exactamente igual a findPortOp si existe un PortOp en ese día). Esta función se utiliza para conocer cual ha sido la operación más reciente sobre un fondo, lo que permite ver las participaciones que tenemos invertidas en él.\\
 						\end{itemize}
 	
 \end{itemize}
 
-Como se ha comentado anteriormente, los campos de los objetos PortOp:  fPartIni, fPartFin y fPrice se calculan bajo demanda en los métodos de búsqueda findPortOp, findAllPortOp, findPortOpByRange y findLatestPortOp. La operación encargada de calcularlos es calculatePortOp.\\
+Como se ha comentado anteriormente, los campos de los objetos PortOp:  fPartIni, fPartFin y fPrice, se calculan bajo demanda en los métodos de búsqueda findPortOp, findAllPortOp, findPortOpByRange y findLatestPortOp. La operación encargada de calcularlos es calculatePortOp.\\
 
 \newpage
 
-El método \textbf{calculatePortOp} revisa todas las operaciones anteriores y obtiene el numero de participaciones inicial y final, además del precio de la operación, utilizando para ello el vl más próximo y teniendo en cuenta las comisiones de apertura y cancelación del fondo.\\
+El método \textbf{calculatePortOp} revisa todas las operaciones anteriores y obtiene el numero de participaciones inicial y final, además del precio de la operación, utilizando para ello el \gls{VL} más próximo y teniendo en cuenta las comisiones de apertura y cancelación del fondo.\\
 
 Se utiliza esta operación en lugar de almacenar directamente los valores de los campos en la base de datos debido a que si se guardasen, cada inserción, actualización o borrado de una operación, implicaría actualizar todos los valores de las operaciones siguientes, además de estar guardando información redundante que se puede calcular directamente con los datos que ya se encuentran en la base de datos.
 
 
+
+\newpage
+\section{Segunda iteración: Creación de la GUI}
+
+Esta segunda iteración del desarrollo tiene como objetivo construir la \gls{GUI}, que será la encargada tanto de mostrar los datos al usuario como de proveer de datos al modelo.
+\\
+
+La biblioteca gráfica utilizada es Swing, un framework MVC para desarrollar interfaces gráficas para Java con independencia de la plataforma.
+
+\subsection{Diseño de la interfaz}
+
+Como en el apartado anterior, para comenzar a diseñar la interfaz debemos tener en cuenta la estructura de datos que tenemos, las funcionalidades del modelo que queremos exponer, y la forma en que el usuario interactuará con ellas.
+\\
+
+Nuestro modelo de carteras con fondos se asemeja mucho a una estructura de árbol, las carteras serían los nodos padre mientras que cada fondo sería una hoja conectado con una o varias carteras. imagen del árbol genérico.
+\\
+
+De esta forma con un simple vistazo podemos ver la distribución de los diferentes fondos de la aplicación.
+\\
+
+Para que la interacción con la aplicación por parte del usuario sea más sencilla, de cada nodo del árbol emergerá un menú con las diferentes opciones de cada elemento, dependiendo de si es un fondo o una cartera:
+
+\begin{itemize}
+	\item \textbf{Fondo:}
+	\begin{itemize}
+		\item \textbf{Añadir Vl:} muestra un dialogo para añadir un \gls{VL} al fondo.
+		\item \textbf{Actualizar:} muestra un dialogo para actualizar los campos del fondo.
+		\item \textbf{Borrar:} elimina el fondo de la base de datos.
+		\item \textbf{Ver Vls:} muestra una tabla con los \gls{VL}s del fondo.
+		\item \textbf{Importar Vls:} permite importar un conjunto de \gls{VL}s de un fichero .xls si este tiene el formato correcto.
+		\item \textbf{Exportar Fondo:} exporta el fondo a un fichero .xls en el directorio seleccionado.
+	\end{itemize}
+\end{itemize}
+\newpage
+\begin{itemize}
+	\item \textbf{Cartera}:
+	\begin{itemize}
+		\item\textbf{Añadir fondo:} muestra un dialogo para añadir un fondo a la cartera.
+		\item \textbf{Eliminar fondo:} muestra un dialogo para eliminar un fondo de una cartera.
+		\item \textbf{Actualizar cartera:} muestra un dialogo para actualizar los campos de una cartera.
+		\item \textbf{Borrar cartera}: elimina la cartera de la base de datos.
+		\item \textbf{Añadir operación:} muestra un dialogo para añadir una operación a la cartera sobre un fondo determinado.
+		\item \textbf{Ver operaciones:} muestra una tabla con las operaciones de la cartera sobre un fondo determinado.\\
+	\end{itemize}
+\end{itemize}
+
+Las funcionalidades que no se encuentran en los anteriores menús estarán disponibles en el menú principal de la aplicación.
+
+\begin{itemize}
+	\item \textbf{Archivo}:
+	\begin{itemize}
+		\item\textbf{Añadir fondo:} muestra un dialogo para añadir un fondo a la base de datos.
+		\item \textbf{Añadir cartera:} muestra un dialogo para añadir una cartera a la base de datos.
+		\item \textbf{Importar fondo:} permite importar un fondo (previamente exportado por la aplicación) de un fichero .xls.\\
+	\end{itemize}
+\end{itemize}
+
+Para poder representar correctamente las gráficas necesitaremos algunos elementos adicionales: 
+\begin{itemize}
+	\item Un \textbf{panel} en el que representar las gráficas.
+	\item Un \textbf{desplegable} donde seleccionar la gráfica deseada.
+	\item Un \textbf{campo de texto} donde incluir una pequeña descripción de lo que representa cada gráfica.
+	\item Para las gráficas en las que necesitemos seleccionar un intervalo de tiempo determinado, debemos incluir \textbf{dos calendarios} que nos permitan acotar las fechas de inicio y fin del intervalo.
+	\item Para la gráfica de la rentabilidad estimada, necesitamos un pequeño \textbf{campo de entrada} donde poder introducir una rentabilidad por si el usuario no quiere usar la del fondo.
+	\item Para la gráfica de medias móviles, necesitaremos \textbf{botones} para seleccionar los intervalos de tiempo.
+\end{itemize}
+
+
+Una primera aproximación de la interfaz principal constará del árbol de las carteras, una barra de menú principal y los elementos necesarios para representar las gráficas.
+
+\newpage
+
+\subsection{Implementación de la interfaz}
+
+Con las necesidades de diseño que hemos establecido en el punto anterior, el siguiente paso es seleccionar los componentes para crear la interfaz en Swing.
+\\
+
+Comenzamos por implementar la ventana principal de la aplicación, para ello, Swing nos proporciona la clase \textbf{JFrame}. Un \textbf{JFrame} es una ventana de alto nivel sobre la que podemos añadir el resto de componentes de la interfaz de manera sencilla.
+\\
+
+Los primeros elementos que añadiremos serán la barra del menú (\textbf{JMenuBar} en Swing), que se ajusta automáticamente a la parte superior de la ventana, y el panel para las gráficas (\textbf{JPanel} en Swing).
+\\
+
+Los componentes en Swing se alinean unos con otros mediante ``\textit{gaps}". Estos espacios pueden ser de tamaño fijo (se respeta su tamaño aunque se redimensione la interfaz) o de tamaño variable (se expanden o se contraen si se redimensiona la interfaz).
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/gui1.PNG}
+	\caption{JFrame}
+	\label{fig:gui1}
+	\end {figure}
+
+
+\newpage
+
+
+Una vez creada la ventana principal, el siguiente paso es añadir el árbol para representar las carteras y los fondos. Swing nos proporciona esta estructura en la clase  \href{JTree}{\textbf{JTree}}, mediante la cual podemos crear un árbol con la estructura de datos deseada.\\
+
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=5cm]{figuras/JTree.PNG}
+	\caption{JTree}
+	\label{fig:JTree}
+	\end {figure}
+
+Como se puede observar en la figura anterior, cada uno de los nodos padre se puede expandir o contraer a voluntad del usuario. Por ello es obligatorio incluir el árbol en un contenedor que permita el desplazamiento vertical. En Swing contamos con la clase \textbf{JScrollPane} que nos permite realizar esta función.
+\\
+
+El desplegable para seleccionar las gráficas se implementa mediante un \textbf{JComboBox}, de tal forma que el nombre de cada gráfica será un elemento de dicho desplegable. Cada componente de Swing nos permite añadirle \textit{``action listeners"} que se encargan de capturar los eventos que van sucediendo, por ejemplo, la selección de un elemento del desplegable o del árbol, permitiéndonos reaccionar ante ellos de la forma adecuada.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics{figuras/JComboBox.png}
+	\caption{JComboBox}
+	\label{fig:JComboBox}
+	\end {figure}
+
+Para el campo de texto de descripción de las gráficas se utiliza un \textbf{JEditorPane}, que nos proporciona un recuadro para mostrar texto formateado. Como en el caso anterior, es necesario incluir este componente en un JScrollPane.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics{figuras/JEditorPane.png}
+	\caption{JEditorPane}
+	\label{fig:JEditorPane}
+	\end {figure}
+\newpage
+
+El siguiente paso es añadir a la interfaz los elementos adicionales que necesitan las gráficas.\\
+
+Para los calendarios de las fechas de inicio y fin de intervalo utilizamos el componente \textbf{JDatePanel}, que nos proporciona un calendario en el que el usuario puede seleccionar una fecha. En nuestra aplicación se utiliza la clase \textit{``LocalDate"} para los datos de tipo fecha, por lo tanto para que los calendarios nos muestren las fechas en el formato correcto es necesario crear una clase que redefina los métodos \textit{``stringToValue"} y \textit{``valueToString"} de la clase \textit{``AbstractFormatter"} con el formato utilizado por LocalDate: \textit{``yyyy-MM-dd"}.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=5cm]{figuras/JDatePanel.png}
+	\caption{JDatePanel}
+	\label{fig:JDatePanel}
+	\end {figure}
+
+Los botones de selección de período, utilizados para calcular las medias móviles, están formados por tres \textbf{JRadioButton} incluidos en un \textbf{ButtonGroup}. De esta manera solo se podrá seleccionar uno de los tres botones a la vez.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics{figuras/ButtonGroup.png}
+	\caption{ButtonGroup}
+	\label{fig:ButtonGroup}
+	\end {figure}
+	
+Para poder introducir una rentabilidad estimada, se utilizan en conjunto una \textbf{JLabel} un \textbf{JFormattedTextField} y un \textbf{JButton}. La etiqueta contiene la descripción del parámetro que se debe introducir en el campo de texto y el botón simplemente llevará a cabo los cálculos.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics{figuras/Calculos.png}
+	\caption{Rentabilidad estimada}
+	\label{fig:calculos}
+	\end {figure}
+
+La entrada de texto acepta entradas de números reales con dos decimales, si se introduce texto, por ejemplo, el campo lo descarta y toma el último valor válido.
+\newpage
+
+Con todos estos elementos añadidos la interfaz queda de la siguiente manera:
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/gui2.PNG}
+	\caption{GUI}
+	\label{fig:gui2}
+	\end {figure}
+
+Swing nos permite ocultar y mostrar componentes de la interfaz bajo demanda. Dependiendo de la gráfica seleccionada las fechas, los botones o el recuadro de introducir la rentabilidad esperada se ocultarán. Los restantes elementos visibles se alinearan siempre a la derecha.\\
+\newpage
+
+El árbol, una vez actualizado, es el contenedor de los datos de carteras y de fondos. Como se había establecido, cuando hagamos click derecho en una de las carteras o fondos, se nos mostrará un menú emergente (\textbf{JPopupMenu} en Swing) con los elementos seleccionados en el diseño (\textbf{JMenuItem} en Swing):
+
+	
+	\begin{figure}[htbp]
+		\centering
+		\subfigure[Cartera]{\includegraphics{figuras/menucartera.PNG}}
+		\subfigure[Fondo]{\includegraphics{figuras/menufondo.PNG}}
+		\caption{Popup menú} \label{fig:menucartera}
+	\end{figure}
+
+Cada elemento del popup menú crea una ventana emergente que muestra lo siguiente:
+
+\begin{itemize}
+	\item \textbf{Fondo:}
+	\begin{itemize}
+		\item \textbf{Añadir Vl :} muestra un dialogo compuesto por varias etiquetas indicando los nombres de  los campos de entrada, un calendario para seleccionar la fecha del \gls{VL}, un campo de texto formateado para indicar el valor y dos botones para aceptar o cancelar la operación. Si al aceptar, la operación no se puede realizar, se muestra una ventana de error.
+		\item \textbf{Actualizar:} muestra un dialogo compuesto por varias etiquetas, una para cada atrubuto de la clase FundDesc, y entradas de texto con los valores actuales del fondo, de esta manera el usuario puede sobrescribir cualquier campo viendo el valor que posee actualmente el fondo. 
+		\item \textbf{Borrar:} muestra un dialogo de confirmación con las opciones si o no.
+		\item \textbf{Ver Vls:} muestra un dialogo con una tabla que contiene todos los \gls{VL}s del fondo seleccionado.
+		\item \textbf{Importar Vls:} muestra un dialogo de selección del fichero de origen. Si el fichero no tiene un formato válido se muestra una ventana de error.
+		\item \textbf{Exportar Fondo:} muestra un dialogo de selección del fichero de destino.
+	\end{itemize}
+\end{itemize}
+\newpage
+\begin{itemize}
+	\item \textbf{Cartera}:
+	\begin{itemize}
+		\item\textbf{Añadir fondo:} muestra un dialogo compuesto por una etiqueta indicando la cartera seleccionada, un desplegable con los fondos que todavía no han sido añadidos a la cartera y dos botones para aceptar o cancelar la operación.
+		\item \textbf{Eliminar fondo:} muestra un dialogo compuesto por una etiqueta indicando la cartera seleccionada, un desplegable con los fondos que han sido añadidos a la cartera y dos botones para aceptar o cancelar la operación.
+		\item \textbf{Actualizar cartera:} muestra un dialogo compuesto por dos etiquetas indicando los nombres de  los campos de entrada y entradas de texto con los valores actuales del nombre y la descripción de la cartera. Si al aceptar, la operación no se puede realizar, se muestra una ventana de error.
+		\item \textbf{Borrar cartera}: muestra un dialogo de confirmación con las opciones si o no.
+		\item \textbf{Añadir operación:} muestra un dialogo compuesto por varias etiquetas indicando los nombres de  los campos de entrada, un desplegable para seleccionar el fondo, un calendario para seleccionar la fecha de la operación, un campo de texto formateado para indicar el total de participaciones de la operación, dos botones para seleccionar si la operación es de compra o de venta y otros dos botones para aceptar o cancelar la operación. Si al aceptar, la operación no se puede realizar, se muestra una ventana de error.
+		\item \textbf{Ver operaciones:} muestra un dialogo con una tabla que contiene todas las operaciones del fondo seleccionado.\\
+	\end{itemize}
+\end{itemize}
+
+Todos los métodos que abren un dialogo con el usuario utilizan la clase \textbf{JDialog} como ventana emergente, excepto las ventanas de error y las de selección de fichero.\\
+
+Las ventanas de error y de confirmación de borrado se crean utilizando la clase \textbf{JOptionPane}, que nos proporciona una manera fácil y rápida de proveer al usuario de información, así como de solicitar confirmación. \\
+
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics{figuras/confirmacion.PNG}
+	\caption{Ventana de confirmación}
+	\label{fig:confirmacion}
+	\end {figure}
+\newpage
+
+La selección de ficheros se implementa usando la clase \textbf{JFileChooser} que nos provee de un pequeño explorador de archivos para seleccionar la ruta del fichero a importar o exportar. Es posible personalizar el tipo de archivos que admite o seleccionar un nombre y extensión predeterminados a la hora de exportar los fondos.
+
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics{figuras/fichero.PNG}
+	\caption{Ventana de selección de fichero}
+	\label{fig:fichero}
+	\end {figure}
+
+La tabla de \gls{VL}s esta implementada mediante la clase \textbf{JTable} en un contenedor de tipo JScrollPanel.
+
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=12cm]{figuras/vls.PNG}
+	\caption{Tabla de valores liquidativos}
+	\label{fig:vls}
+	\end {figure}
+	
+Como se puede observar en la figura anterior, la columna de rentabilidad muestra un color distinto en función de su valor, para conseguir este efecto ha sido necesario sobrescribir el método \textit{``prepareRenderer"} de la tabla, de tal forma que si el valor de la columna es negativo se muestre rojo y si es positivo verde.\\
+\newpage
+
+Si seleccionamos un día concreto de la tabla y hacemos click derecho sobre él, se muestra un nuevo menú emergente que nos proporciona la posibilidad de actualizar o de borrar el \gls{VL}. El dialogo de actualización es muy similar al de añadir un nuevo \gls{VL} con la diferencia de que el día no puede ser modificado. Si se selecciona la operación de borrado se muestra el menú de confirmación. 
+\\
+
+La tabla de operaciones es similar a la de los \gls{VL}s:
+
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=12cm]{figuras/ops.PNG}
+	\caption{Tabla de operaciones}
+	\label{fig:ops}
+	\end {figure}
+
+En ella se muestran todas las operaciones de la cartera para el fondo seleccionado en el desplegable. Como en el caso anterior, si seleccionamos una fila de la tabla, y hacemos click derecho sobre ella, se muestra un nuevo menú emergente que nos proporciona la posibilidad de actualizar o de borrar la operación.
+\\
+
+Por último, el menú de archivo contiene las operaciones de añadir un fondo o una cartera e importar un fondo. Los dos primeros muestran un dialogo muy similar a sus versiones de actualizar y el último muestra el selector de ficheros. Todos ellos muestran la ventana de error si no se puede completar la operación.
+\newpage
+
+\section{Tercera iteración: Creación de las gráficas}
+
+Esta tercera iteración tiene como objetivo crear el conjunto de gráficas que proveerán de información al usuario acerca de los fondos y las carteras.\\
+
+La lbrería de gráficas utilizada es JFreeChart, un marco de software open source para el lenguaje de programación Java, el cual permite la creación de gráficos complejos de forma simple.
+
+\subsection{Preparación de las gráficas}
+
+El primer paso antes de comenzar a programar las gráficas es decidir donde se van a implementar. En nuestro caso se implementan en una clase aparte llamada \textit{``ChartMaker"}. Esta clase será la encargada de recibir los datos necesarios de la interfaz, crear la gráfica seleccionada y su descripción a partir de ellos y devolverlas a la interfaz para que esta pueda representarlas en el panel.\\
+
+Para pasar la gráfica y la descripción al controlador, se ha creado una clase sencilla denominada \textit{``Chart"}. Esta clase está compuesta por dos atributos, un ChartPanel que será el contenedor y un String con la descripción de la gráfica.\\
+
+JFreeChart funciona de la siguiente manera: primero debemos crear un \textit{``dataset"} acorde con el tipo de gráfica que queramos realizar, por ejemplo, para gráficas en forma de tarta se utiliza \textit{``DefaultPieDataset"} y para gráficas de barras \textit{``DefaultCategoryDataset"}.\\
+
+A continuación, se insertan los datos en el dataset, normalmente mediante el método \textit{``dataset.addValue()"} o \textit{``dataset.setValue()"}. Estos métodos utilizan parámetros distintos dependiendo del tipo de dataset, por ejemplo para las gráficas en forma de tarta se le pasan los siguentes campos.
+
+\begin{verbatim}
+pie_chart_dataset.setValue(nombre, valor);
+\end{verbatim}
+
+Una vez añadidos todos los valores se invoca a \textit{``ChartFactory"}, en este caso: 
+
+\begin{verbatim}
+JFreeChart chart = ChartFactory.createPieChart(nombre de la gráfica,
+pie_chart_dataset, leyenda, herramientas, urls);
+\end{verbatim}
+
+Donde los campos leyenda, herramientas y urls son de tipo booleano para indicar si se deben incluir dichos elementos el la gráfica.\\
+
+La llamada a \textit{``ChartFactory"} nos devuelve la gráfica creada, ahora solamente necesitamos crear un nuevo ChartPanel con la gráfica y añadirlo al panel de la interfaz.
+
+\begin{verbatim}
+ChartPanel cP = new ChartPanel(chart);
+panelGraficas.add(cp);
+\end{verbatim}
+\newpage
+
+\subsection{Gráficas de carteras}
+
+\subsubsection{Distribución de capital de la cartera}
+
+Esta primera gráfica tiene como objetivo, que el usuario pueda ver la distribución del capital invertido en los diferentes fondos de una cartera. Para ello se utiliza una gráfica en forma de tarta en la cual cada una de sus porciones representa el tanto por ciento del capital de la cartera que está invertido en un fondo.\\
+
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/distribucion.PNG}
+	\caption{Gráfica de distribución de capital de la cartera}
+	\label{fig:distribucion}
+	\end {figure}
+	
+Para el cálculo de está gráfica se toma el valor del número de participaciones de cada fondo y se multiplica por el valor de cada una a día de hoy, si no existe un \gls{VL} en el día de hoy se utiliza el más próximo.\\
+\newpage
+
+\subsubsection{Fondos normalizados de la cartera}
+
+Esta gráfica tiene como objetivo mostrar un histórico de los \gls{VL}s de todos los fondos de la cartera partiendo todos de la misma base, en este caso 100. De esta manera es posible comparar los fondos entre ellos y ver cuales han alcanzado una mayor rentabilidad. Para ello se utiliza una gráfica de serie temporal. Este tipo de gráficas utilizan valores de tipo temporal en el eje de abscisas y valores de tipo double en el de ordenadas.\\
+
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/normalizados.PNG}
+	\caption{Gráfica de fondos normalizados de la cartera}
+	\label{fig:normalizados}
+	\end {figure}
+	
+	
+
+
+Para el cálculo de está gráfica supongamos que el fondo tiene los siguientes valores liquidativos $\text{VL}_1,\text{VL}_2,\ldots,\text{VL}_d$ para los días $1,2,\ldots,d$, y que queremos calcular sus \gls{VL}s normalizados $\text{VLN}_1,\text{VLN}_2,\ldots,\text{VLN}_d$ para que comiencen en 100 . Los valores se calculan de la siguiente manera.
+
+\begin{equation}
+\text{VLN}_i=\text{VL}_i\left(\frac{100}{\text{VL}_1}\right)
+\end{equation}
+
+	\newpage
+
+\subsubsection{Fondos más y menos rentables de la cartera}
+
+Esta gráfica tiene como objetivo mostrar los cinco fondos más y menos rentables de una cartera. De esta manera es posible ver los mejores y los peores fondos de la cartera y tomar decisiones acerca del capital invertido en ellos, como por ejemplo, sacar fondos del peor y comprar participaciones del mejor con ellos. \\
+
+Para visualizar los datos se utiliza una gráfica de barras donde cada barra corresponde a la rentabilidad del fondo en la cartera.\\
+
+
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/masrentables.PNG}
+	\caption{Gráfica de los fondos más rentables de la cartera}
+	\label{fig:masrentables}
+	\end {figure}
+	
+Para calcular esta gráfica se tienen en cuenta la rentabilidad de todas las operaciones realizadas en la cartera, es decir, se calcula la rentabilidad entre el coste total de compras de participaciones y la remuneración de las ventas. Si las participaciones todavía no se han vendido entonces se calcula su valor a día de hoy y se suma al valor de venta.\\
+
+En este caso nuestra cartera de prueba solo tiene tres fondos por lo que son, a la vez, los más y menos rentables de la cartera.\\
+
+Es posible que alguno de los fondos menos rentables tengan una rentabilidad negativa. Si esto ocurre, simplemente la barra estará en sentido inverso.
+	
+\newpage
+\subsubsection{Comparativa de inversión}
+
+Esta gráfica tiene como objetivo mostrar una comparativa entre el valor de nuestras participaciones en la última operación realizada y el valor que poseen actualmente. Con esta información podemos ver rápidamente si el capital invertido en un determinado fondo ha crecido o menguado desde el último movimiento de participaciones.\\
+
+Para visualizar los datos se utiliza una gráfica de barras, cada categoría es un fondo, la barra roja indica el valor de las participaciones en la última operación y la barra roja el valor actual.
+
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/comparativa.PNG}
+	\caption{Gráfica de la comparativa de inversión de la cartera}
+	\label{fig:comparativa}
+	\end {figure}
+
+Para calcular esta gráfica simplemente deberemos obtener las participaciones finales de la última operación, su valor entonces y su valor actual.\\ 
+
+Si un fondo de la cartera no tiene ninguna operación registrada o se han liquidado todas sus participaciones no aparecerá en esta gráfica.
+
+\newpage
+
+\subsubsection{Rentabilidad total de la cartera}
+
+Esta gráfica tiene como objetivo mostrar la rentabilidad total de la cartera en un período de tiempo determinado. Con esta información podemos comprobar como evoluciona en el tiempo el conjunto de nuestras inversiones.\\
+
+Para visualizar los datos se utiliza una gráfica de serie temporal.
+
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/renttotal.PNG}
+	\caption{Gráfica de la rentabilidad en conjunto de la cartera}
+	\label{fig:renttotal}
+	\end {figure}
+
+
+Para calcular esta gráfica se calcula la rentabilidad de todos los fondos en función de las operaciones realizadas para cada día de la gráfica y luego se suman, obteniendo el total. Si para un día concreto tenemos participaciones de un fondo en la cartera, su precio se calcula multiplicándolas por el \gls{VL} más cercano.
+\newpage
+
+\subsection{Gráficas de fondos}
+
+\subsubsection{Historial del Valor Liquidativo}
+
+Esta gráfica tiene como objetivo mostrar un histórico de los \gls{VL}s del fondo seleccionado. Para ello se utiliza una gráfica de serie temporal. Este tipo de gráficas utilizan valores de tipo temporal en el eje de abscisas y valores de tipo double en el de ordenadas.\\
+
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/historial.PNG}
+	\caption{Gráfica historial del Valor Liquidativo}
+	\label{fig:historial}
+	\end {figure}
+
+El cálculo de esta gráfica es muy sencillo, basta con incluir en ella los \gls{VL}s del fondo en el período seleccionado.
+
+\newpage
+
+\subsubsection{Historial de rentabilidades}
+
+Esta gráfica tiene como objetivo mostrar las rentabilidades históricas del fondo para los siguientes períodos de tiempo: último año fiscal, último semestre, último trimestre y último mes. Con esta información podemos ver como ha evolucionado el fondo en los últimos períodos de tiempo, y comprobar si ha tenido variaciones o si ha seguido una tendencia.\\
+
+Para visualizar los datos se utiliza una gráfica de barras, cada categoría es un período de tiempo y la barra indica la rentabilidad en dicho período.
+
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/rentabilidades.PNG}
+	\caption{Historial de rentabilidades}
+	\label{fig:rentabilidades}
+	\end {figure}
+
+Para calcular esta gráfica obtenemos los \gls{VL} más próximos a las fechas de inicio y fin del período, si existe la suficiente distancia entre ellas calculamos sus rentabilidades, si por el contrario no hay suficientes días entre ellos obviamos ese período y lo indicamos en la descripción.
+
+\newpage
+
+\subsubsection{Rentabilidad esperada}
+
+Esta gráfica tiene como objetivo mostrar un histórico de los \gls{VL}s del fondo seleccionado y los \gls{VL} esperados en función de la rentabilidad media diaria. Con esta información podemos ver una estimación de los \gls{VL}s del fondo y comparar los reales con los estimados.\\
+
+Para visualizar los datos se utiliza una gráfica de serie temporal.
+
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/esperada.PNG}
+	\caption{Rentabilidad esperada}
+	\label{fig:esperada}
+	\end {figure}
+
+Para calcular esta gráfica se utiliza la rentabilidad media diaria $r$. Este valor nos indica la variación diaria teniendo en cuenta todos los datos disponibles del fondo. Para calcularla se utilizan los valores liquidativos más antiguo y más reciente, esto es, $\text{VL}_I$ y $\text{VL}_F$, respectivamente.
+
+\begin{equation}
+r=\left(\frac{\text{VL}_F}{\text{VL}_I}\right)^{1/d}-1
+\end{equation} 
+Donde $d$ es el número de días transcurridos entre los valores liquidativos inicial y final.\\
+
+Una vez calculado r se añade el primer valor a la gráfica, el resto se calculan de la siguiente manera.
+
+\begin{equation}
+e_i= e_{i-1} \left(1 + r\right), \quad\text{para }i>1
+\end{equation} 
+
+
+
+\newpage
+
+\subsubsection{Medias Móviles}
+
+Esta gráfica tiene como objetivo mostrar un histórico de los \gls{VL}s del fondo seleccionado y su media móvil a un determinado intervalo de tiempo. Una de las grandes ventajas de usar medias móviles es que se mueven en la dirección de la tendencia, lo que permite que avancen los beneficios y se frenen las pérdidas. Pero hay que tener en cuenta que su uso es para seguir la pista de la tendencia, la media no anticipa nada.
+
+
+	\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/media.PNG}
+	\caption{Media Móvil}
+	\label{fig:media}
+	\end {figure}
+	
+	Para calcular esta gráfica supongamos el fondo tiene los siguientes valores liquidativos $\text{VL}_1,\text{VL}_2,\ldots,\text{VL}_d$ para los días $1,2,\ldots,d$, y que queremos calcular la media móvil para $m$ días. En ese caso, tendremos una secuencia de $d-m+1$ valores $y_m,y_{m+1},\ldots,y_d$. Los primeros $m-1$ valores de la secuencia $y$ se pueden poner a $0$. El resto de valores se calculan de la siguiente manera:
+	
+	\begin{equation}
+	y_j=\frac{1}{m}\left(\sum_{i=j-m+1}^{j}\text{VL}_i\right)
+	\end{equation}
+	De forma más eficiente, suponiendo que se ha calculado el primer valor de la serie, $y_m$, tenemos:
+	
+	\begin{equation}
+	y_{j}=\frac{1}{m}\left(m\cdot y_{j-1}+\text{VL}_j-\text{VL}_{j-m}\right),\quad\text{para }j>m
+	\end{equation}
+
+\newpage
 
 \newpage
 \part{Bibliografía}
