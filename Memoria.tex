@@ -124,6 +124,7 @@
 \newacronym{ISIN}{ISIN}{International Securities Identification Number}
 \newacronym{ER}{ER}{Modelo Entidad-Relación}
 \newacronym{GUI}{GUI}{Interfaz Gráfica de Usuario}
+\newacronym{EDT}{EDT}{Event Dispatch Thread}
 
 
 
@@ -447,7 +448,7 @@ Para comenzar el diseño de la base de datos debemos analizar cuáles son las fu
 
 Por un lado, hemos de ser capaces de guardar los principales campos que contiene un fondo de inversión: \gls{ISIN} del fondo, nombre de la entidad gestora, el tipo de fondo que es, la categoría, la divisa con la que operan sus inversiones y sus comisiones de apertura y cancelación.\\
 
-Por otro, cada fondo puede tener una cantidad variable de \gls{VL}s, normalmente uno por día durante el período en el que el fondo se encuentra activo.\\
+Por otro, cada fondo puede tener una cantidad variable de \gls{VL}s, normalmente uno por día durante el período en el que el fondo se encuentra activo, exceptuando los festivos.\\
 
 Una primera aproximación del \gls{ER} es el siguiente:\\
 
@@ -1128,6 +1129,122 @@ Esta gráfica tiene como objetivo mostrar un histórico de los \gls{VL}s del fon
 	\end{equation}
 
 \newpage
+
+\section{Cuarta iteración: Ejecución de tareas en segundo plano}
+
+Esta cuarta iteración tiene como objetivo implementar la ejecución en segundo plano de las tareas que requieren un cierto tiempo de procesamiento.\\
+
+Para ello, Swing nos proporciona \textbf{SwingWorker}, una clase abstracta para realizar interacciones con la \gls{GUI} en un thread en segundo plano.
+
+\subsection{SwingWorker}
+
+Cuando construimos una aplicación multi-thread utilizando Swing, debemos tener en cuenta dos restricciones:
+
+\begin{itemize}
+	\item Las tareas que consumen tiempo no deberían correr en el \gls{EDT}, pues la aplicación se quedaría congelada.
+	\item Los componentes de swing únicamente deberían ser accesibles en el \gls{EDT}.
+\end{itemize}
+
+Estas restricciones significan que una \gls{GUI} con tareas que requieren un tiempo de cómputo grande necesitan por lo menos dos threads: uno para realizar las tareas largas y otro, el \gls{EDT}, para las actividades relacionadas con los componentes de la interfaz.\\
+
+Podríamos realizar esta tarea a mano, usando la clase Thread para crear un hilo cada vez que realizemos una tarea que requiera tiempo, pero desde java 6 tenemos SwingWorker.\\
+
+SwingWorker está diseñado para situaciones en las que se necesita tener una tarea larga corriendo en segundo plano y proveer actualizaciones a la \gls{GUI} acerca de si ha terminado, o sigue en proceso.\\
+
+La clase SwingWorker es una clase abstracta en la que debemos definir dos tipos de datos: Class SwingWorker$<$T,V$>$. T representa el tipo de objeto devuelto cuando el worker termina la tarea, mientras que V es el tipo de información que que usara el worker para informar de su progreso.\\
+
+Todas las subclases de SwingWorker deben implementar el método doInBackground(), donde se implementará la tarea en segundo plano, y el método done(), en el que se muestra el resultado de la operación en pantalla. SwingWorker se encargará de que ambos métodos se ejecuten en los threads adecuados.\\
+
+ Cuando creamos un SwingWorker debemos pasar como parámetros aquellos elementos que queramos modificar cuando se complete la operación, y modificarlos unicamente en el método done(). En este último método también se capturan las excepciones ocurridas durante el transcurso de doInBackground().\\
+ 
+ Para ejecutar un worker, basta con llamar a su método execute(). Esta llamada crea el nuevo thread y devuelve el control inmediatamente.
+ 
+ \newpage
+ 
+Si queremos informar del progreso de la operación, en el método doInBackground() podemos llamar a setProgress() (un método que admite un entero entre 0 y 100) o publish() (que utilizara el tipo de dato que hayamos definido en V). Ambos métodos notifican a los PropertyChangeListener con un evento denominado progress, que podemos capturar y utilizar para mostrar al usuario o actualizar una barra de progreso.\\
+
+
+Existen tres threads involucrados en el ciclo de vida de un SwingWorker:
+
+\begin{itemize}
+	\item El thread actual: Es donde se llama el método execute(). Esto programa a SwingWorker para la ejecución en segundo plano de la tarea en lo que se denomina worker thread, y vuelve al hilo actual. Podemos esperar a que se complete dicha operación con el método get(), lo que bloquearía la interfaz.
+	\item El worker thread: el método doInBackground() se llama en este thread. En el se llevan a cabo las tareas necesarias y se notifica a los PropertyChangeListeners acerca del estado de la tarea.
+	\item El \gls{EDT}: todas las actividades relacionadas con Swing ocurren en este thread. SwingWorker invoca el método done() y notifica a cualquier PropertyChangeListener en este hilo.
+\end{itemize}
+
+Normalmente el thread actual se corresponde con el \gls{EDT}.\\
+
+Antes de que se ejecute el metodo doInBackground, SwingWorker notifica a todos los PropertyChangeListeners acerca del cambio de estado a StateValue.STARTED. Una vez termina doInBackground y se ejecuta el método done, se notifica que el estado pasa a StateValue.DONE.\\
+
+En última instancia hemos de tener en cuenta que:
+
+\begin{itemize}
+	\item Si por alguna razón queremos cancelar un worker en ejecución, es necesario llamar al método cancel(true), que interrumpe la operación.
+	\item SwingWorker está diseñado para ser ejecutado una única vez. Ejecutar el mismo worker una segunda vez no tendrá ningún efecto.
+\end{itemize}
+
+
+\newpage
+
+\subsection{Implementación de SwingWorker}
+
+Existen tres tareas en nuestra aplicación que pueden tardar un tiempo suficiente en realizarse como para que el usuario perciba que la interfaz se ha quedado bloqueada: Importar un fondo o los \gls{VL}s de un fondo, crear las gráficas y actualizar el árbol de carteras.
+
+\subsubsection{ChartWorker}
+
+Hasta ahora la clase encargada de crear las gráficas era \textit{``ChartMaker"}, una clase a la que le pasábamos los parámetros necesarios y nos devolvía un objeto de tipo \textbf{Chart}, el cual contenía la gráfica y una descripción.\\
+
+Para poder ejecutar las gráficas en segundo plano y tener información acerca de su progreso, ha sido necesario modificar esta clase de tal manera que herede de SwingWorker, de esta manera podemos redefinir los métodos doInBackground() y done(). Para indicar que esta clase se ejecutará en un worker thread se ha cambiado su nombre a \textit{``ChartWorker"}. \\
+
+Como hemos definido en el punto anterior, la tarea que se realizará en segundo plano es la contenida en el método doInBackground(), con el objetivo de evitar el tener que crear una clase worker para cada gráfica, se ha creado un constructor genérico donde se proporcionan los elementos de la interfaz que se actualizan cuando la gráfica está terminada (cuando se llama al método done()).\\
+
+Para seleccionar la gráfica que queremos crear debemos llamar a un método de la clase y pasarle los valores necesarios para crear esa gráfica en concreto. Por ejemplo, para crear la gráfica de distribución del capital primero deberemos llamar a setPortfolioDistributionChart() donde indicamos la cartera de la cual queremos obtener la gráfica y a continuación al método execute().\\
+
+Cuando la tarea termina, el resultado obtenido es exactamente el mismo que antes, un objeto Chart con la gráfica y la descripción. Sin embargo, el panel y el cuadro de la descripción se actualizan directamente en el método done(), en lugar de en la clase principal, para asegurarnos que los componentes siempre se actualizan en el \gls{EDT} una vez ha terminado la operación. Si por cualquier motivo falla la ejecución de la tarea, en el método done() capturamos la excepción \textit{ExecutionException} y reseteamos el panel de las gráficas.\\
+
+Normalmente en un equipo medio y para fondos normales (el fondo más extenso que se ha utilizado cuenta con alrededor de 7000 valores desde 1993) todas las gráficas excepto la de la rentabilidad total de la cartera no tardan más de medio segundo en crearse. Esta última en cambio tarda alrededor de unos cinco segundos porque tiene que calcular un gran número de operaciones y  será la única que reporte su progreso mediante el método setProgress().\\
+
+
+\newpage
+
+Para poder mostrar el progreso en la barra de la ventana principal es necesario añadir un PropertyChangeListener que reaccione ante el evento progress cuando creemos el worker. De esta manera la barra se actualizará conforme avance la tarea indicando al usuario el progreso.\\
+
+
+Durante la realización de la gráfica es posible que el usuario cambie a otra o realice otra operación sin esperar a que esta termine. Si esto sucede, el usuario podría estar viendo ya otra gráfica y de repente se le actualizaría el panel con la rentabilidad total de la cartera. Para evitar esta situación, cada vez que se seleccione otra gráfica mientras se está calculando la rentabilidad, cancelaremos la operación pendiente mediante el método cancel(true).
+
+
+\subsubsection{NodesWorker}
+
+La segunda tarea que queremos ejecutar en segundo plano es la de actualizar el árbol de carteras.\\
+
+Esta operación estaba realizada por la función createNodes(), que solicitaba los datos de carteras y fondos a la base de datos y construía el árbol. Para ejecutar esta tarea en un worker thread, se ha creado una nueva clase denominada NodesWorker.\\
+
+El método doInBackground() realiza la misma función que createNodes(). Al actualizar el modelo del árbol con los datos nuevos este se contrae por defecto y el último elemento seleccionado se des selecciona. Para evitar esto, en el método done() se ha establecido un comportamiento para el último elemento:
+
+\begin{itemize}
+	\item Si el nodo aún existe, se selecciona de nuevo y se expande el recorrido hasta él.
+	\item Si el nodo ya no existe, se selecciona su nodo padre.
+\end{itemize} 
+
+La operación informa periódicamente del progreso mediante el método setProgress(), por lo que, al igual que en el caso anterior, es necesario añadir un PropertyChangeListener que reaccione ante el evento progress cuando creemos el worker, pero en este caso será la barra inferior de progreso la que se actualice a medida que se actualiza el árbol.
+
+\subsubsection{ImportFundWorker}
+
+Por último, nos queda la tarea de importar fondos o \gls{VL}s.\\
+
+El funcionamiento de este worker es muy similar al de las gráficas. De nuevo se ha creado un constructor genérico donde se proporcionan los elementos de la interfaz que se actualizan cuando la operación está terminada. A mayores se le proporciona una instancia de un NodesWorker, de esta manera es posible actualizar el modelo una vez se termine de importar.\\
+
+Para seleccionar la operación que queremos utilizar debemos llamar a un método de la clase y pasarle los valores necesarios para realizar esa operación en concreto. Por ejemplo, para importar los \gls{VL}s de un fondo, debemos proporcionar el fondo en el que se importarán y el formato de la fecha del fichero.\\
+
+\newpage
+
+Cuando importamos los \gls{VL}s de un fondo comprobamos si existe un valor para el día de cada uno en la base de datos. Si existe, se actualiza el que tenemos, sino, se añade el nuevo. En este caso, como en los anteriores, se utiliza setProgress() para indicar el progreso de la operación.\\
+
+Cuando importamos un fondo, el servicio del modelo nos devuelve el fondo contenido en el fichero junto con sus \gls{VL}s asociados. En este caso no es posible conocer el progreso de la operación en un momento determinado, por lo que utilizamos el método setIndeterminate() de la barra de progreso para indicar que se está realizando una operación.\\
+
+Mientras se está importando un fondo o sus \gls{VL}s, se bloquean los botones de importar fondo e importar \gls{VL}s.
+\newpage
+
 
 \newpage
 \part{Bibliografía}
