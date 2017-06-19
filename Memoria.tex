@@ -1,4 +1,4 @@
-\documentclass[12pt, a4paper]{article}
+\documentclass[12pt, a4paper]{book}
 % Indicamos que el lenguaje es el español 
 \usepackage[spanish]{babel} % Soporte multilenguaje para LaTeX.
 \usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry} % Interfaz flexible para definir las dimensiones del documento
@@ -118,13 +118,18 @@
 \newacronym{PUD}{PUD}{Proceso Unificado de Desarrollo Software}
 \newacronym{TFG}{TFG}{Trabajo Fin de Grado}
 \newacronym{UML}{UML}{Lenguaje Unificado de Modelado}
-\newacronym{IDE}{IDE}{Entornos de Desarrollo Integrado}
+\newacronym{IDE}{IDE}{Entorno de Desarrollo Integrado}
 \newacronym{POM}{POM}{Project Object Model}
 \newacronym{XML}{XML}{eXtensible Markup Language}
 \newacronym{ISIN}{ISIN}{International Securities Identification Number}
 \newacronym{ER}{ER}{Modelo Entidad-Relación}
 \newacronym{GUI}{GUI}{Interfaz Gráfica de Usuario}
 \newacronym{EDT}{EDT}{Event Dispatch Thread}
+\newacronym{DAG}{DAG}{Grafo Acíclico Dirigido}
+\newacronym{JDK}{JDK}{Java SE Development Kit}
+\newacronym{API}{API}{Interfaz de Programación de Aplicaciones}
+\newacronym{MVP}{MVP}{Modelo–Vista–Presentador}
+\newacronym{MVC}{MVC}{Modelo–Vista–Controlador}
 
 
 
@@ -134,8 +139,6 @@
 \renewcommand{\tablename}{Tabla}
 \renewcommand{\acronymname }{Acrónimos}
 \let\Oldpart\part
-
-% Definicion de acronimos
 
 
 \begin{titlepage}
@@ -173,14 +176,117 @@ A Coruña, Junio de 2016
 
 \end{titlepage}
 
+
+% para crear una cara en blanco
+\newpage
+$\ $
+\thispagestyle{empty} % para que no se numere esta página
+
+\chapter*{}
+\pagenumbering{Roman} % para comenzar la numeración de paginas en números romanos
+\setcounter{page}{3}
+\begin{flushright}
+	\textit{A mi familia y amigos.}
+\end{flushright}
+
+\newpage
+$\ $
+\thispagestyle{empty} % para que no se numere esta página
+
+\chapter*{Agradecimientos} % si no queremos que añada la palabra "Capitulo"
+\markboth{AGRADECIMIENTOS}{AGRADECIMIENTOS} % encabezado
+
+En  este proyecto quiero agradecer en especial a todas aquellas personas que me han acompañado
+en estos últimos años.\\
+
+En primer lugar, me gustaría agradecer a mi familia, por todo el apoyo que me han proporcionado durante la realización del proyecto y a mis amigos, que me han apoyado siempre.\\
+
+ Gracias a Paula y a José, que me han guiado y ayudado durante los últimos meses.\\
+ 
+ Por último, gracias a Marcos, por su compañía en las numerosas horas de biblioteca que hemos compartido mientras realizábamos nuestros proyectos. 
+
+
+\newpage
+$\ $
+\thispagestyle{empty} % para que no se numere esta página
+
+\chapter*{Resumen} % si no queremos que añada la palabra "Capitulo"
+\markboth{RESUMEN}{RESUMEN} % encabezado
+
+
+En este proyecto se ha desarrollado una aplicación de escritorio con la finalidad de hacer estudios cualitativos y cuantitativos del rendimiento de activos financieros. En particular, la aplicación presenta gráficas e indicadores que proporcionan información acerca de la evolución de las diferentes carteras del usuario, así como de los fondos en los que se encuentra invertido el capital de dichas carteras. \\
+
+La finalidad de esta aplicación es simplificar y facilitar la forma en la que los usuarios gestionan los datos publicados por sitios web o entidades financieras. De este modo, mediante la generación de gráficos y el cálculo de indicadores, se persigue sintetizar y visualizar los datos de una manera rápida y sencilla, de tal forma que asistan en la la toma de decisiones a los inversores de fondos de inversión.
+\vspace{7cm}
+
+\section*{Lista de palabras clave} % si no queremos que añada la palabra "Capitulo"
+\markboth{Lista de palabras clave}{Lista de palabras clave} % encabezado
+
+ Cartera, Fondo de inversión, Gráficas, Rentabilidad, Toma de decisiones.
+
+
+
+
+\newpage
+$\ $
+\thispagestyle{empty} % para que no se numere esta página
+
 \newpage
 \tableofcontents
 \newpage
 
+\listoffigures % indice de figuras
+\newpage
+
+\listoftables % indice de tablas
+\newpage
+
 %Queda por decidir la estructura del proyecto, de momento lo he dividido en partes y dentro de estas partes creare secciones (Ej: Parte I Introdución y dentro de esta iria la introducción al mundo financiero), pero de momento utilizo las partes a modo de borrador.(Preguntar)
-\part{Introducción}
-\section{Introducción al mundo financiero}
-% No estoy seguro de como debo orientar esta parte itroductoria, si como un resumen y explicación de en que consisten los fondos de inversiones o por el contrario debo explicar la forma en la cual yo he entendido como funcionan(Preguntar).
+
+\pagenumbering{arabic}
+\chapter{Introducción}
+
+\section{Objetivos}
+
+Este proyecto persigue obtener una aplicación en la que los usuarios puedan obtener gráficos, datos numéricos y resultados de una o varias carteras de fondos de inversión.\\
+
+La finalidad de esta aplicación es simplificar y facilitar la forma en la que los usuarios gestionan los datos publicados por sitios web o entidades financieras. De este modo, mediante la generación de gráficos y el cálculo de indicadores, se persigue sintetizar y visualizar los datos de una manera rápida y sencilla.\\
+
+Para ello, se ha implementado una aplicación de escritorio que contiene las fichas de los fondos y las carteras del usuario. Para cada fondo, se pueden calcular y mostrar indicadores técnicos, realizar el seguimiento de medidas como medias móviles, calcular la evolución en los periodos de tiempo deseados, computar rentabilidades anuales, etc. Para cada cartera es posible visualizar la distribución del capital invertido, la rentabilidad total de la cartera, los fondos más y menos rentables, etc.\\
+ 
+Otra de las características es que las medidas son personalizables, permitiendo elegir periodos de tiempo. Este tipo de funcionalidad no se encuentra en servicios web, ya que únicamente muestran datos pre calculados a los usuarios.\\
+
+
+Dentro del proyecto no se incluye la obtención de los datos financieros necesarios para realizar el seguimiento. Dichos datos son proporcionados por la entidad financiera correspondiente. Sin embargo, la aplicación permite tanto exportar como importar fondos previamente exportados por ella, así como la posibilidad de importar los valores liquidativos de un ficheros de excel (.xls), que es el formato más habitual en el que se presentan los fondos de inversión.\\
+
+\newpage
+
+
+\section{Estructura del documento}
+
+La memoria de este \gls{TFG} está estructurada en los siguientes capítulos:
+
+\begin{itemize}
+	\item En el Capítulo 1, el actual, se introduce el objetivo que se trata en este TFG, así como la estructura detallada del documento.
+	\item En el Capítulo 2, se exponen los fundamentos teóricos necesarios para entender el trabajo realizado, concretamente se realiza una pequeña introducción acerca de los fondos de inversión.
+	\item En el Capítulo 3, se realiza un estudio sobre los fundamentos tecnológicos, mencionando las alternativas y justificando la elección de los elementos que se han utilizado en la elaboración del proyecto.
+	\item En el Capítulo 4, se exponen los aspectos metodológicos relativos al análisis, el diseño y el desarrollo de la aplicación.
+	\item En el Capítulo 5, se expone la planificación temporal del proyecto mediante diagramas de Gantt, se definen las iteracciones en las que se desarrollará el proyecto y se calcula su coste.
+	\item En el Capítulo 6, se concretan los casos de uso que tendrá la aplicación.
+	\item En el Capítulo 7, se expone como se han llevado a cabo las diferentes iteracciones de desarrollo establecidas en el capítulo 5.
+
+\end{itemize}
+
+Tras los capítulos mencionados, aparece la Bibliografía consultada para la realización de este \gls{TFG} y finalmente, en el anexo A se incluye el manual de usuario.\\
+
+Como software para la documentación se ha utilizado la distrubución de LaTeX MiKTeX y como editor el IDE TeXstudio.
+
+\newpage
+
+\chapter{Fundamentos teóricos}
+
+\section{Introducción a los fondos de inversión}
+
 Para poder llevar a cabo este proyecto, ha sido necesario realizar un primer paso de búsqueda de información acerca del mundo de las finanzas, mas concretamente sobre los fondos de inversión, para poder conocer su funcionamiento, sus métricas y los tipos de datos que en ellos se utilizan.\\
 
 \subsection{Fondos de inversión}
@@ -199,6 +305,8 @@ Los fondos de inversión se dividen en partes proporcionales llamadas \textbf{pa
 \end{center}
 \vspace{1cm}
 
+\newpage
+
 Este valor depende, por tanto, de la evolución diaria de los valores que componen el patrimonio del fondo y será uno de los indicativos fundamentales que utilizará la aplicación a la hora de realizar los históricos de los diferentes fondos. Otra medida importante es la \textbf{rentabilidad del fondo}. Esta se calcula mediante la diferencia porcentual entre el \gls{VL} en la fecha de compra de la participación (suscripción) y la fecha de venta (reembolso), de la siguiente manera:
 
 \begin{center}
@@ -207,7 +315,14 @@ Este valor depende, por tanto, de la evolución diaria de los valores que compon
 	\end{equation}
 \end{center}
 
-\newpage
+Sin embargo, debe tenerse en cuenta que el porcentaje anterior no refleja la rentabilidad anual, sino la obtenida en el período comprendido entre la fecha del valor inicial y la fecha del valor final. Para obtener la tasa de rentabilidad anual es preciso anualizar la rentabilidad. Para anualizar la rentabilidad, se utiliza la siguiente fórmula:
+
+\begin{equation}
+Rentabilidad Anual=\left(\left(\frac{ Valor\ liquidativo\ final}{Valor\ liquidativo\ inicial}\right)^{365/d}-1\right) \times 100.
+\end{equation} 
+Donde $d$ es el número de días transcurridos entre los valores liquidativos inicial y final.\\
+
+
 
 El resultado no es percibido de manera efectiva hasta que no se produzca el reembolso de las participaciones y será en ese momento en el que el partícipe deberá tributar por el resultado de su inversión. \\
 
@@ -216,14 +331,16 @@ Otro aspecto importante es que las decisiones de la inversión las toma una \tex
 
 Los siguientes puntos se centrarán en ver los distintos tipos de fondos que podemos encontrar, los criterios que se deben de utilizar para su elección y las operaciones que podemos realizar sobre ellos.
 
-
-\subsubsection{Tipos de fondos }
+\subsection{Tipos de fondos }
 
 En el mercado existen una amplia gama de fondos de inversión. Es tarea del propio inversor elegir aquél que más se adapte a sus necesidades.
 
 \begin{itemize}
 	\item \textbf{Fondos de renta fija:} Son fondos donde la mayoría de sus activos son de renta fija (obligaciones y bonos, letras, pagarés, etc). Normalmente, la rentabilidad de estos fondos va ligado al plazo de vencimiento de dichos activos, es decir, a menor plazo, menos riesgo y por lo tanto, menos rentabilidad prevista, y viceversa.
 	\item \textbf{Fondos de renta variable:} Son fondos donde la mayoría de sus activos son de renta variable (acciones). Por lo general, los fondos de renta variable reportan ganancias o rendimiento a largo plazo, a cambio de un mayor riesgo.
+	
+		\newpage
+	
 	\item \textbf{Fondos Mixtos:} Son fondos en los que sus activos se encuentran divididos entre activos de renta fija y renta variable. Cuanto mayor sea el porcentaje de activos de renta variable mayor sera el riesgo y la rentabilidad potencial.
 	\item \textbf{Fondos globales:} Son fondos que suelen incluir renta variable, fija y activos monetarios en diferentes localizaciones geográficas, en determinados porcentajes dependiendo de la política del fondo, de forma que sus inversiones estén muy diversificadas.
 	\item \textbf{Fondos garantizados:} Son fondos que aseguran la recuperación del capital inicialmente invertido más una rentabilidad fija o variable, en una fecha futura determinada.
@@ -231,7 +348,7 @@ En el mercado existen una amplia gama de fondos de inversión. Es tarea del prop
 \end{itemize}
 
 
-\subsubsection{Criterios para elegir un fondo de inversión.}
+\subsection{Criterios para elegir un fondo de inversión.}
 
 
 Como hemos visto en el apartado anterior, existen varios tipos de fondos de inversión adaptados a diferentes necesidades. A la hora de elegir un fondo en particular existen varios ratios e indicadores que pueden ayudar a determinar cual es el más adecuado a las preferencias del inversor.\\
@@ -244,20 +361,86 @@ También hemos de considerar el comportamiento histórico que ha tenido un fondo
 
 Es posible que durante la vida de un fondo éste cambie su política de inversión e incluso de grupo gestor, por lo que al consultar rendimientos pasados hay que tener en cuenta que puede que éstos hayan cambiado. Es importante conocer la fecha de dicho cambio y tener en cuenta sólo las rentabilidades a partir de ese momento.\\
 
-Por último, algunas métricas o indicadores que se deben utilizar para elegir un fondo de inversión son los siguientes:
-
-\begin{itemize}
-	\item \textbf{Volatilidad:} es una medida de variación (cambios) en el precio de un activo. Mide cuanto varía el precio de un activo respecto a su precio medio y cuantifica el riesgo del activo financiero.
-	\item \textbf{Alfa:} mide la capacidad o habilidad que tiene el gestor de generar valor al fondo de inversión.
-	\item \textbf{Beta:} mide la sensibilidad del \gls{VL} de un fondo a los movimientos de su índice de referencia.
-	\item \textbf{Ratio de Sharpe:} nos dice lo bueno que es un fondo de inversión en la relación rentabilidad-riesgo.
-	\item \textbf{Ratio de Información:}  es una medida que se emplea para determinar la influencia que ha tenido un gestor en la rentabilidad del fondo en comparación con el comportamiento del mercado.
-	\item \textbf{Máximo Drawdown:} se define como la máxima caída experimentada por un fondo en el periodo comprendido desde que se registra un máximo hasta que vuelve a ser superado.
-\end{itemize}
-
 \newpage
 
- \subsubsection{Operaciones y seguimiento de fondos}
+ \subsection{Métricas o indicadores}
+
+Algunas métricas o indicadores que se deben utilizar para elegir un fondo de inversión son los siguientes:
+
+\begin{itemize}
+	\item \textbf{Volatilidad:} es una medida de variación (cambios) en el precio de un activo. Mide cuanto varía el precio de un activo respecto a su precio medio y cuantifica el riesgo del activo financiero. Se calcula como la raíz cuadrada de la varianza:
+	
+	\begin{center}
+		\begin{equation}
+		\sigma _{n}={\sqrt{{\frac {1}{n}}\sum _{i=1}^{n}\left(X_{i}-{\overline {X}}\right)^{2}}}
+		\end{equation}
+	\end{center}
+	
+	Siendo:
+	\begin{itemize}
+		\item  $X_{i}$ cada \gls{VL}.
+		\item  $n$ el número total de \gls{VL}s.
+		\item  $\overline {X}$ la media aritmética de los \gls{VL}s.\\
+	\end{itemize}
+	
+	
+	\item \textbf{Beta:} mide la sensibilidad del \gls{VL} de un fondo a los movimientos de su índice de referencia. Se calcula de la siguiente manera:
+	
+	\begin{center}
+		\begin{equation}
+		\beta _{i}=p_{im}\frac{\sigma _{i}}{\sigma _{m}}
+		\end{equation}
+	\end{center}
+	
+	Siendo: 
+	\begin{itemize}
+		\item $p_{im}$ la correlación entre la acción y el índice de referencia.
+		\item $\sigma _{i}$ desviación estándar de un fondo. 
+		\item $\sigma _{m} $ desviación estándar del índice de referencia (el IBEX 35 por ejemplo).\\ 
+	\end{itemize}
+	
+	
+	\item \textbf{Alfa de Jensen:} mide la capacidad o habilidad que tiene el gestor de generar valor al fondo de inversión, es decir, de obtener rentabilidades por encima del índice bursátil de referencia ajustadas por el riesgo. Se calcula de la siguiente manera:
+	
+	\begin{center}
+		\begin{equation}
+		\alpha _{J}=R_{i}-[R_{f}+\beta _{{iM}}\cdot (R_{M}-R_{f})]
+		\end{equation}
+	\end{center}
+	
+	Siendo: 
+	\begin{itemize}
+		\item $R_{f}$ la rentabilidad de la cartera.
+		\item $R_{f}$ la rentabilidad del activo libre de riesgo (los bonos del tesoro, por ejemplo).
+		\item $\beta _{{iM}} $ la Beta de la cartera
+		\item $R_{M}$ la rentabilidad del mercado (medida por el índice bursátil de referencia).
+	\end{itemize}
+	
+	 \newpage
+	 
+	\item \textbf{Ratio de Sharpe:} nos dice lo bueno que es un fondo de inversión en la relación rentabilidad-riesgo. Se calcula de la siguiente manera.
+	
+	\begin{center}
+		\begin{equation}
+		S={\frac {{\textsf {E}}[R-R_{f}]}{\sigma }}
+		\end{equation}
+	\end{center}
+	
+		Siendo: 
+	\begin{itemize}
+		\item $R$ el rendimiento del fondo.
+		\item $R_{f}$ es el rendimiento de una inversión de referencia, por ejemplo, la rentabilidad del activo libre de riesgo.
+		\item ${\textsf {E}}[R-R_{f}]$ es el valor esperado del exceso de rendimiento de inversión comparado con el retorno de la inversión de referencia.
+		\item $\sigma$ es la desviación estándar (volatilidad) del rendimiento del fondo.\\
+		
+	\end{itemize}
+	
+	\item \textbf{Máximo Drawdown:} se define como la máxima caída experimentada por un fondo en el periodo comprendido desde que se registra un máximo hasta que vuelve a ser superado.\\
+	
+\end{itemize}
+
+
+ \subsection{Operaciones y seguimiento de fondos}
 
 En este último punto hablaremos sobre las operaciones de suscripción, reembolso y traspaso de un fondo de inversión y de cómo realizar el seguimiento de su rentabilidad.\\
 
@@ -267,6 +450,8 @@ Si un inversor quiere recuperar su dinero debe solicitar un \textbf{reembolso} d
 El plazo en el que el inversor recibe su dinero es como máximo de 3 a 5 días, pudiendo tener dicho reembolso una comisión de hasta el 5\%, como en el caso anterior. El inversor conocerá el resultado de la inversión (positivo o negativo) cuando se le abone el reemboslo.\\
 
 En el caso de querer realizar un \textbf{traspaso} de un fondo a otro se produce un reembolso del primero y la inmediata suscripción al segundo. Este método tiene una ventaja, pues se conserva la antigüedad de la primera inversión a efectos fiscales, por lo que las plusvalías no se tributan hasta que se produzca el reembolso definitivo.\\
+
+\newpage
 
 Existen cuatro partes que intervienen en un traspaso:
 
@@ -284,73 +469,157 @@ El proceso de \textbf{seguimiento} de un fondo de inversión puede realizarse pr
 	\item La documentación que proporcione la entidad gestora o depositaria. Pues es obligatorio que se proporcione a los partícipes información periódica acerca de la evolución de sus inversiones.
 	\item La divulgación de datos sobre fondos de inversión que proporcionan periódicos o diversos portales de internet. De esta última fuente obtendremos los datos necesarios para el funcionamiento inicial de la aplicación.
 \end{itemize}
-\newpage
+
+\newpage 
+
+\chapter{Estudio de viabilidad}
 
 \section{Revisión de fundamentos tecnológicos}
 
-En este apartado se describen las herramientas y tecnologías usadas para el desarrollo del proyecto.
+En este apartado se describen las herramientas y tecnologías que se han tenido en cuenta para el desarrollo del proyecto.
 
 \subsection{Herramientas para la gestión de proyectos}
+
+Las principales alternativas para el repositorio del proyecto son las siguientes:
+
 \begin{itemize}
-	\item \textbf{Git: } Es un software de control de versiones distribuido que permite trabajar en grupo y mantener accesibles las diferentes versiones de la aplicación del proyecto. Se ha elegido git como sistema de gestión de versiones del proyecto por encima de su principal alternativa, subversion porque proporciona un repositorio local sobre el que se puede trabajar off-line.
-\end{itemize}
+	
+	\item \textbf{Git:} es un software de control de versiones distribuido que permite trabajar en grupo, llevar la cuenta de qué cambios se han realizado y mantener accesibles las diferentes versiones de la aplicación del proyecto.
+	
+	\item \textbf{Subversion:} es una herramienta open source de control de versiones centralizado. Su funcionamiento se parece mucho a un sistema de ficheros convencional.
+	
+\end{itemize}	
 
-
+Se ha elegido git como sistema de gestión de versiones del proyecto por encima de su principal alternativa, subversion porque proporciona un repositorio local sobre el que se puede trabajar off-line y permite comparar los cambios realizados en el proyecto.
 
 
 
 \subsection{Herramientas para el modelado de software}
 
-\begin{itemize}
-	\item \textbf{Visual Paradigm Community Edition: }
-	Es una herramienta para el desarrollo de aplicaciones utilizando \gls{UML} recomendada para la aplicación y el seguimiento del \gls{PUD}. Proporciona asistencia para realizar los análisis, diseño, casos de uso y modelos \gls{UML} del proyecto. Se trata de un software con licencia pero se utiliza su versión gratuita (Community Edition).
-\end{itemize}
-
-\subsection{Herramientas para el desarrollo del proyecto}
+Las principales alternativas para el modelado del software son las siguientes:
 
 \begin{itemize}
-	\item \textbf{Eclipse IDE Neon: } Es una plataforma de desarrollo de software de código abierto y multiplataforma basada en Java. Proporciona \glspl{IDE} prácticamente para cualquier lenguaje, siendo el mas utilizado el de Java. Provee también de una serie de plugins para el control de versiones y frameworks para el desarrollo de aplicaciones gráficas.
+	\item \textbf{Visual Paradigm Community Edition:} es una herramienta para el desarrollo de aplicaciones utilizando \gls{UML} recomendada para la aplicación y el seguimiento del \gls{PUD}. Proporciona asistencia para realizar los análisis, diseño, casos de uso y modelos \gls{UML} del proyecto.
 	
-	\vspace{2mm}
+	\item \textbf{Dia:} es una aplicación para la creación de diagramas. Está concebido de forma modular, con diferentes paquetes de formas para diferentes necesidades.
 	
-	Se ha elegido Eclipse como plataforma de desarrollo de este proyecto en lugar de Netbeans debido a que ha sido la plataforma utilizada en la mayoría de las asignaturas del grado, por lo que su funcionamiento es mas conocido. Para la sincronización con el repositorio git se utiliza el plugin EGit.\\
-	
-	\item \textbf{Apache Maven: }Es un software de gestión de proyectos software desarrollado por Apache. Esta basado en el concepto de \gls{POM}, maven permite gestionar dependencias, módulos, componentes y el orden de construcción.
 	
 \end{itemize}
+
+Se ha elegido Visual Paradigm Commuty Edition para la realización de la mayoría de diagramas del proyecto, tales como \gls{UML} o los del modelo relacional porque provee diagramas de mayor calidad. Sin embargo, Visual Paradigm no nos ofrece la posibilidad de crear diagramas de \gls{ER}, para estos se ha utilizado Dia.
 
 \newpage
 
+\subsection{Herramientas para el desarrollo del proyecto}
+
+Las principales alternativas para el \glspl{IDE} son las siguientes:
+
+\begin{itemize}
+	\item \textbf{Eclipse IDE Neon:} es una plataforma de desarrollo de software de código abierto y multiplataforma basada en Java. Proporciona \glspl{IDE} prácticamente para cualquier lenguaje, siendo el mas utilizado el de Java. Provee también de una serie de plugins para el control de versiones y frameworks para el desarrollo de aplicaciones gráficas.
+	
+	
+	\item \textbf{NetBeans IDE:} es un entorno de desarrollo integrado libre que permite desarrollar aplicaciones a partir de un conjunto de componentes de software llamados módulos. NetBeans esta pensado sobre todo para el desarrollo de aplicaciones en Java, y contiene un framework que simplifica el desarrollo de aplicaciones para escritorio Java Swing.
+	
+	
+\end{itemize}
+
+Se ha elegido Eclipse y el plugin EGit como plataforma de desarrollo de este proyecto en lugar de Netbeans debido a que ha sido la plataforma utilizada en la mayoría de las asignaturas del grado, por lo que su funcionamiento es más conocido. Sin embargo, para crear la estructura de la \gls{GUI} se ha utilizado a modo de apoyo el framework de Swing proporcionado por NetBeans.\\
+
+Las principales alternativas como software de gestión del proyecto son las siguientes:
+
+\begin{itemize}
+	
+	\item \textbf{Apache Maven:} es un software de gestión de proyectos software desarrollado por Apache. Esta basado en el concepto de \gls{POM}, maven permite gestionar dependencias, módulos, componentes y el orden de construcción.
+	
+	\item \textbf{Gradle:} es una herramienta de construcción de software que combina la flexibilidad de Ant con las convenciones de Maven que utiliza un \gls{DAG} para determinar el orden en que se deben ejecutar las tareas.
+	
+\end{itemize}
+
+Se ha Elegido Maven en lugar de Gradle como software de gestión de proyectos porque ha sido el gestor de proyectos utilizado en el grado.
+
+
 \subsection{Herramientas de bases de datos}
 
+Las principales alternativas como software de gestión de bases de datos son las siguientes:
+
 \begin{itemize}
-	\item \textbf{MySQL: }Es un sistema de gestión de bases de datos relacional desarrollado por Oracle Corporation y está considerada como la base datos open source más popular del mundo. Se utiliza en este proyecto para guardar los datos de los diferentes fondos de inversión de tal forma que puedan estar disponibles off-line.
+	\item \textbf{MySQL:} es un sistema de gestión de bases de datos relacional desarrollado por Oracle Corporation y está considerada como la base datos open source más popular del mundo. MySQL proporciona una base de datos muy rápida en la lectura, pero que puede dar problemas en entornos de alta concurrencia en la modificación.
 	
-	\vspace{2mm}
+	\newpage
 	
-	Su principal alternativa es PostgreSQL, pero se ha decidido utilizar MySQL porque nuestra aplicación utilizará principalmente consultas sencillas, normalmente de lectura y MySQL esta orientado a este tipo de tareas proporcionando un mayor rendimiento que su competidor.\\  
+	\item \textbf{PostgreSQL:} es un sistema de gestión de bass de datos relacional orientado a objetos y libre, que proporciona alta concurrencia y una amplia variedad de tipos nativos.
 	
-	\item \textbf{Hibernate: }Es un framework para el mapeo objeto-relacional de código abierto para la plataforma Java. Su uso facilita el mapeo de atributos entre una base de datos relacional tradicional y el modelo de objetos de una aplicación, mediante archivos denominados \gls{XML} o anotaciones en los beans de las entidades para poder establecer estas relaciones.
 \end{itemize}	
 
-\subsection{Herramientas para pruebas}
+Se ha decidido utilizar MySQL porque nuestra aplicación utilizará principalmente consultas sencillas, normalmente de lectura y MySQL esta orientado a este tipo de tareas proporcionando un mayor rendimiento que su competidor.\\  
+
+La principal alternativa como framework de mapeo objeto-relacional es:
+
 \begin{itemize}
-	\item \textbf{JUnit: }Es un framework utilizado para realizar pruebas unitarias a aplicaciones Java, permitiendo realizar estas pruebas de forma controlada y evaluar el funcionamiento de cada uno de los métodos de las clases.
+	
+	\item \textbf{Hibernate:} es un framework para el mapeo objeto-relacional de código abierto para la plataforma Java. Su uso facilita el mapeo de atributos entre una base de datos relacional tradicional y el modelo de objetos de una aplicación, mediante archivos denominados \gls{XML} o anotaciones en los beans de las entidades para poder establecer estas relaciones.
+	
+\end{itemize}	
+
+
+
+\subsection{Herramientas para el desarrollo de la interfaz gráfica}
+
+Las principales alternativas como bibliotecas gráficas para Java son las siguientes:
+
+\begin{itemize}
+	\item \textbf{Swing:} es una biblioteca gráfica para Java. Incluye widgets para interfaz gráfica de usuario tales como cajas de texto, botones, desplegables y tablas.
+	
+	\item \textbf{SWT:} es un conjunto de componentes para construir interfaces gráficas en Java, (widgets) desarrollados por el proyecto Eclipse. 
+\end{itemize}
+
+Se ha decidido utilizar Swing porque forma parte del \gls{JDK} y no necesita librerías nativas adicionales para cada sistema soportado como SWT.
+
+\subsection{Herramientas para la creación de las gráficas}
+
+La principal alternativa como librería para la creación de las gráficas es la siguiente:
+
+\begin{itemize}
+	\item \textbf{JfreeChart:} es un marco de software open source para Java, el cual permite la creación de gráficos complejos de manera simple. JFreeChart dibuja automáticamente las escalas de los ejes, y nos permite hacer zoom en la gráfica y cambiar algunos ajustes, a través del menú local.
+\end{itemize}
+
+
+\subsection{Herramientas para la gestión de ficheros .xls}
+
+La principal alternativa como \gls{API} para gestión de las hojas de cálculo es la siguiente:
+
+\begin{itemize}
+	\item \textbf{JXL API:} es la \gls{API} más usada para leer, escribir, crear y modificar hojas de calculo con formato .xls.
+\end{itemize}
+
+\subsection{Herramientas para pruebas}
+
+La principal alternativa como framework de pruebas es:
+
+\begin{itemize}
+	\item \textbf{JUnit:} es un framework utilizado para realizar pruebas unitarias a aplicaciones Java, permitiendo realizar estas pruebas de forma controlada y evaluar el funcionamiento de cada uno de los métodos de las clases.
 \end{itemize}
 
 \subsection{Herramientas de documentación}
 
+Las principales alternativas como software para realizar la documentación son:
+
 \begin{itemize}
-	\item \textbf{LaTeX: }Es un software gratuito de composición de textos para la elaboración de documentos de índole científica. Latex proporciona una serie de características que proporcionan una gran calidad tipográfica en sus documentos.
+	\item \textbf{LaTeX:} es un software gratuito de composición de textos para la elaboración de documentos de índole científica. Latex proporciona una serie de características que proporcionan una gran calidad tipográfica en sus documentos.
+	
+	\item \textbf{Apache OpenOffice Writer:} es un procesador de texto mutiplataforma que forma parte del conjunto de la suite ofimática Apache OpenOffice.
+	
+	\item \textbf{LibreOffice:} es un procesador de texto e código abierto del paquete de software LibreOffice y es una bifurcación de Apache OpenOffice Writer.
+	
 \end{itemize}
 
-
+Se ha elegido LaTeX como software para realizar la documentación por la mayor calidad que ofrece en los documentos. \\
 
 \newpage
 
 
 
-\part{Metodología}
+\chapter{Metodología}
 
 \section{Proceso Unificado de Desarrollo Software}
 Para la realización de este proyecto se utilizará la metodología de \textbf{ \gls{PUD}}. El \gls{PUD} \href{https://es.wikipedia.org/wiki/Proceso_unificado}{*} es un marco de desarrollo extensible, dirigido por casos de uso, iterativo e incremental, en el cual los casos de uso se utilizan para capturar los requisitos funcionales y para definir los contenidos de las iteraciones.\\
@@ -367,11 +636,32 @@ Como lenguaje de representación visual el \gls{PUD} utiliza el \gls{UML} y se h
 
 \newpage 
 
-\part{Planificación y evaluación de costes}
+\section{Patrón Modelo–vista–presentador}
 
+Para la construcción de la interfaz de usuario utilizaremos el patrón denominado \gls{MVP}.\\
+
+
+\gls{MVP} es una derivación del patrón arquitectónico \gls{MVC}, y es utilizado mayoritariamente para construir interfaces de usuario, permitiendo independizar a la aplicación del tipo de interfaz de usuario elegida.\\
+
+\gls{MVP} consta de los siguientes elementos:
+
+
+\begin{itemize}
+	\item El modelo es una interfaz que define los datos.
+	\item El presentador actúa sobre el modelo y la vista. Recupera datos del modelo, y los formatea para mostrarlos en la vista.
+	\item La vista es una interfaz pasiva que exhibe los datos del modelo y proporciona las órdenes de usuario al presentador para que este actue sobre los datos.
+\end{itemize}
+
+En nuestra aplicación, la vista es totalmente pasiva y su función es la de reenviar todas las operaciones de interacción al presentador. De esta manera, cuando un usuario activa un método de evento de la vista, simplemente invoca un método del presentador que no tiene parámetros y no devuelve ningún valor. El presentador recupera entonces datos de la vista a través de los métodos definidos por la interfaz de vista. Por último, el presentador opera en el modelo y actualiza la vista con los resultados de la operación. 
+
+\newpage
+
+\chapter{Planificación y evaluación de costes}
+
+\section{Planificación}
 En este apartado se detalla cómo se ha aplicado el \gls{PUD} para gestionar el desarrollo de la aplicación. Debido a que se utiliza un marco de desarrollo incremental, en cada iteración se presentará un nuevo caso de uso que conformará una nueva versión del producto final.\\
 
-El objetivo de este \gls{TFG} es implementar una aplicación en la que los usuarios puedan obtener gráficos, datos numéricos y resultados de una o varias carteras de fondos de inversión, por lo cual las fases en las que se divide el proyecto son las siguientes:\\
+El objetivo de este \gls{TFG} es implementar una aplicación en la que los usuarios puedan obtener gráficos, datos numéricos y resultados de una o varias carteras de fondos de inversión, por lo cual las fases en las que se divide el proyecto son las siguientes:
 
 
 %Aún no tengo claro las distintas iteracciones que voy a realizar, ¿debería incluir un diagrama de gant con la planificacion temporal de cada una de las fases?.
@@ -385,7 +675,7 @@ El objetivo de este \gls{TFG} es implementar una aplicación en la que los usuar
 		Fase                        & Iteración                   & Tareas                                                                                                            \\ \midrule
 		\multirow{4}{*}{Inicial}    & \multirow{4}{*}{Preliminar} & Inmersión en el mundo financiero                                                                                  \\ \cmidrule(l){3-3} 
 		&                             & \begin{tabular}[c]{@{}c@{}}Elección de indicadores, medidas y criterios más \\ significativos\end{tabular}        \\ \cmidrule(l){3-3} 
-		&                             & Localización y selección de las fuentes de datos                                                                  \\ \cmidrule(l){3-3} 
+		&                             & Selección del modelo de datos                                                                  \\ \cmidrule(l){3-3} 
 		&                             & \begin{tabular}[c]{@{}c@{}}Definición las diferentes iteraciones en las que se realizará \\ el proyecto\end{tabular} \\ \midrule
 		\multirow{2}{*}{Diseño}     & 1                           & Búsqueda de requisitos funcionales                                                                                \\ \cmidrule(l){2-3} 
 		& 2                           & Realización de los modelos de los casos de uso                                                                          \\ \midrule
@@ -398,45 +688,220 @@ El objetivo de este \gls{TFG} es implementar una aplicación en la que los usuar
 \end{table}
 \vspace{0.5cm}
 
-Para una mayor monitorización de las tareas a realizar se incluye a continuación un diagrama de Gantt con la planificación temporal estimada para cada tarea.
+Para una mayor monitorización de las tareas a realizar se incluye a continuación los diagramas de Gantt con la planificación temporal estimada para cada tarea dividida en los seis meses que ha durado el proyecto.
 
 %Preguntar el estilo del diagrama de gant y si vale asi.
 \newpage
 \begin{landscape}
 	
+\textbf{Mes de enero:}\\
+	
 \begin{tikzpicture}
-\GanttHeader{22cm}{2ex}{6.5cm}{25}
-\Task{1}{Introducción al mundo financiero}{0}{7}
-\Task{2}{Metodología, Planificación y costes}{7}{4}
-\Task{3}{Formato de  la base de datos}{11}{7}
-\Task{4}{Tecnologías empleadas}{18}{7}
+\GanttHeader{23cm}{2ex}{7cm}{31}
+\Task{1}{Introducción al mundo financiero}{9}{7}
+\Task{2}{Selección del modelo de datos}{16}{3}
+\Task{3}{Selección de las Tecnologías empleadas}{19}{7}
+\Task{4}{Definir las iteraciones}{26}{5}
+\Task{5}{Documentación}{9}{7}
+\Task{5}{Documentación}{18}{1}
+\Task{5}{}{23}{3}
+\Task{5}{}{29}{2}
 \end{tikzpicture}
 \\
 
+\textbf{Mes de febrero:}\\
+
 \begin{tikzpicture}
-\GanttHeader{22cm}{2ex}{6.5cm}{25}
-\Task{1}{Introducción al mundo financiero}{0}{7}
-\Task{2}{Metodología, Planificación y costes}{7}{4}
-\Task{3}{Formato de  la base de datos}{11}{7}
-\Task{4}{Tecnologías empleadas}{18}{7}
+\GanttHeader{23cm}{2ex}{7cm}{28}
+\Task{1}{Búsqueda de requisitos funcionales}{0}{7}
+\Task{2}{Establecer los casos de uso}{7}{4}
+\Task{3}{Diseño de la base de datos}{11}{7}
+\Task{4}{Creación de la base de datos}{18}{7}
+\Task{5}{Creación del servicio del modelo}{27}{1}
+\Task{6}{Documentación}{0}{7}
+\Task{6}{}{7}{4}
+\Task{6}{}{11}{7}
+\Task{6}{}{25}{2}
+
 \end{tikzpicture}
 \\
+\newpage
+
+\textbf{Mes de marzo:}\\
 
 \begin{tikzpicture}
-\GanttHeader{22cm}{2ex}{6.5cm}{25}
-\Task{1}{Introducción al mundo financiero}{0}{7}
-\Task{2}{Metodología, Planificación y costes}{7}{4}
-\Task{3}{Formato de  la base de datos}{11}{7}
-\Task{4}{Tecnologías empleadas}{18}{7}
+\GanttHeader{23cm}{2ex}{7cm}{31}
+\Task{1}{Creación del servicio del modelo}{0}{13}
+\Task{2}{Diseño de la interfaz}{15}{5}
+\Task{3}{Creación de la interfaz}{21}{10}
+\Task{4}{Documentación}{13}{2}
+\Task{4}{}{20}{1}
+\end{tikzpicture}\\
+
+	
+\textbf{Mes de abril:}\\
+	
+\begin{tikzpicture}
+\GanttHeader{23cm}{2ex}{7cm}{30}
+\Task{1}{Creación de la interfaz}{0}{4}
+\Task{2}{Creación de las gráficas de las carteras}{7}{10}
+\Task{3}{Creación de las gráficas de los fondos}{19}{10}
+\Task{4}{Documentación}{4}{3}
+\Task{4}{}{17}{2}
+\Task{4}{}{29}{1}
 \end{tikzpicture}
-
-
+	\\
+	
+	\textbf{Mes de mayo:}\\
+	
+	\begin{tikzpicture}
+	\GanttHeader{23cm}{2ex}{7cm}{31}
+	\Task{1}{Ejecución paralela}{2}{10}
+	\Task{2}{Redacción del manual de usuario}{12}{7}
+	\Task{3}{Creación del ejecutable}{29}{2}
+	\Task{4}{Documentación}{0}{2}
+	\Task{4}{}{19}{10}
+	\end{tikzpicture}
+	\\
+	
+	\textbf{Mes de junio:}\\
+	
+	\begin{tikzpicture}
+	\GanttHeader{23cm}{2ex}{7cm}{30}
+	\Task{1}{Creación del ejecutable}{0}{3}
+	\Task{2}{Revisión}{3}{3}
+	\Task{3}{Margen de error de la planificación}{6}{16}
+	\end{tikzpicture}
+	
+	
 \end{landscape} 
-
 \newpage
 
 
-\part{Desarrollo}
+Con la planificación establecida tenemos un margen de error de unas dos semanas, el ritmo de trabajo será aproximadamente de unas 20 horas semanales.\\
+
+La idea es realizar la documentación del proyecto de forma simultanea, en la medida de lo posible, a su desarrollo.
+
+\section{Evaluación de costes}
+
+El proyecto se inicia el 09-01-2017 y finaliza el 22-06-2017.\\
+
+En total se emplean 115 días laborables en la realización del proyecto. El total de horas empleadas en cada una de las tareas del proyecto se presenta en la siguiente tabla: \\
+
+\begin{table}[htbp]
+	\centering
+	\caption{Horas totales por cada tarea}
+	\label{horas}
+	\begin{tabular}{@{}c|c|c|@{}}
+		\toprule
+		\multicolumn{1}{|c|}{Fase}                           & Tarea                                    & Duración \\ \midrule
+		\multicolumn{1}{|c|}{\multirow{4}{*}{Inicial}}       & Introducción al mundo financiero         & 14       \\ \cmidrule(l){2-3} 
+		\multicolumn{1}{|c|}{}                               & Selección del modelo de datos            & 6        \\ \cmidrule(l){2-3} 
+		\multicolumn{1}{|c|}{}                               & Selección de las Tecnologías empleadas   & 14       \\ \cmidrule(l){2-3} 
+		\multicolumn{1}{|c|}{}                               & Definir las iteraciones                  & 10       \\ \midrule
+		\multicolumn{1}{|c|}{\multirow{2}{*}{Diseño}}        & Búsqueda de requisitos funcionales       & 14       \\ \cmidrule(l){2-3} 
+		\multicolumn{1}{|c|}{}                               & Establecer los casos de uso              & 10       \\ \midrule
+		\multicolumn{1}{|c|}{\multirow{8}{*}{Desarrollo}}    & Diseño de la base de datos               & 14       \\ \cmidrule(l){2-3} 
+		\multicolumn{1}{|c|}{}                               & Creación de la base de datos             & 18       \\ \cmidrule(l){2-3} 
+		\multicolumn{1}{|c|}{}                               & Creación del servicio del modelo         & 30       \\ \cmidrule(l){2-3} 
+		\multicolumn{1}{|c|}{}                               & Diseño de la interfaz                    & 10       \\ \cmidrule(l){2-3} 
+		\multicolumn{1}{|c|}{}                               & Creación de la interfaz                  & 20       \\ \cmidrule(l){2-3} 
+		\multicolumn{1}{|c|}{}                               & Creación de las gráficas de las carteras & 20       \\ \cmidrule(l){2-3} 
+		\multicolumn{1}{|c|}{}                               & Creación de las gráficas de los fondos   & 20       \\ \cmidrule(l){2-3} 
+		\multicolumn{1}{|c|}{}                               & Implementación de la ejecución paralela  & 20       \\ \midrule
+		\multicolumn{1}{|c|}{\multirow{2}{*}{Documentación}} & Redacción del manual de usuario          & 14       \\ \cmidrule(l){2-3} 
+		\multicolumn{1}{|c|}{}                               & Documentación                            & 50       \\ \midrule
+		\multicolumn{1}{l|}{}                                & Total                                    & 284      \\ \cmidrule(l){2-3} 
+	\end{tabular}
+\end{table}
+
+Si el proyecto se llevase a cabo en una empresa real ,la mayoría de las tareas (por no decir todas) las realizaría un único programador. Teniendo en cuenta un coste medio por hora de 15€/persona, y que todo el software utilizado en el proyecto es gratuito, el coste total asciende a 4260€.
+
+
+\newpage
+\chapter{Etapa preliminar}
+
+\section{Selección del modelo de datos}
+
+En un primer momento, se nos presentaban tres fuentes factibles de las cuales podríamos obtener y gestionar los datos de los fondos de inversión.\\
+
+La primera, consiste en cargar los datos directamente de hojas de cálculo. Esta opción supondría que la aplicación debería ser capaz de obtener los datos tanto de fondos como de carteras de ficheros .xls. Leer de hojas de cálculo es relativamente rápido, pero la inserción de los datos no lo es. Si queremos añadir un nuevo \gls{VL} al fondo en un día determinado, deberemos mover todos los valores siguientes una posición, y lo mismo sucede con el borrado.\\
+
+La segunda opción consiste en hacer web scraping de diferentes páginas como podría ser \href{https://funds.ddns.net/}{funds.ddns.net}. Esta web nos proporciona un histórico del fondo con el ISIN que le indicamos. De esta forma, necesitaríamos guardar de alguna manera los identificadores de los fondos del usuario y cargarlos en memoria una vez se inicia la aplicación. Esta alternativa imposibilitaría la ejecución de la aplicación sin conexión, pero mantendría los fondos actualizados automáticamente.\\
+
+La tercera opción, y la que se ha decidido implementar, es la creación de una base de datos de fondos y carteras. De esta forma no tenemos problemas de inserción ni de actualización. Los datos están disponibles aunque no tengamos conexión y tenemos la seguridad de que se cumplen las restricciones de integridad que impongamos. El único inconveniente es la forma de introducir los históricos de \gls{VL}s de los fondos, ya que introducirlos a mano en la base de datos no es una opción viable. Para solucionar esto, la aplicación podrá leer listas de valores de hojas de cálculo y añadirlos a un fondo determinado.
+
+
+
+\newpage
+
+\section{Definición de las iteraciones}
+
+Se ha decidido que el desarrollo del proyecto se divida en cuatro iteraciones funcionales:
+
+\begin{itemize}
+	\item Desarrollo de la capa modelo: Durante esta iteración se llevará a cabo el diseño de la base de datos, su creación usando hibernate, se implementará el servicio del modelo y se probará su funcionamiento utilizando JUnit. 
+	\item Desarrollo de la interfaz gráfica: Durante esta iteración se diseñará y construirá la \gls{GUI}.
+	\item Creación de las gráficas: Durante esta iteración se crearan las gráficas seleccionadas en los requisitos funcionales de la aplicación.
+	\item Ejecución de tareas en segundo plano: Durante esta iteración, se implementará la ejecución paralela de los métodos que más tiempo necesiten.
+\end{itemize}
+
+\newpage
+\chapter{Diseño}
+
+\section{Búsqueda de requisitos funcionales}
+
+Los requisitos funcionales definen las funcionalidades específicas que nuestro sistema debe cumplir. En la siguiente tabla se definen los requisitos funcionales de nuestra aplicación:
+
+
+\begin{table}[htbp]
+	\centering
+	\caption{Requisitos funcionales}
+	\label{my-label}
+	\begin{tabular}{|c|c|}
+		\hline
+		Requisito                                                                                 & Descripcción del requisto                                                                                                                                                                                 \\ \hline
+		Añadir y modificar un fondo                                                               & \begin{tabular}[c]{@{}c@{}}El sistema debe permitir añadir un nuevo \\ fondo a la base de datos y modificar los ya \\ existentes.\end{tabular}                                                            \\ \hline
+		Añadir y modificar una cartera                                                            & \begin{tabular}[c]{@{}c@{}}El sistema debe permitir añadir una \\ nueva cartera a la base de datos y \\ modificar las ya existentes\end{tabular}                                                          \\ \hline
+		Añadir y modificar un VL                                                                  & \begin{tabular}[c]{@{}c@{}}El sistema debe permitir añadir un\\ nuevo VL a un fondo y actualizar \\ los ya existentes\end{tabular}                                                                        \\ \hline
+		Borrar un fondo                                                                           & \begin{tabular}[c]{@{}c@{}}El sistema debe permitir eliminar\\ un fondo de la base de datos\end{tabular}                                                                                                  \\ \hline
+		Borrar una cartera                                                                        & \begin{tabular}[c]{@{}c@{}}El sistema debe permitir eliminar\\ una cartera de la base de datos\end{tabular}                                                                                               \\ \hline
+		Borrar un VL                                                                              & \begin{tabular}[c]{@{}c@{}}El sistema debe permitir eliminar\\ un VLde la base de datos\end{tabular}                                                                                                      \\ \hline
+		Importar VLs                                                                              & \begin{tabular}[c]{@{}c@{}}El sistema debe permitir importar \\ VLs de un fichero .xls si este\\ tiene el formato correcto\end{tabular}                                                                   \\ \hline
+		Exportar fondos                                                                           & \begin{tabular}[c]{@{}c@{}}El sistema debe permitir exportar los\\ fondos y sus VLs a ficheros .xls en un \\ directorio seleccionado por el usuario\end{tabular}                                          \\ \hline
+		Importar fondos                                                                           & \begin{tabular}[c]{@{}c@{}}El sistema debe permitir importar fondos\\ previamente exportados por la aplicación\end{tabular}                                                                               \\ \hline
+                                                                                                                                     
+		
+	\end{tabular}
+\end{table}
+
+\newpage
+
+\begin{table}[htbp]
+	\centering
+	\caption{Requisitos funcionales (cont)}
+	\label{my-label}
+	\begin{tabular}{|c|c|}
+		\hline
+		Requisito                                                                                 & Descripcción del requisto                                                                                                                                                                                 \\ \hline
+                                                                            
+		\begin{tabular}[c]{@{}c@{}}Añadir y eliminar un fondo\\  de una cartera\end{tabular}      & \begin{tabular}[c]{@{}c@{}}El sistema debe permitir añadir y eliminar\\ un fondo de una cartera en la base de datos\end{tabular}                                                                          \\ \hline
+		Añadir y modificar una operación                                                          & \begin{tabular}[c]{@{}c@{}}El sistema debe permitir añadir una nueva\\ operación a una cartera sobre un fondo \\ determinado y actualizar las existentes.\end{tabular}                                    \\ \hline
+		Visualizar los VLs de un fondo                                                            & \begin{tabular}[c]{@{}c@{}}El sistema debe proporcionar al usuario\\ la información de los VLs de un fondo\end{tabular}                                                                                   \\ \hline
+		\begin{tabular}[c]{@{}c@{}}Visualizar las operaciones de\\ una cartera\end{tabular}       & \begin{tabular}[c]{@{}c@{}}El sistema debe proporcionar información\\ acerca las operaciones que se han llevado\\ a cabo en una cartera para un fondo \\ determinado\end{tabular}                         \\ \hline
+		\begin{tabular}[c]{@{}c@{}}Visualizar la descripción de \\ un fondo\end{tabular}          & \begin{tabular}[c]{@{}c@{}}El sistema debe proporcionar al usuario\\ la información general de un fondo y sus \\ métricas de rendimiento tales como \\ desviación estandar o ratio de shape.\end{tabular} \\ \hline
+		\begin{tabular}[c]{@{}c@{}}Visualizar las gráficas de fondos\\ y de carteras\end{tabular} & \begin{tabular}[c]{@{}c@{}}El sistema debe proporcionar al usuario \\ un recuadro donde visualizar la gráfica \\ seleccionada\end{tabular}                                                                \\ \hline
+	\end{tabular}
+\end{table}
+
+Estos requisitos funcionales deberán ser tenidos en cuenta durante todo el proceso de desarrollo de la aplicación.
+
+\newpage
+
+\section{Realización de los modelos de los casos de uso}
+\newpage
+
+\chapter{Desarrollo}
 \section{Primera iteración: Capa modelo}
 
 Esta primera iteración de desarrollo tiene como objetivo sentar las bases de la aplicación, proporcionando una capa modelo que exponga las funcionalidades necesarias para el acceso a los datos de los diferentes fondos de inversión.\\
@@ -1245,11 +1710,19 @@ Cuando importamos un fondo, el servicio del modelo nos devuelve el fondo conteni
 Mientras se está importando un fondo o sus \gls{VL}s, se bloquean los botones de importar fondo e importar \gls{VL}s.
 \newpage
 
+\appendix
+\chapter{Manual de usuario}\label{aped.A}
+
+
+\cleardoublepage
 
 \newpage
-\part{Bibliografía}
 
 \begin{thebibliography}{10}
+	
+	\bibitem[ Bou Ysas Silvia]{}
+	\newblock {\textit{Medidas de Performance Para Carteras de Fondos de Inversión}.
+		\\Ewe Editorial Acad MIA Espa Ola , 2012.}
 	
 	\bibitem[CNMV]{}
 	\newblock {\textit{Comisión Nacional del Mercado de Valores}.}
@@ -1266,10 +1739,106 @@ Mientras se está importando un fondo o sus \gls{VL}s, se bloquean los botones d
 	\newline
 	\href{http://www.rankia.com/blog/fondos-inversion/952310-que-fondo-inversion-como-funciona}{http://www.rankia.com/blog/fondos-inversion/952310-que-fondo-inversion-como-funciona}
 	
+	\bibitem[Rankia]{}
+	\newblock {\textit{Índice de referencia del fondo}.}
+	\newline
+	\href{https://www.rankia.com/blog/fondos-inversion-que-es/1137719-indice-referencia-fondo}{https://www.rankia.com/blog/fondos-inversion-que-es/1137719-indice-referencia-fondo}
+	
+	\bibitem[Rankia]{}
+	\newblock {\textit{Máximo drawdown}.}
+	\newline
+	\href{https://www.rankia.com/blog/fondos-inversion-que-es/1137747-maximo-drawdown}{https://www.rankia.com/blog/fondos-inversion-que-es/1137747-maximo-drawdown}
+	
+	\bibitem[Funds Peopel]{}
+	\newblock {\textit{La importancia de la ratio de Sharpe a la hora de seleccionar fondos}.}
+	\newline
+	\href{http://es.fundspeople.com/news/la-importancia-del-ratio-de-sharpe-a-la-hora-de-seleccionar-fondos}{http://es.fundspeople.com/news/la-importancia-del-ratio-de-sharpe-a-la-hora-de-seleccionar-fondos}
+	
+	\bibitem[Economipedia]{}
+	\newblock {\textit{Alfa de Jensen}.}
+	\newline
+	\href{http://economipedia.com/definiciones/alfa-de-jensen.html}{http://economipedia.com/definiciones/alfa-de-jensen.html}
+	
+	\bibitem[Economipedia]{}
+	\newblock {\textit{Beta de un activo financiero}.}
+	\newline
+	\href{http://economipedia.com/definiciones/beta-de-un-activo-financiero.html}{http://economipedia.com/definiciones/beta-de-un-activo-financiero.html}
+	
 	\bibitem[Wikipedia]{}
 	\newblock {\textit{Proceso Unificado de Desarrollo Software}.}
 	\newline
 	\href{https://es.wikipedia.org/wiki/Proceso\_unificado}{https://es.wikipedia.org/wiki/Proceso\_unificado}
+	
+	\bibitem[Wikipedia]{}
+	\newblock {\textit{Model–view–presenter}.}
+	\newline
+	\href{https://en.wikipedia.org/wiki/Model–view–presenter}{https://en.wikipedia.org/wiki/Model–view–presenter}
+	
+	\bibitem[Jboss]{}
+	\newblock {\textit{Hibernate}.}
+	\newline
+	\href{http://docs.jboss.org/hibernate/orm/3.5/reference/es-ES/html/}{http://docs.jboss.org/hibernate/orm/3.5/reference/es-ES/html/}
+	
+	\newpage
+	
+	\bibitem[Mkyong]{}
+	\newblock {\textit{Hibernate, Many-to-Many annotation}.}
+	\newline
+	\href{https://www.mkyong.com/hibernate/hibernate-many-to-many-relationship-example-annotation/}{https://www.mkyong.com/hibernate/hibernate-many-to-many-relationship-example-annotation/}
+	
+	
+	
+	\bibitem[Vladmihalcea]{}
+	\newblock {\textit{The best way to map a Composite Primary Key with JPA and Hibernate}.}
+	\newline
+	\href{https://vladmihalcea.com/2016/08/01/the-best-way-to-map-a-composite-primary-key-with-jpa-and-hibernate/}{https://vladmihalcea.com/2016/08/01/the-best-way-to-map-a-composite-primary-key-with-jpa-and-hibernate/}
+	
+	\bibitem[Oracle]{}
+	\newblock {\textit{Using Swing Components}.}
+	\newline
+	\href{http://docs.oracle.com/javase/tutorial/uiswing/components/index.html}{http://docs.oracle.com/javase/tutorial/uiswing/components/index.html}
+	
+	\bibitem[Oracle]{}
+	\newblock {\textit{Writing Event Listeners}.}
+	\newline
+	\href{http://docs.oracle.com/javase/tutorial/uiswing/events/index.html}{http://docs.oracle.com/javase/tutorial/uiswing/events/index.html}
+	
+	\bibitem[CodeJava]{}
+	\newblock {\textit{How to use JDatePicker to display calendar component}.}
+	\newline
+	\href{http://www.codejava.net/java-se/swing/how-to-use-jdatepicker-to-display-calendar-component}{http://www.codejava.net/java-se/swing/how-to-use-jdatepicker-to-display-calendar-component}
+	
+	\bibitem[Java Creed]{}
+	\newblock {\textit{Swing Worker}.}
+	\newline
+	\href{http://www.javacreed.com/swing-worker-example/}{http://www.javacreed.com/swing-worker-example/}
+	
+	\bibitem[Java Code Geeks]{}
+	\newblock {\textit{Multi-threading in Java Swing with SwingWorker}.}
+	\newline
+	\href{https://www.javacodegeeks.com/2012/12/multi-threading-in-java-swing-with-swingworker.html}{https://www.javacodegeeks.com/2012/12/multi-threading-in-java-swing-with-swingworker.html}
+	
+	\bibitem[jfree]{}
+	\newblock {\textit{JFreeChart - Documentation}.}
+	\newline
+	\href{http://www.jfree.org/jfreechart/api/javadoc/index.html}{http://www.jfree.org/jfreechart/api/javadoc/index.html}
+	
+	\bibitem[Tutorials Point]{}
+	\newblock {\textit{JFreeChart Tutorial}.}
+	\newline
+	\href{https://www.tutorialspoint.com/jfreechart/}{https://www.tutorialspoint.com/jfreechart/}
+	
+	\bibitem[jexcelapi]{}
+	\newblock {\textit{JexcelApi - Documentation}.}
+	\newline
+	\href{http://jexcelapi.sourceforge.net/resources/javadocs/}{http://jexcelapi.sourceforge.net/resources/javadocs/}
+	
+	
+	\bibitem[TeamDev]{}
+	\newblock {\textit{JexcelApi - JExcel Programmer's Guide}.}
+	\newline
+	\href{https://www.teamdev.com/downloads/jexcel/docs/JExcel-PGuide.html}{https://www.teamdev.com/downloads/jexcel/docs/JExcel-PGuide.html}
+	
 	
 \end{thebibliography}
 \newpage
