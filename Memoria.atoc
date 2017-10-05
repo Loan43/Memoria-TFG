@@ -1,0 +1,87 @@
+\select@language {spanish}
+\select@language {spanish}
+\contentsline {chapter}{\numberline {1}Introducci\IeC {\'o}n}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Objetivos}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}Estructura del documento}{2}{section.1.2}
+\contentsline {chapter}{\numberline {2}Fundamentos te\IeC {\'o}ricos}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Introducci\IeC {\'o}n a los fondos de inversi\IeC {\'o}n}{3}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Fondos de inversi\IeC {\'o}n}{3}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Tipos de fondos }{4}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Criterios para elegir un fondo de inversi\IeC {\'o}n.}{5}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}M\IeC {\'e}tricas o indicadores}{6}{subsection.2.1.4}
+\contentsline {subsection}{\numberline {2.1.5}Operaciones y seguimiento de fondos}{7}{subsection.2.1.5}
+\contentsline {chapter}{\numberline {3}Fundamentos tecnol\IeC {\'o}gicos}{9}{chapter.3}
+\contentsline {section}{\numberline {3.1}Revisi\IeC {\'o}n de fundamentos tecnol\IeC {\'o}gicos}{9}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Herramientas para la gesti\IeC {\'o}n de proyectos}{9}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Herramientas para el modelado de software}{9}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}Herramientas para el desarrollo del proyecto}{10}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.4}Herramientas de bases de datos}{10}{subsection.3.1.4}
+\contentsline {subsection}{\numberline {3.1.5}Herramientas para el desarrollo de la interfaz gr\IeC {\'a}fica}{11}{subsection.3.1.5}
+\contentsline {subsection}{\numberline {3.1.6}Herramientas para la creaci\IeC {\'o}n de las gr\IeC {\'a}ficas}{11}{subsection.3.1.6}
+\contentsline {subsection}{\numberline {3.1.7}Herramientas para la gesti\IeC {\'o}n de ficheros .xls}{11}{subsection.3.1.7}
+\contentsline {subsection}{\numberline {3.1.8}Herramientas para pruebas}{12}{subsection.3.1.8}
+\contentsline {subsection}{\numberline {3.1.9}Herramientas de documentaci\IeC {\'o}n}{12}{subsection.3.1.9}
+\contentsline {chapter}{\numberline {4}Metodolog\IeC {\'\i }a}{13}{chapter.4}
+\contentsline {section}{\numberline {4.1}Proceso Unificado de Desarrollo Software}{13}{section.4.1}
+\contentsline {section}{\numberline {4.2}Patr\IeC {\'o}n modelo\IeC {\textendash }vista\IeC {\textendash }presentador}{14}{section.4.2}
+\contentsline {chapter}{\numberline {5}Planificaci\IeC {\'o}n y evaluaci\IeC {\'o}n de costes}{15}{chapter.5}
+\contentsline {section}{\numberline {5.1}Planificaci\IeC {\'o}n}{15}{section.5.1}
+\contentsline {section}{\numberline {5.2}Evaluaci\IeC {\'o}n de costes}{19}{section.5.2}
+\contentsline {chapter}{\numberline {6}Etapa preliminar}{21}{chapter.6}
+\contentsline {section}{\numberline {6.1}Selecci\IeC {\'o}n del modelo de datos}{21}{section.6.1}
+\contentsline {section}{\numberline {6.2}Definici\IeC {\'o}n de las iteraciones}{22}{section.6.2}
+\contentsline {chapter}{\numberline {7}Dise\IeC {\~n}o}{23}{chapter.7}
+\contentsline {section}{\numberline {7.1}B\IeC {\'u}squeda de requisitos funcionales}{23}{section.7.1}
+\contentsline {section}{\numberline {7.2}Casos de uso}{25}{section.7.2}
+\contentsline {chapter}{\numberline {8}Desarrollo}{37}{chapter.8}
+\contentsline {section}{\numberline {8.1}Primera iteraci\IeC {\'o}n: Capa modelo}{37}{section.8.1}
+\contentsline {subsection}{\numberline {8.1.1}Dise\IeC {\~n}o de la base de datos}{37}{subsection.8.1.1}
+\contentsline {subsection}{\numberline {8.1.2}Implementaci\IeC {\'o}n de la base de datos mediante Hibernate}{41}{subsection.8.1.2}
+\contentsline {subsection}{\numberline {8.1.3}Implementaci\IeC {\'o}n del servicio del modelo}{44}{subsection.8.1.3}
+\contentsline {section}{\numberline {8.2}Segunda iteraci\IeC {\'o}n: Creaci\IeC {\'o}n de la GUI}{48}{section.8.2}
+\contentsline {subsection}{\numberline {8.2.1}Dise\IeC {\~n}o de la interfaz}{48}{subsection.8.2.1}
+\contentsline {subsection}{\numberline {8.2.2}Implementaci\IeC {\'o}n de la interfaz}{50}{subsection.8.2.2}
+\contentsline {section}{\numberline {8.3}Tercera iteraci\IeC {\'o}n: Creaci\IeC {\'o}n de las gr\IeC {\'a}ficas}{59}{section.8.3}
+\contentsline {subsection}{\numberline {8.3.1}Preparaci\IeC {\'o}n de las gr\IeC {\'a}ficas}{59}{subsection.8.3.1}
+\contentsline {subsection}{\numberline {8.3.2}Gr\IeC {\'a}ficas de carteras}{60}{subsection.8.3.2}
+\contentsline {subsubsection}{Distribuci\IeC {\'o}n de capital de la cartera}{60}{subsection.8.3.2}
+\contentsline {subsubsection}{Fondos normalizados de la cartera}{61}{figure.caption.52}
+\contentsline {subsubsection}{Comparativa de rentabilidad de los fondos de una cartera}{62}{equation.8.3.1}
+\contentsline {subsubsection}{Comparativa de inversi\IeC {\'o}n}{63}{figure.caption.54}
+\contentsline {subsubsection}{Rentabilidad total de la cartera}{64}{figure.caption.55}
+\contentsline {subsection}{\numberline {8.3.3}Gr\IeC {\'a}ficas de fondos}{65}{subsection.8.3.3}
+\contentsline {subsubsection}{Historial del Valor Liquidativo}{65}{subsection.8.3.3}
+\contentsline {subsubsection}{Historial de rentabilidades}{66}{figure.caption.57}
+\contentsline {subsubsection}{Rentabilidad esperada}{67}{figure.caption.58}
+\contentsline {subsubsection}{Medias m\IeC {\'o}viles}{68}{equation.8.3.3}
+\contentsline {section}{\numberline {8.4}Cuarta iteraci\IeC {\'o}n: Ejecuci\IeC {\'o}n de tareas en segundo plano}{69}{section.8.4}
+\contentsline {subsection}{\numberline {8.4.1}SwingWorker}{69}{subsection.8.4.1}
+\contentsline {subsection}{\numberline {8.4.2}Implementaci\IeC {\'o}n de SwingWorker}{71}{subsection.8.4.2}
+\contentsline {subsubsection}{ChartWorker}{71}{subsection.8.4.2}
+\contentsline {subsubsection}{NodesWorker}{72}{subsection.8.4.2}
+\contentsline {subsubsection}{ImportFundWorker}{72}{subsection.8.4.2}
+\contentsline {chapter}{\numberline {9}Pruebas}{75}{chapter.9}
+\contentsline {section}{\numberline {9.1}Pruebas realizadas en la primera iteraci\IeC {\'o}n: Capa modelo}{75}{section.9.1}
+\contentsline {section}{\numberline {9.2}Pruebas realizadas en la segunda iteraci\IeC {\'o}n: Creaci\IeC {\'o}n de la GUI}{75}{section.9.2}
+\contentsline {section}{\numberline {9.3}Pruebas realizadas en la tercera iteraci\IeC {\'o}n: Creaci\IeC {\'o}n de las gr\IeC {\'a}ficas }{76}{section.9.3}
+\contentsline {section}{\numberline {9.4}Pruebas realizadas en la cuarta iteraci\IeC {\'o}n: Ejecuci\IeC {\'o}n de tareas en segundo plano}{76}{section.9.4}
+\contentsline {chapter}{\numberline {10}Conclusiones y l\IeC {\'\i }neas futuras de trabajo}{77}{chapter.10}
+\contentsline {section}{\numberline {10.1}Conclusiones}{77}{section.10.1}
+\contentsline {section}{\numberline {10.2}L\IeC {\'\i }neas futuras de trabajo}{78}{section.10.2}
+\StartAppendixEntries 
+\contentsline {chapter}{\numberline {A}Manual de usuario}{81}{appendix.Alph1}
+\contentsline {section}{\numberline {A.1}Introducci\IeC {\'o}n}{82}{section.Alph1.1}
+\contentsline {subsection}{\numberline {A.1.1}Descripci\IeC {\'o}n general de la Aplicaci\IeC {\'o}n}{82}{subsection.Alph1.1.1}
+\contentsline {subsection}{\numberline {A.1.2}Objetivos y ventajas}{82}{subsection.Alph1.1.2}
+\contentsline {subsection}{\numberline {A.1.3}Usuarios y desarrolladores de la Aplicaci\IeC {\'o}n}{82}{subsection.Alph1.1.3}
+\contentsline {section}{\numberline {A.2}Requisitos de Hardware y Software}{82}{section.Alph1.2}
+\contentsline {subsection}{\numberline {A.2.1}Requisitos de Hardware}{82}{subsection.Alph1.2.1}
+\contentsline {subsection}{\numberline {A.2.2}Requisitos de Software}{82}{subsection.Alph1.2.2}
+\contentsline {section}{\numberline {A.3}Procedimientos de Instalaci\IeC {\'o}n, arranque y finalizaci\IeC {\'o}n de la Aplicaci\IeC {\'o}n}{82}{section.Alph1.3}
+\contentsline {subsection}{\numberline {A.3.1}Contenido del disco de instalaci\IeC {\'o}n}{82}{subsection.Alph1.3.1}
+\contentsline {subsection}{\numberline {A.3.2}Procedimiento de Instalaci\IeC {\'o}n}{82}{subsection.Alph1.3.2}
+\contentsline {subsection}{\numberline {A.3.3}Arranque de la Aplicaci\IeC {\'o}n}{82}{subsection.Alph1.3.3}
+\contentsline {subsection}{\numberline {A.3.4}Finalizaci\IeC {\'o}n de la Aplicaci\IeC {\'o}n}{82}{subsection.Alph1.3.4}
+\contentsline {section}{\numberline {A.4}Descripci\IeC {\'o}n de Men\IeC {\'u}s, Pantallas y Procesos}{82}{section.Alph1.4}
+\contentsline {subsection}{\numberline {A.4.1}Elementos comunes a toda la Aplicaci\IeC {\'o}n}{82}{subsection.Alph1.4.1}
+\contentsline {subsection}{\numberline {A.4.2}Men\IeC {\'u}s, pantallas y procesos de la Aplicaci\IeC {\'o}n}{82}{subsection.Alph1.4.2}

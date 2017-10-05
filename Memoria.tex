@@ -28,6 +28,8 @@
 \titleformat*{\section}{\LARGE\bfseries}
 \titleformat*{\subsection}{\Large\bfseries}
 
+
+\usepackage{etoc}
 \usepackage{xcolor}
 \usepackage{listings}
 \usepackage{caption}
@@ -135,6 +137,9 @@
 
 
 \begin{document}
+\etocdepthtag.toc{mtchapter}
+\etocsettagdepth{mtchapter}{subsection}
+\etocsettagdepth{mtappendix}{none}
 \renewcommand{\partname}{Capítulo}
 \renewcommand{\tablename}{Tabla}
 \renewcommand{\acronymname }{Acrónimos}
@@ -904,7 +909,7 @@ Estos requisitos funcionales deberán ser tenidos en cuenta durante todo el proc
 
 \section{Casos de uso}
 
-En esta sección se detallan los diferentes casos de uso para cada uno de los requisitos funcionales definidos en las tablas \ref{Requisitos} y \ref{Requisitos2}.
+En esta sección se detallan los diferentes casos de uso para cada uno de los requisitos funcionales definidos en las tablas \ref{Requisitos} y \ref{Requisitos2}. Estos casos de uso se detallan en las tablas \ref{afondo}-\ref{vergraficas}.
 
 
 \begin{table}[htbp]
@@ -919,10 +924,10 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador      & El cliente solicita añadir un fondo                                                                                                                                                                                                                                                                                                                                  \\ \hline
 		Actores         & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                                  \\ \hline
 		Precondiciones  & Ninguna                                                                                                                                                                                                                                                                                                                \\ \hline
-		Flujo           & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita añadir un nuevo fondo\\ 2. La vista proporciona una ventana en la que introducir los datos\\ 3. El usuario introduce los datos del fondo\\ 4. El usuario confirma los datos\\ 5. El presentador formatea los datos y llama al modelo\\ 6. El modelo recibe los datos y los guarda en la base de datos\end{tabular} \\ \hline
+		Flujo           & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita añadir un nuevo fondo\\ 2. La vista proporciona una ventana en la que se introducen \\ \hspace{0.5cm}los datos\\ 3. El usuario introduce los datos del fondo\\ 4. El usuario confirma los datos\\ 5. El presentador formatea los datos y llama al modelo\\ 6. El modelo recibe los datos y los guarda en la base de datos\end{tabular} \\ \hline
 		Flujo alternativo & 4.1 El usuario cancela la operación                                                                                                                                                                                                                                                                                                    \\ \hline
-		Postcondiciones & El fondo añadido a la base de datos                                                                                                                                                                                                                                                                                                                                  \\ \hline
-		Excepciones     & \begin{tabular}[c]{@{}l@{}}El ISIN del fondo ya se encontraba en la base de datos\\El ISIN del fondo tiene un formato incorrecto \\El nombre del fondo es  nulo.\end{tabular}                                                                                                                                                                                                                \\ \hline
+		Postcondiciones & El fondo es añadido a la base de datos                                                                                                                                                                                                                                                                                                                                  \\ \hline
+		Excepciones     & \begin{tabular}[c]{@{}l@{}}El ISIN del fondo ya se encontraba en la base de datos\\El ISIN del fondo tiene un formato incorrecto \\El nombre del fondo es  nulo\end{tabular}                                                                                                                                                                                                                \\ \hline
 	\end{tabular}
 
 \end{table}
@@ -939,10 +944,10 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador      & El cliente solicita modificar un fondo                                                                                                                                                                                                                                                                                                                                                      \\ \hline
 		Actores         & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                                                         \\ \hline
 		Precondiciones  & El fondo existe en la base de datos                                                                                                                                                                                                                                                                                                                                                   \\ \hline
-		Flujo           & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita modificar un fondo\\ 2. La vista proporciona una ventana en la que modificar los datos\\ 3. El usuario modifica los datos del fondo\\ 4. El usuario confirma los datos modificados\\ 5. El presentador formatea los datos y llama al modelo\\ 6. El modelo recibe los datos y actualiza el fondo en la\\ base de datos\end{tabular} \\ \hline
+		Flujo           & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita modificar un fondo\\ 2. La vista proporciona una ventana en la que se modifican los datos\\ 3. El usuario modifica los datos del fondo\\ 4. El usuario confirma los datos modificados\\ 5. El presentador formatea los datos y llama al modelo\\ 6. El modelo recibe los datos y actualiza el fondo en la base de \\ \hspace{0.5cm}datos\end{tabular} \\ \hline
 		Flujo alternativo & 4.1 El usuario cancela la modificación                                                                                                                                                                                                                                                                                                    \\ \hline
-		Postcondiciones & El fondo modificado en la base de datos                                                                                                                                                                                                                                                                                                                                                     \\ \hline
-		Excepciones     & \begin{tabular}[c]{@{}l@{}}El nombre del fondo modificado es nulo.\end{tabular}                                                                                                                                                                                                                                       \\ \hline
+		Postcondiciones & El fondo es modificado en la base de datos                                                                                                                                                                                                                                                                                                                                                     \\ \hline
+		Excepciones     & \begin{tabular}[c]{@{}l@{}}El nombre del fondo modificado es nulo\end{tabular}                                                                                                                                                                                                                                       \\ \hline
 	\end{tabular}
 
 \end{table}
@@ -959,9 +964,9 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador      & El cliente solicita añadir una cartera                                                                                                                                                                                                                                                                                                                                               \\ \hline
 		Actores         & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                                                  \\ \hline
 		Precondiciones  & Ninguna                                                                                                                                                                                                                                                                                                                                                                              \\ \hline
-		Flujo           & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita añadir una cartera\\ 2. La vista proporciona una ventana en la que introducir los\\ datos\\ 3. El usuario introduce los datos de la cartera\\ 4. El usuario confirma los datos\\ 5. El presentador formatea los datos y llama al modelo\\ 6. El modelo recibe los datos y crea la nueva cartera en la base\\ de datos\end{tabular} \\ \hline
+		Flujo           & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita añadir una cartera\\ 2. La vista proporciona una ventana en la que se introducen los\\\hspace{0.5cm}datos\\ 3. El usuario introduce los datos de la cartera\\ 4. El usuario confirma los datos\\ 5. El presentador formatea los datos y llama al modelo\\ 6. El modelo recibe los datos y crea la nueva cartera en la base de \\ \hspace{0.5cm}datos\end{tabular} \\ \hline
 		Flujo alternativo & 4.1 El usuario cancela la operación                                                                                                                                                                                                                                                                                                    \\ \hline
-		Postcondiciones & La cartera añadida a la base de datos                                                                                                                                                                                                                                                                                                                                                \\ \hline
+		Postcondiciones & La cartera es añadida a la base de datos                                                                                                                                                                                                                                                                                                                                                \\ \hline
 		Excepciones     & \begin{tabular}[c]{@{}l@{}}El nombre de la cartera es nulo\\Ya existe una cartera con el mismo nombre en la base de datos\end{tabular}                                                                             \\ \hline
 	\end{tabular}
 \end{table}
@@ -978,9 +983,9 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador      & El cliente solicita modificar una cartera                                                                                                                                                                                                                                                                                                                                                      \\ \hline
 		Actores         & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                                                            \\ \hline
 		Precondiciones  & La cartera existe en la base de datos                                                                                                                                                                                                                                                                                                                                                          \\ \hline
-		Flujo           & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita modificar una cartera\\ 2. La vista proporciona una ventana en la que modificar los datos\\ 3. El usuario modifica los datos de la cartera\\ 4. El usuario confirma los datos modificados\\ 5. El presentador formatea los datos y llama al modelo\\ 6. El modelo recibe los datos y actualiza la cartera en la base\\ de datos\end{tabular} \\ \hline
+		Flujo           & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita modificar una cartera\\ 2. La vista proporciona una ventana en la que se modifican los\\\hspace{0.5cm}datos\\ 3. El usuario modifica los datos de la cartera\\ 4. El usuario confirma los datos modificados\\ 5. El presentador formatea los datos y llama al modelo\\ 6. El modelo recibe los datos y actualiza la cartera en la base\\ \hspace{0.5cm}de datos\end{tabular} \\ \hline
 		Flujo alternativo & 4.1 El usuario cancela la modificación                                                                                                                                                                                                                                                                 \\ \hline
-		Postcondiciones & La cartera modificada en la base de datos                                                                                                                                                                                                                                                                                                                                                      \\ \hline
+		Postcondiciones & La cartera es modificada en la base de datos                                                                                                                                                                                                                                                                                                                                                      \\ \hline
 		Excepciones     & \begin{tabular}[c]{@{}l@{}}El nombre modificado de la cartera ya existe en la base de datos\end{tabular}                                                                                                                                                                                                                                              \\ \hline
 	\end{tabular}
 \end{table}
@@ -998,7 +1003,7 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador      & El cliente solicita añadir un valor liquidativo                                                                                                                                                                                                                                                                                                                                                                                   \\ \hline
 		Actores         & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                                                                                               \\ \hline
 		Precondiciones  & \begin{tabular}[c]{@{}l@{}}El fondo al que pertenece el valor liquidativo existe en la base\\ de datos\end{tabular}                                                                                                                                                                                                                                                                                                               \\ \hline
-		Flujo           & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita añadir un valor liquidativo\\ 2. La vista proporciona una ventana en la que introducir los datos\\ 3. El usuario introduce los datos del valor liquidativo\\ 4. El usuario confirma los datos\\ 5. El presentador formatea los datos y llama al modelo\\ 6. El modelo recibe los datos y añade el valor liquidativo al\\ fondo correspondiente en la base de datos\end{tabular} \\ \hline
+		Flujo           & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita añadir un valor liquidativo\\ 2. La vista proporciona una ventana para introducir los datos\\ 3. El usuario introduce los datos del valor liquidativo\\ 4. El usuario confirma los datos\\ 5. El presentador formatea los datos y llama al modelo\\ 6. El modelo recibe los datos y añade el valor liquidativo al\\\hspace{0.5cm}fondo correspondiente en la base de datos\end{tabular} \\ \hline
 			Flujo alternativo & 4.1 El usuario cancela la operación                                                                                                                                                                                                                                                              \\ \hline
 		Postcondiciones & El valor liquidativo modificado en la base de datos                                                                                                                                                                                                                                                                                                                                                                               \\ \hline
 	
@@ -1018,9 +1023,9 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador      & El cliente solicita modificar un valor liquidativo                                                                                                                                                                                                                                                                                                                                                                                  \\ \hline
 		Actores         & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                                                                                                 \\ \hline
 		Precondiciones  & \begin{tabular}[c]{@{}l@{}}El valor liquidativo y el fondo al que pertenece existen en la base\\ de datos\end{tabular}                                                                                                                                                                                                                                                                                                              \\ \hline
-		Flujo           & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita modificar un valor liquidativo\\ 2. La vista proporciona una ventana en la que modificar los datos\\ 3. El usuario modifica los datos del valor liquidativo\\ 4. El usuario confirma los datos modificados\\ 5. El presentador formatea los datos y llama al modelo\\ 6. El modelo recibe los datos y actualiza el valor liquidativo del\\ fondo en la base de datos\end{tabular} \\ \hline
+		Flujo           & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita modificar un valor liquidativo\\ 2. La vista proporciona una ventana en la que se modifican los\\\hspace{0.5cm}datos\\ 3. El usuario modifica los datos del valor liquidativo\\ 4. El usuario confirma los datos modificados\\ 5. El presentador formatea los datos y llama al modelo\\ 6. El modelo recibe los datos y actualiza el valor liquidativo del\\\hspace{0.5cm}fondo en la base de datos\end{tabular} \\ \hline
 		Flujo alternativo & 3.1 El usuario cancela la modificación                                                                                                                                                                                                                                                                                                    \\ \hline
-		Postcondiciones & El valor liquidativo modificado en la base de datos                                                                                                                                                                                                                                                                                                                                                                                 \\ \hline
+		Postcondiciones & El valor liquidativo es modificado en la base de datos                                                                                                                                                                                                                                                                                                                                                                                 \\ \hline
 		Excepciones     & \begin{tabular}[c]{@{}l@{}}Se intenta modificar el valor liquidativo a un número negativo\end{tabular}                                                                                                                                                                                                                                                                                                         \\ \hline
 	\end{tabular}
 \end{table}
@@ -1037,9 +1042,9 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador        & El cliente solicita borrar un fondo                                                                                                                                                                                                                                                                                                  \\ \hline
 		Actores           & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                  \\ \hline
 		Precondiciones    & El fondo existe en la base de datos                                                                                                                                                                                                                                                                                                  \\ \hline
-		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita eliminar un fondo\\ 2. La vista proporciona una ventana de confimación\\ 3. El usuario confirma el borrado\\ 4. El presentador llama al modelo\\ 5. El modelo recibe los datos del fondo y lo elimina de la \\ base de datos junto con todos sus valores liquidativos\end{tabular} \\ \hline
+		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita eliminar un fondo\\ 2. La vista proporciona una ventana de confimación\\ 3. El usuario confirma el borrado\\ 4. El presentador llama al modelo\\ 5. El modelo recibe los datos del fondo y lo elimina de la \\\hspace{0.5cm}base de datos junto con todos sus valores liquidativos\end{tabular} \\ \hline
 		Flujo alternativo & 3.1 El usuario cancela el borrado                                                                                                                                                                                                                                                                                                    \\ \hline
-		Postcondiciones   & El fondo y sus valores liquidativos eliminados de la base de datos                                                                                                                                                                                                                                                                                               \\ \hline
+		Postcondiciones   & El fondo y sus valores liquidativos son eliminados de la base de datos                                                                                                                                                                                                                                                                                               \\ \hline
 		Excepciones       & Ninguna                                                                                                                                                                    \\ \hline
 	\end{tabular}
 \end{table}
@@ -1056,7 +1061,7 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador        & El cliente solicita borrar una cartera                                                                                                                                                                                                                                                                                                                           \\ \hline
 		Actores           & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                              \\ \hline
 		Precondiciones    & La cartera existe en la base de datos                                                                                                                                                                                                                                                                                                                            \\ \hline
-		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita eliminar una cartera\\ 2. La vista proporciona una ventana de confimación\\ 3. El usuario confirma el borrado\\ 4. El presentador llama al modelo\\ 5. El modelo recibe los datos de la cartera y la elimina de la \\ base de datos junto con todas las operaciones realizadas sobre\\ sus fondos\end{tabular} \\ \hline
+		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita eliminar una cartera\\ 2. La vista proporciona una ventana de confimación\\ 3. El usuario confirma el borrado\\ 4. El presentador llama al modelo\\ 5. El modelo recibe los datos de la cartera y la elimina de la \\\hspace{0.5cm}base de datos junto con todas las operaciones realizadas sobre\\\hspace{0.5cm}sus fondos\end{tabular} \\ \hline
 		Flujo alternativo & 3.1 El usuario cancela el borrado                                                                                                                                                                                                                                                                                                                                \\ \hline
 		Postcondiciones   & La cartera y sus operaciones eliminadas de la base de datos                                                                                                                                                                                                                                                                                                      \\ \hline
 		Excepciones       & Ninguna                                                                                                                                                                                                                                                                                                                                                          \\ \hline
@@ -1075,9 +1080,9 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador        & El cliente solicita borrar un valor liquidativo de un fondo                                                                                                                                                                                                                                                         \\ \hline
 		Actores           & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                 \\ \hline
 		Precondiciones    & \begin{tabular}[c]{@{}l@{}}El valor liquidativo y el fondo al que pertenece exsisten en la\\ base de datos\end{tabular}                                                                                                                                                                                             \\ \hline
-		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita eliminar un valor liquidativo\\ 2. La vista proporciona una ventana de confimación\\ 3. El usuario confirma el borrado\\ 4. El presentador llama al modelo\\ 5. El modelo recibe los datos del valor liquidativo y lo elimina\\ de la base de datos.\end{tabular} \\ \hline
+		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita eliminar un valor liquidativo\\ 2. La vista proporciona una ventana de confimación\\ 3. El usuario confirma el borrado\\ 4. El presentador llama al modelo\\ 5. El modelo recibe los datos del valor liquidativo y lo elimina\\\hspace{0.5cm}de la base de datos\end{tabular} \\ \hline
 		Flujo alternativo & 3.1 El usuario cancela el borrado                                                                                                                                                                                                                                                                                   \\ \hline
-		Postcondiciones   & El valor liquidativo eliminado de la base de datos                                                                                                                                                                                                                                                                  \\ \hline
+		Postcondiciones   & El valor liquidativo es eliminado de la base de datos                                                                                                                                                                                                                                                                  \\ \hline
 		Excepciones       & Ninguna                                                                                                                                                                                                                                                                                                             \\ \hline
 	\end{tabular}
 \end{table}
@@ -1094,9 +1099,9 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador        & El cliente solicita importar los valores liquidativos                                                                                                                                                                                                                                                                                                                                       \\ \hline
 		Actores           & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                                                         \\ \hline
 		Precondiciones    & \begin{tabular}[c]{@{}l@{}}El fondo al que se le asignarán los valores liquidativos\\ debe existir en la base de datos\end{tabular}                                                                                                                                                                                                                                                         \\ \hline
-		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita importar los valores liquidativos\\ 2. La vista proporciona una ventana donde seleccionar el\\ fichero desde el que se importarán\\ 3. El usuario selecciona el fichero\\ 4. El presentador llama al modelo pasandole el fichero\\ 5. El modelo recibe el fichero e importa los valores liquidativos\\ al fondo seleccionado\end{tabular} \\ \hline
+		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita importar los valores liquidativos\\ 2. La vista proporciona una ventana donde seleccionar el\\\hspace{0.5cm}fichero desde el que se importarán\\ 3. El usuario selecciona el fichero\\ 4. El presentador llama al modelo pasandole el fichero\\ 5. El modelo recibe el fichero e importa los valores liquidativos\\\hspace{0.5cm}al fondo seleccionado\end{tabular} \\ \hline
 		Flujo alternativo & 3.1 El usuario cancela la selección del fichero                                                                                                                                                                                                                                                                                                                                             \\ \hline
-		Postcondiciones   & \begin{tabular}[c]{@{}l@{}}Los valores liquidativos contenidos en el fichero añadidos a la \\ base de datos asignados al fondo seleccionado\end{tabular}                                                                                                                                                                                                                                    \\ \hline
+		Postcondiciones   & \begin{tabular}[c]{@{}l@{}}Los valores liquidativos contenidos en el fichero son añadidos a la \\ base de datos y asignados al fondo seleccionado\end{tabular}                                                                                                                                                                                                                                    \\ \hline
 		Excepciones       & \begin{tabular}[c]{@{}l@{}}El fichero no es del formato correcto\\ Ya existe para el fondo un valor liquidativo para alguno\\ de los días contenidos en el fichero\end{tabular}                                                                                                                                                                                                             \\ \hline
 	\end{tabular}
 \end{table}
@@ -1113,9 +1118,9 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador        & El cliente solicita exportar un fondo                                                                                                                                                                                                                                                                                                                                                                \\ \hline
 		Actores           & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                                                                  \\ \hline
 		Precondiciones    & El fondo que se va a exportar debe existir en la base de datos                                                                                                                                                                                                                                                                                                                                       \\ \hline
-		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita exportar un fondo\\ 2. La vista proporciona una ventana donde seleccionar el\\ directorio en el que se exportará\\ 3. El usuario selecciona el directorio\\ 4. El presentador llama al modelo pasandole la ruta\\ 5. El modelo recibe la ruta y genera el fichero .xls con los\\ datos del fondo y sus valores liquidativos asociados\end{tabular} \\ \hline
+		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita exportar un fondo\\ 2. La vista proporciona una ventana en la que se selecciona el\\\hspace{0.5cm}directorio en el que se exportará\\ 3. El usuario selecciona el directorio\\ 4. El presentador llama al modelo pasandole la ruta\\ 5. El modelo recibe la ruta y genera el fichero .xls con los\\ datos del fondo y sus valores liquidativos asociados\end{tabular} \\ \hline
 		Flujo alternativo & 3.1 El usuario cancela la selección del directorio                                                                                                                                                                                                                                                                                                                                                   \\ \hline
-		Postcondiciones   & \begin{tabular}[c]{@{}l@{}}El fondo y su conjunto de valores liquidativos exportados\\ a un fichero .xls\end{tabular}                                                                                                                                                                                                                                                                                \\ \hline
+		Postcondiciones   & \begin{tabular}[c]{@{}l@{}}El fondo y su conjunto de valores liquidativos son exportados\\ a un fichero .xls\end{tabular}                                                                                                                                                                                                                                                                                \\ \hline
 		Excepciones       & Ninguna                                                                                                                                                                                                                                                                                                                                                                                              \\ \hline
 	\end{tabular}
 \end{table}
@@ -1131,9 +1136,9 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador        & El cliente solicita importar un fondo                                                                                                                                                                                                                                                                                                                                                       \\ \hline
 		Actores           & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                                                         \\ \hline
 		Precondiciones    & El fondo ha sido exportado previamente por la aplicación                                                                                                                                                                                                                                                                                                                                    \\ \hline
-		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita importar un fondo\\ 2. La vista proporciona una ventana donde seleccionar el\\ fichero desde el que se importará\\ 3. El usuario selecciona el fichero\\ 4. El presentador llama al modelo pasandole el fichero\\ 5. El modelo recibe el fichero y añade el fondo y su conjunto\\ de valores liquidativos a la base de datos\end{tabular} \\ \hline
+		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita importar un fondo\\ 2. La vista proporciona una ventana en la que se selecciona el\\\hspace{0.5cm}fichero desde el que se importará\\ 3. El usuario selecciona el fichero\\ 4. El presentador llama al modelo pasándole el fichero\\ 5. El modelo recibe el fichero y añade el fondo y su conjunto\\ de valores liquidativos a la base de datos\end{tabular} \\ \hline
 		Flujo alternativo & 3.1 El usuario cancela la selección del fichero                                                                                                                                                                                                                                                                                                                                             \\ \hline
-		Postcondiciones   & \begin{tabular}[c]{@{}l@{}}El fondo y su conjunto de valores liquidativos añadidos\\ a la base de datos\end{tabular}                                                                                                                                                                                                                                                                        \\ \hline
+		Postcondiciones   & \begin{tabular}[c]{@{}l@{}}El fondo y su conjunto de valores liquidativos  son añadidos\\ a la base de datos\end{tabular}                                                                                                                                                                                                                                                                        \\ \hline
 		Excepciones       & \begin{tabular}[c]{@{}l@{}}El fondo a importar ya existe en la base de datos\end{tabular}                                                                                                                                                                                                                                                                    \\ \hline
 	\end{tabular}
 \end{table}
@@ -1149,9 +1154,9 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador        & El cliente solicita añadir un fondo a una cartera                                                                                                                                                                                                                                                                                                                                                               \\ \hline
 		Actores           & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                                                                             \\ \hline
 		Precondiciones    & El fondo y la cartera existen en la base de datos                                                                                                                                                                                                                                                                                                                                                               \\ \hline
-		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita añadir un fondo a una cartera\\ 2. La vista proporciona una ventana donde seleccionar la\\ cartera y el fondo\\ 3. El usuario selecciona la cartera y el fondo\\ 4. El usuario confirma la operación\\ 5. El presentador llama al modelo pasandole los datos\\ 6. El modelo recibe los datos y añade el fondo a la cartera\\ en la base de datos\end{tabular} \\ \hline
+		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita añadir un fondo a una cartera\\ 2. La vista proporciona una ventana en la que se selecciona la\\\hspace{0.5cm}cartera y el fondo\\ 3. El usuario selecciona la cartera y el fondo\\ 4. El usuario confirma la operación\\ 5. El presentador llama al modelo pasándole los datos\\ 6. El modelo recibe los datos y añade el fondo a la cartera\\\hspace{0.5cm}en la base de datos\end{tabular} \\ \hline
 		Flujo alternativo & 4.1 El usuario cancela la operación                                                                                                                                                                                                                                                                                                                                                                             \\ \hline
-		Postcondiciones   & El fondo añadido a la cartera en la base de datos                                                                                                                                                                                                                                                                                                                                                               \\ \hline
+		Postcondiciones   & El fondo es añadido a la cartera en la base de datos                                                                                                                                                                                                                                                                                                                                                               \\ \hline
 		Excepciones       & \begin{tabular}[c]{@{}l@{}}E fondo ya se encuentra añadido a la cartera\end{tabular}                                                                                                                                                                                                                                                                                             \\ \hline
 	\end{tabular}
 \end{table}
@@ -1167,9 +1172,9 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador        & El cliente solicita eliminar un fondo de una cartera                                                                                                                                                                                                                                                                                                                                                                   \\ \hline
 		Actores           & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                                                                                    \\ \hline
 		Precondiciones    & El fondo y la cartera existen en la base de datos                                                                                                                                                                                                                                                                                                                                                                      \\ \hline
-		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita eliminar un fondo de una cartera\\ 2. La vista proporciona una ventana donde seleccionar la\\ cartera y el fondo\\ 3. El usuario selecciona la cartera y el fondo\\ 4. El usuario confirma la operación\\ 5. El presentador llama al modelo pasandole los datos\\ 6. El modelo recibe los datos y elimina el fondo \\ de la cartera en la base de datos\end{tabular} \\ \hline
+		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita eliminar un fondo de una cartera\\ 2. La vista proporciona una ventana en la que se selecciona la\\\hspace{0.5cm}cartera y el fondo\\ 3. El usuario selecciona la cartera y el fondo\\ 4. El usuario confirma la operación\\ 5. El presentador llama al modelo pasándole los datos\\ 6. El modelo recibe los datos y elimina el fondo \\\hspace{0.5cm}de la cartera en la base de datos\end{tabular} \\ \hline
 		Flujo alternativo & 4.1 El usuario cancela la operación                                                                                                                                                                                                                                                                                                                                                                                    \\ \hline
-		Postcondiciones   & El fondo no añadido a la cartera en la base de datos                                                                                                                                                                                                                                                                                                                                                                   \\ \hline
+		Postcondiciones   & El fondo no es añadido a la cartera en la base de datos                                                                                                                                                                                                                                                                                                                                                                   \\ \hline
 		Excepciones       & \begin{tabular}[c]{@{}l@{}}El fondo no se encuentra añadido a la cartera en la base de datos\end{tabular}                                                                                                                                                                                                                                                                                \\ \hline
 	\end{tabular}
 \end{table}
@@ -1185,9 +1190,9 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador        & El cliente solicita añadir una operación sobre un fondo                                                                                                                                                                                                                                                                                                                                                                                                                         \\ \hline
 		Actores           & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                                                                                                                                             \\ \hline
 		Precondiciones    & El fondo y la cartera existen en la base de datos                                                                                                                                                                                                                                                                                                                                                                                                                               \\ \hline
-		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita añadir una operación sobre un fondo\\ de una cartera\\ 2. La vista proporciona una ventana donde seleccionar la\\ cartera y el fondo\\ 3. El usuario selecciona la cartera y el fondo\\ 4. El usuario introduce el valor de la operación\\ 5. El usuario confirma la operación\\ 6. El presentador llama al modelo pasandole los datos\\ 7. El modelo recibe los datos y añade la operación a la\\ base de datos\end{tabular} \\ \hline
+		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita añadir una operación sobre un fondo\\\hspace{0.5cm}de una cartera\\ 2. La vista proporciona una ventana donde seleccionar la\\\hspace{0.5cm}cartera y el fondo\\ 3. El usuario selecciona la cartera y el fondo\\ 4. El usuario introduce el valor de la operación\\ 5. El usuario confirma la operación\\ 6. El presentador llama al modelo pasándole los datos\\ 7. El modelo recibe los datos y añade la operación a la\\\hspace{0.5cm}base de datos\end{tabular} \\ \hline
 		Flujo alternativo & 5.1 El usuario cancela la operación                                                                                                                                                                                                                                                                                                                                                                                                                                             \\ \hline
-		Postcondiciones   & \begin{tabular}[c]{@{}l@{}}El la operación sobre el fondo de la cartera añadida a la\\ base de datos\end{tabular}                                                                                                                                                                                                                                                                                                                                                               \\ \hline
+		Postcondiciones   & \begin{tabular}[c]{@{}l@{}}La operación sobre el fondo de la cartera  es añadida a la\\ base de datos\end{tabular}                                                                                                                                                                                                                                                                                                                                                               \\ \hline
 		Excepciones       & \begin{tabular}[c]{@{}l@{}}El fondo no se encuentra añadido a la cartera en la base de datos\\ El total de la operación es igual a cero\\ La fecha de la operación es posterior a la fecha actual\\ Ya existe una operación sobre el fondo para el mismo día\\ La operación deja a la cartera con un número de participaciones\\ sobre el fondo negativas\end{tabular}                                                                                                          \\ \hline
 	\end{tabular}
 \end{table}
@@ -1200,12 +1205,12 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		\hline
 		Nombre            & Modificar una operación                                                                                                                                                                                                                                                                                                                                                                                                                \\ \hline
 		Descripción       & \begin{tabular}[c]{@{}l@{}}Modificar una operación sobre un fondo en una cartera en\\ un día determinado\end{tabular}                                                                                                                                                                                                                                                                                                                                                 \\ \hline
-		Disparador        & \begin{tabular}[c]{@{}l@{}}El cliente solicita Modificar una operación realizada\\ sobre un fondo\end{tabular}                                                                                                                                                                                                                                                                                                                                                        \\ \hline
+		Disparador        & \begin{tabular}[c]{@{}l@{}}El cliente solicita modificar una operación realizada\\ sobre un fondo\end{tabular}                                                                                                                                                                                                                                                                                                                                                        \\ \hline
 		Actores           & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                                                                                                                                   \\ \hline
 		Precondiciones    & El fondo, la cartera y la operacíon existen en la base de datos                                                                                                                                                                                                                                                                                                                                                                                                       \\ \hline
-		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita modificar una operación existente\\ sobre un fondo de una cartera en un día determinado\\ 2. La vista proporciona una ventana donde visualizar los datos\\ de la operación\\ 3. El usuario modifica la operación\\ 4. El usuario confirma los datos modificados\\ 5. El presentador llama al modelo pasandole los datos\\ 6. El modelo recibe los datos y actualiza la operación en la\\ base de datos\end{tabular} \\ \hline
+		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita modificar una operación existente\\\hspace{0.5cm}sobre un fondo de una cartera en un día determinado\\ 2. La vista proporciona una ventana en la que se visualizan los datos\\\hspace{0.5cm}de la operación\\ 3. El usuario modifica la operación\\ 4. El usuario confirma los datos modificados\\ 5. El presentador llama al modelo pasándole los datos\\ 6. El modelo recibe los datos y actualiza la operación en la\\\hspace{0.5cm}base de datos\end{tabular} \\ \hline
 		Flujo alternativo & 3.1 El usuario cancela la modificación                                                                                                                                                                                                                                                                                                                                                                                                                                \\ \hline
-		Postcondiciones   & La operación modificada en la base de datos                                                                                                                                                                                                                                                                                                                                                                                                                           \\ \hline
+		Postcondiciones   & La operación es modificada en la base de datos                                                                                                                                                                                                                                                                                                                                                                                                                           \\ \hline
 		Excepciones       & \begin{tabular}[c]{@{}l@{}}El total de la operación modificada es igual a cero\\ La modificación de la operación deja a la cartera con un número \\ de participaciones sobre el fondo negativas\end{tabular}                                                                                                                                                                                                                                                          \\ \hline
 	\end{tabular}
 \end{table}
@@ -1222,9 +1227,9 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador        & El cliente solicita borrar una operación                                                                                                                                                                                                                                                                                                                             \\ \hline
 		Actores           & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                                  \\ \hline
 		Precondiciones    & El fondo, la cartera y la operacíon existen en la base de datos                                                                                                                                                                                                                                                                                                      \\ \hline
-		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita borrar una operación existente\\ sobre un fondo de una cartera en un día determinado\\ 2. La vista proporciona una ventana de confirmación\\ 3. El usuario confirma el borrado\\ 4. El presentador llama al modelo\\ 5. El modelo recibe los datos de la operación y la elimina\\ de la base de datos\end{tabular} \\ \hline
+		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita borrar una operación existente\\\hspace{0.5cm}sobre un fondo de una cartera en un día determinado\\ 2. La vista proporciona una ventana de confirmación\\ 3. El usuario confirma el borrado\\ 4. El presentador llama al modelo\\ 5. El modelo recibe los datos de la operación y la elimina\\\hspace{0.5cm}de la base de datos\end{tabular} \\ \hline
 		Flujo alternativo & 3.1 El usuario cancela el borrado                                                                                                                                                                                                                                                                                                                                    \\ \hline
-		Postcondiciones   & La operación eliminada de la base de datos                                                                                                                                                                                                                                                                                                                           \\ \hline
+		Postcondiciones   & La operación es eliminada de la base de datos                                                                                                                                                                                                                                                                                                                           \\ \hline
 		Excepciones       & \begin{tabular}[c]{@{}l@{}}La eliminación de la operación deja a la cartera con un \\ número de participaciones sobre el fondo negativas\end{tabular}                                                                                                                                                                                                                \\ \hline
 	\end{tabular}
 \end{table}
@@ -1240,9 +1245,9 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador        & \begin{tabular}[c]{@{}l@{}}El cliente solicita ver un listado de los valores liquidativos\\ de un fondo\end{tabular}                                                                                                                                                                    \\ \hline
 		Actores           & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                     \\ \hline
 		Precondiciones    & El fondo existe en la base de datos                                                                                                                                                                                                                                                     \\ \hline
-		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita ver los valores liquidativos de un\\ fondo\\ 2. La vista proporciona una ventana donde seleccionar\\ el fondo\\ 3. El usuario selecciona el fondo\\ 4. La vista muestra la lista de los valores liquidativos\\ del fondo\end{tabular} \\ \hline
+		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita ver los valores liquidativos de un\\\hspace{0.5cm}fondo\\ 2. La vista proporciona una ventana en la que se selecciona\\\hspace{0.5cm}el fondo\\ 3. El usuario selecciona el fondo\\ 4. La vista muestra la lista de los valores liquidativos\\\hspace{0.5cm}del fondo\end{tabular} \\ \hline
 		Flujo alternativo &                                                                                                                                                                                                                                                                                         \\ \hline
-		Postcondiciones   & \begin{tabular}[c]{@{}l@{}}El conjunto de valores liquidativos del fondo mostrados\\ al usuario\end{tabular}                                                                                                                                                                            \\ \hline
+		Postcondiciones   & \begin{tabular}[c]{@{}l@{}}El conjunto de valores liquidativos del fondo es mostrado\\ al usuario\end{tabular}                                                                                                                                                                            \\ \hline
 		Excepciones       & Ninguna                                                                                                                                                                                                                                                                                 \\ \hline
 	\end{tabular}
 \end{table}
@@ -1258,9 +1263,9 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador        & \begin{tabular}[c]{@{}l@{}}El cliente solicita ver un listado de las operaciones \\ realizadas en una cartera sobre un fondo\end{tabular}                                                                                                                                                                                                                                                                     \\ \hline
 		Actores           & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                                                                           \\ \hline
 		Precondiciones    & El fondo y la cartera deben existir en la base de datos                                                                                                                                                                                                                                                                                                                                                       \\ \hline
-		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita ver las operaciones de una cartera\\ 2. La vista proporciona una ventana donde seleccionar\\ el fondo y la cartera\\ 3. El usuario selecciona el fondo y la cartera\\ 4. El presentador pasa los datos al modelo\\ 5. El modelo obtiene todas las operaciones de la cartera\\ sobre el fondo\\ 6. La vista muestra la lista de las operaciones\end{tabular} \\ \hline
+		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita ver las operaciones de una cartera\\ 2. La vista proporciona una ventana donde seleccionar\\\hspace{0.5cm}el fondo y la cartera\\ 3. El usuario selecciona el fondo y la cartera\\ 4. El presentador pasa los datos al modelo\\ 5. El modelo obtiene todas las operaciones de la cartera\\\hspace{0.5cm}sobre el fondo\\ 6. La vista muestra la lista de las operaciones\end{tabular} \\ \hline
 		Flujo alternativo & 3.1 El usuario cancela la operación                                                                                                                                                                                                                                                                                                                                                                           \\ \hline
-		Postcondiciones   & \begin{tabular}[c]{@{}l@{}}El conjunto de operaciones de la cartera sobre el fondo\\ mostradas al usuario\end{tabular}                                                                                                                                                                                                                                                                                        \\ \hline
+		Postcondiciones   & \begin{tabular}[c]{@{}l@{}}El conjunto de operaciones de la cartera sobre el fondo\\ es mostrado al usuario\end{tabular}                                                                                                                                                                                                                                                                                        \\ \hline
 		Excepciones       & \begin{tabular}[c]{@{}l@{}}El fondo no se encuentra añadido a la cartera en la base\\ de datos\end{tabular}                                                                                                                                                                                                                                                                                                   \\ \hline
 	\end{tabular}
 \end{table}
@@ -1276,9 +1281,9 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador        & El cliente solicita ver la descripción de un fondo                                                                                                                                                                                                                                                                                                                                                                                         \\ \hline
 		Actores           & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                                                                                                        \\ \hline
 		Precondiciones    & El fondo debe existir en la base de datos                                                                                                                                                                                                                                                                                                                                                                                                  \\ \hline
-		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita ver las descripcción de un fondo\\ 2. La vista proporciona una ventana donde seleccionar\\ el fondo\\ 3. El usuario selecciona el fondo\\ 4. El presentador pasa los datos al modelo\\ 5. El modelo obtiene la descripción del fondo\\ 6. El presentador calcula sus métricas de rendimiento\\ 7. La vista muestra la descripción del fondo y sus\\ métricas de rendimiento\end{tabular} \\ \hline
+		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita ver las descripcción de un fondo\\ 2. La vista proporciona una ventana en la que se\\\hspace{0.5cm}selecciona el fondo\\ 3. El usuario selecciona el fondo\\ 4. El presentador pasa los datos al modelo\\ 5. El modelo obtiene la descripción del fondo\\ 6. El presentador calcula sus métricas de rendimiento\\ 7. La vista muestra la descripción del fondo y sus\\\hspace{0.5cm}métricas de rendimiento\end{tabular} \\ \hline
 		Flujo alternativo & 3.1 El usuario cancela la operación                                                                                                                                                                                                                                                                                                                                                                                                        \\ \hline
-		Postcondiciones   & \begin{tabular}[c]{@{}l@{}}La descripción del fondo y sus métricas de rendimiento\\ mostradas al usuario\end{tabular}                                                                                                                                                                                                                                                                                                                      \\ \hline
+		Postcondiciones   & \begin{tabular}[c]{@{}l@{}}La descripción del fondo y sus métricas de rendimiento\\ son mostradas al usuario\end{tabular}                                                                                                                                                                                                                                                                                                                      \\ \hline
 		Excepciones       & Ninguna                                                                                                                                                                                                                                                                                                                                                                                                                                    \\ \hline
 	\end{tabular}
 \end{table}
@@ -1294,9 +1299,9 @@ En esta sección se detallan los diferentes casos de uso para cada uno de los re
 		Disparador        & El cliente solicita ver una gráfica de un fondo o cartera                                                                                                                                                                                                                                                                                                                                                                                              \\ \hline
 		Actores           & Usuario, modelo, vista, presentador                                                                                                                                                                                                                                                                                                                                                                                                                    \\ \hline
 		Precondiciones    & El fondo o la cartera debe existir en la base de datos                                                                                                                                                                                                                                                                                                                                                                                                 \\ \hline
-		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita ver una determinada gráfica de un\\ fondo o cartera\\ 2. La vista proporciona una ventana donde seleccionar\\ el fondo o la cartera\\ 3. El usuario selecciona el fondo\\ 4. El presentador pasa los datos al modelo\\ 5. El modelo obtiene los datos del fondo o la cartera y\\ se los devuelve al presentador\\ 6. El presentador calcula la gráfica\\ 7. La vista muestra la gráfica\end{tabular} \\ \hline
+		Flujo             & \begin{tabular}[c]{@{}l@{}}1. El usuario solicita ver una determinada gráfica de un\\\hspace{0.5cm}fondo o cartera\\ 2. La vista proporciona una ventana donde seleccionar\\\hspace{0.5cm}el fondo o la cartera\\ 3. El usuario selecciona el fondo\\ 4. El presentador pasa los datos al modelo\\ 5. El modelo obtiene los datos del fondo o la cartera y\\ se los devuelve al presentador\\ 6. El presentador obtiene la gráfica\\ 7. La vista muestra la gráfica\end{tabular} \\ \hline
 		Flujo alternativo & 3.1 El usuario cancela la operación                                                                                                                                                                                                                                                                                                                                                                                                                    \\ \hline
-		Postcondiciones   & La gráfica solicitada mostrada al usuario                                                                                                                                                                                                                                                                                                                                                                                                              \\ \hline
+		Postcondiciones   & La gráfica solicitada es mostrada al usuario                                                                                                                                                                                                                                                                                                                                                                                                              \\ \hline
 		Excepciones       & Ninguna                                                                                                                                                                                                                                                                                                                                                                                                                                                \\ \hline
 	\end{tabular}
 \end{table}
@@ -1545,18 +1550,6 @@ cada interrogante es sustituido por una variable cuando se realiza la consulta, 
 Los métodos que manejan los ficheros Excel utilizan el \gls{API} JXL. El formato de las fechas ha de ser uno de los siguientes : \textit{"dd/MM/yyyy"} o bien \textit{"yyyy-MM-dd"}. El formato de los \gls{VL}s ha de ser uno de los siguientes: xx.xx o xx,xx.\\
 
 Si se utiliza el método importVlsFromExcel sobre un fondo que ya contenga \gls{VL}s deberá tenerse en cuenta que existen \gls{VL}s para determinados días que podrían existir en la base de datos como indica el caso de uso \ref{importarvls}.
-
-\newpage
-
-\subsection{Pruebas realizadas}
-
-Para comprobar que todos los métodos proporcionados por el servicio funcionan correctamente se ha creado, utilizando JUnit, una clase denominada \textit{``FundServiceTest"} en el paquete \textit{tfg.tests}.\\
-
-En esta clase se implementan más de 60 casos de test que comprueban de forma automatizada y exhaustiva el correcto funcionamiento de cada uno de los métodos expuestos por el servicio del modelo.
-
-
-
-\newpage
 
 \newpage
 \section{Segunda iteración: Creación de la GUI}
@@ -1828,13 +1821,7 @@ En ella se muestran todas las operaciones de la cartera para el fondo selecciona
 Por último, el menú de archivo contiene las operaciones de añadir un fondo o una cartera e importar un fondo. Las dos primeras muestran un dialogo muy similar a sus versiones de actualizar y la última muestra el selector de ficheros. Todas ellas muestran la ventana de error si no se puede completar la operación.
 
 
-\subsection{Pruebas realizadas}
 
-La interfaz gráfica ofrece un importante grado de dificultad a la hora de aplicar técnicas para automatizar el proceso de prueba. Sin embargo, no se pueden obviar las pruebas en ninguno de los componentes de la aplicación si se desea obtener un producto de calidad.\\
-
-Existen dos tipos de pruebas que se pueden realizar a una interfaz: pruebas de funcionalidad y pruebas de usabilidad. Las primeras se centran en si la interfaz realiza correctamente las funciones para la que se ha implementado. Las segundas se centran en si la interfaz es intuitiva y se puede utilizar fácilmente.\\
-
-En nuestro caso nos hemos centrado en realizar pruebas de funcionalidad de manera manual. Para ello se han utilizado intensivamente todos los componentes de la interfaz con el objetivo de detectar y corregir la mayor cantidad de errores posibles.
 
 \newpage
 \section{Tercera iteración: Creación de las gráficas}
@@ -2057,15 +2044,6 @@ Esta gráfica (\ref{fig:media}) tiene como objetivo mostrar un histórico de los
 
 \newpage
 
-
-\subsection{Pruebas realizadas}
-
-Al igual que ocurre con la interfaz, no disponemos de una forma automatizada de realizar pruebas a las gráficas obtenidas.\\
-
-Para asegurar un correcto funcionamiento hemos repasado las operaciones realizadas detenidamente y hemos recreado los mismos cálculos utilizando MATLAB para tener la certeza de que los resultados obtenidos son los correctos.
-
-\newpage
-
 \section{Cuarta iteración: Ejecución de tareas en segundo plano}
 
 Esta cuarta iteración tiene como objetivo implementar la ejecución en segundo plano de las tareas que requieren un cierto tiempo de procesamiento.\\
@@ -2180,40 +2158,169 @@ Cuando importamos un fondo, el servicio del modelo nos devuelve el fondo conteni
 
 Mientras se está importando un fondo o sus \gls{VL}s, se bloquean los botones de importar fondo e importar \gls{VL}s.
 
-\subsection{Pruebas realizadas}
 
-Las pruebas realizadas para esta iteración se han limitado a comprobar que la interfaz ejecuta las tareas en segundo plano de la forma correcta.
+
+\newpage
+
+\chapter{Pruebas}
+
+\section{Pruebas realizadas en la primera iteración: Capa modelo}
+
+Para comprobar que todos los métodos proporcionados por el servicio funcionan correctamente se ha creado, utilizando JUnit, una clase denominada \textit{``FundServiceTest"} en el paquete \textit{tfg.tests}.\\
+
+En esta clase se implementan más de 60 casos de test que comprueban de forma automatizada y exhaustiva el correcto funcionamiento de cada uno de los métodos expuestos por el servicio del modelo.
+
+
+\section{Pruebas realizadas en la segunda iteración: Creación de la GUI}
+
+La interfaz gráfica ofrece un importante grado de dificultad a la hora de aplicar técnicas para automatizar el proceso de prueba. Sin embargo, no se pueden obviar las pruebas en ninguno de los componentes de la aplicación si se desea obtener un producto de calidad.\\
+
+Existen dos tipos de pruebas que se pueden realizar a una interfaz: pruebas de funcionalidad y pruebas de usabilidad. Las primeras se centran en determinar si la interfaz realiza correctamente las funciones para las que se ha implementado. Las segundas se centran en comprobar si la interfaz es intuitiva y se puede utilizar fácilmente.\\
+
+En nuestro caso nos hemos centrado en realizar pruebas de funcionalidad de manera manual. Para ello se han utilizado intensivamente todos los componentes de la interfaz con el objetivo de detectar y corregir la mayor cantidad de errores posibles.
+
+\section{Pruebas realizadas en la tercera iteración: Creación de las gráficas }
+
+Al igual que ocurre con la interfaz, no disponemos de una forma automatizada de realizar pruebas a las gráficas obtenidas.\\
+
+Para asegurar un correcto funcionamiento hemos repasado las operaciones realizadas detenidamente y hemos recreado los mismos cálculos utilizando MATLAB para tener la certeza de que los resultados obtenidos son los correctos.
+
+\section{Pruebas realizadas en la cuarta iteración: Ejecución de tareas en segundo plano}
+
+Las pruebas realizadas para esta iteración se han limitado a comprobar que la interfaz ejecuta las tareas en segundo plano de forma correcta.
 
 \newpage
 
 \chapter{Conclusiones y líneas futuras de trabajo}
 
+En este capítulo mostraremos las principales conclusiones del trabajo realizado y presentaremos algunas
+propuestas de trabajo futuro que pueden mejorar la aplicación realizada en este \gls{TFG}.
+
 \section{Conclusiones}
 
-El objetivo de este proyecto era desarrollar una aplicación de escritorio con la finalidad de hacer estudios cualitativos y cuantitativos del rendimiento de activos financieros. En particular debía presentar gráficas e indicadores que asistan en la la toma de decisiones a los inversores de fondos de inversión.\\
+El objetivo de este proyecto era desarrollar una aplicación de escritorio con la finalidad de hacer estudios cualitativos y cuantitativos del rendimiento de activos financieros. En particular debía presentar gráficas e indicadores que asistieran en la la toma de decisiones a los inversores de fondos de inversión.\\
 
-El resultado obtenido cumple con los requisitos planteados al inicio del proyecto. Mediante el modelo de datos implementado la aplicación permite gestionar al usuario su propio conjunto de carteras y de fondos de inversión.\\
+El resultado obtenido cumple con los requisitos planteados al inicio del proyecto. Mediante el modelo de datos implementado la aplicación permite gestionar el conjunto de carteras de un usuario y sus fondos de inversión.\\
 
-Es posible obtener directamente indicadores y métricas de rendimiento de los diferentes fondos de inversión sin ningún esfuerzo.\\
+Es posible obtener directamente indicadores y métricas de rendimiento de los diferentes fondos de inversión en tiempo real.\\
 
-Las gráficas proporcionadas son personalizables y permiten calcular la evolución en los períodos de tiempo deseados de manera simple, permitiendo al usuario ver los datos que realmente le interesan.\\
+Las gráficas proporcionadas son personalizables y permiten obtener la evolución de nuestras inversiones en los períodos de tiempo deseados de manera simple, permitiendo al usuario ver los datos que realmente le interesan.\\
 
-Todo esto desde una interfaz sencilla e intuitiva que abstrae toda la complejidad del sistema de cara al usuario, que debe limitarse a introducir los datos y seleccionar la información que necesite.
+Todo esto desde una interfaz sencilla e intuitiva que abstrae toda la complejidad del sistema de cara al usuario, que debe limitarse a introducir sus fondos, carteras y las operaciones que ha realizado con ellos, y seleccionar la información que necesite.
  
  \newpage
  
 \section{Líneas futuras de trabajo}
 
-Actualmente existen una gran cantidad de métricas acerca de los fondos de inversión que no han podido ser implementadas en nuestra aplicación debido al factor tiempo. Una línea de trabajo futuro podría ser incrementar el número de gráficas e indicadores que posee la aplicación, en vistas a que sea más completa.\\
+Actualmente existen una gran cantidad de métricas acerca de los fondos de inversión que no han sido implementadas en nuestra aplicación porque hemos considerado que su relevancia es menor que aquellas que sí lo han sido. Sin embargo para completar la información disponible a los usuarios, una línea
+de trabajo futuro podría ser incrementar el número de gráficas e indicadores que posee la aplicación o incluir la opción de hacer scraping para automatizar la adquisición de datos.\\
+
+Por otra parte los resultados que se muestran son más bien cualitativos
+porque las gráficas no permiten ver con claridad los resultados
+numéricos. Otra línea de trabajo podría ser implementar una consola o una ventana donde se
+vayan mostrando dichos valores, sirviendo como base para análisis cuantitativos.\\
+
+El aspecto de la interfaz también podría mejorarse, ya que la inexperiencia de partida con Swing como la limitación temporal del TGF no nos han permitido ir más allá en la mejora del diseño de la interfaz. Por lo tanto, sería interesante continuar en este sentido. Entre otras cosas, se podría hacer que se puedan visualizar las gráficas en un sistema de pestañas.
+\\
+
+Por otra parte, sería interesante añadir la posibilidad de gestionar otro tipo de inversiones como la bolsa o el mercado de divisas. De esta forma el perfil de usuario se ampliaría a otros tipos de inversores, no solo a los de fondos de inversiones.
 
 
-El aspecto de la interfaz se ha visto degradado también por la inexperiencia con Swing y por el límite de tiempo. Sería interesante continuar mejorando la interfaz en este sentido, mejorando su aspecto y haciendo que se puedan visualizar las gráficas en un sistema de pestañas, entre otras cosas.\\
-
-Por otra parte, sería interesante añadir la posibilidad de gestionar otro tipo de inversiones cómo la bolsa o el mercado de divisas. De esta forma el perfil de usuario se ampliaría a otros tipos de inversores, no solo a los de fondos de inversiones.
 
 
 \appendix
 \chapter{Manual de usuario}\label{aped.A}
+
+\etocdepthtag.toc{mtappendix}
+\etocsettagdepth{mtchapter}{none}
+\etocsettagdepth{mtappendix}{subsection}
+
+\renewcommand{\contentsname}{Índice del manual de usuario}
+
+\tableofcontents
+
+\newpage
+
+\section{Introducción}
+
+\subsection{Descripción general de la Aplicación}
+
+En este proyecto se ha desarrollado una aplicación de escritorio con la finalidad de hacer estudios cualitativos y cuantitativos del rendimiento de activos financieros. En particular, la aplicación presenta gráficas e indicadores que proporcionan información acerca de la evolución de las diferentes carteras del usuario, así como de los fondos en los que se encuentra invertido el capital de dichas carteras.
+
+\subsection{Objetivos y ventajas}
+
+La finalidad de esta aplicación es simplificar y facilitar la forma en la que los usuarios gestionan los datos publicados por sitios web o entidades financieras. De este modo, mediante la generación de gráficos y el cálculo de indicadores, se persigue sintetizar y visualizar los datos de una manera rápida y sencilla, de tal forma que asistan en la toma de decisiones a los inversores de fondos de inversión.
+
+\subsection{Usuarios y desarrolladores de la Aplicación}
+
+La aplicación va dirigida principalmente a inversores particulares y gestoras de fondos de inversión, pero podría ser usada también para la formación de estudiantes de economía.\\
+
+El principal responsable del desarrollo de la aplicación es Ángel López López, alumno de la facultad de informática de A Coruña.
+
+\section{Requisitos de Hardware y Software}
+
+\subsection{Requisitos de Hardware}
+
+Los requisitos mínimos que garantizan un correcto funcionamiento de la aplicación son los siguientes:
+
+\begin{itemize}
+	\item Procesador: Mínimo 2 GHz o superior
+	\item RAM: Mínimo: 1 GB de RAM; Para obtener los mejores resultados: 2 GB de RAM
+	\item Espacio libre en disco duro: mínimo es necesario 1 GB de espacio de disco para la instalación de la aplicación. Necesitará más espacio de disco dependiendo de la cantidad de fondos que necesite almacenar. 
+	\item Tarjeta gráfica: DirectX 9 o posterior con un controlador WDDM 1.0
+	\item Pantalla:	1024 x 768 como mínimo con 256 colores (o superior para obtener mejores resultados)
+\end{itemize}
+
+\subsection{Requisitos de Software}
+
+La aplicación esta diseñada para ser ejecutada en sistemas operativos Windows, más concretamente está optimizada para Windows 10.\\
+
+Para ejecutar la aplicación es necesario tener instalado MySQL. Una instancia de MySQL está empaquetada con la aplicación y se instala durante su instalación.
+
+\section{Procedimientos de Instalación, arranque y finalización de la Aplicación}
+
+\subsection{Procedimiento de Instalación}
+
+La aplicación se distribuye mediante un instalador para el sistema operativo Windows (.msi). Al ejecutar el instalador se instalan en la ruta especificada los archivos necesarios para el funcionamiento de la aplicación, así como el cliente de MySQL necesario para guardar los datos y un acceso directo en el escritorio.
+
+(¿Necesario incluir fotos del instalador?)
+
+
+\subsection{Arranque de la Aplicación}
+
+Para ejecutar la aplicación basta con ejecutar el acceso directo creado en el escritorio.
+
+
+\subsection{Finalización de la Aplicación}
+
+Para finalizar la aplicación se recomienda utilizar el botón superior izquierdo de la ventana o, en su defecto la combinación de teclas Alt + F4.\\
+
+Cerrar la aplicación por cualquier otro medio como finalizar el proceso desde el administrador de tareas o apagar el equipo directamente puede resultar en una pérdida de la información guardada en la aplicación.
+
+\newpage
+
+\section{Descripción de Menús, Pantallas y Procesos}
+
+\subsection{Elementos comunes a toda la Aplicación}
+
+La pantalla principal de la aplicación tiene el siguiente aspecto:
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\textwidth]{figuras/guifinal.PNG}
+	\caption{Pantalla inicial.}
+	\label{fig:guifinal}
+	\end {figure}
+	
+	La selección de un fondo o una cartera de la aplicación 
+
+\subsection{Menús, pantallas y procesos de la Aplicación}
+
+Comenzando en la pantalla principal, se describirán todos los
+menús, submenús y pantallas de la Aplicación, de izquierda a
+derecha y de arriba a abajo, detallando los procesos que se
+realizan en cada pantalla, excepto los originados por los
+elementos comunes explicados en el punto anterior.
 
 
 \cleardoublepage
